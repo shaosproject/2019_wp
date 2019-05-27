@@ -6,5 +6,7 @@ class CUnit : public CGameObject
 public:
 	CUnit();
 	~CUnit();
+
+	virtual void Draw(HDC hdc);
 };
 

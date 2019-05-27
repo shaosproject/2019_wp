@@ -10,3 +10,7 @@ CUnit::CUnit()
 CUnit::~CUnit()
 {
 }
+
+void CUnit::Draw(HDC hdc)
+{
+}
