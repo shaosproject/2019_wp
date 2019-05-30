@@ -1,6 +1,8 @@
 #pragma once
-#include "CGameObject.h"
-class CPlayer : public CGameObject
+
+#include "CMoveUnit.h"
+
+class CPlayer : public CMoveUnit
 {
 public:
 	CPlayer();
