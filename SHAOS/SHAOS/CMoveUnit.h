@@ -9,5 +9,6 @@ public:
 	~CMoveUnit();
 
 	virtual void Move() = 0;
+	virtual void Draw() = 0;
 };
 
