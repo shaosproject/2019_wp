@@ -9,7 +9,6 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
-#include <math.h>
 
 #define CLIENT_WIDTH 1200
 #define CLIENT_HEIGHT 700
@@ -17,8 +16,3 @@
 #define IDC_BUTTON_START 100
 #define IDC_BUTTON_HELP 101
 #define IDC_BUTTON_EXIT 102
-
-#define PLAYER_RADIUS 10
-#define TURRET_RADIUS 30
-
-#define  PLAYER_SPEED 2

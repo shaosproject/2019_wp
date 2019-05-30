@@ -3,12 +3,12 @@ class CHp;
 class CGameObject
 {
 protected:
-	POINTFLOAT		mptpos;
+	POINTFLOAT		mptos;
 	RECT			mrcRng;
 	CHp				*mhp;
 public:
 	CGameObject();
 	virtual ~CGameObject();
 
-	virtual void Draw() = 0;
+
 };
