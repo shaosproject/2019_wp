@@ -10,3 +10,4 @@ CAttack::CAttack()
 CAttack::~CAttack()
 {
 }
+
