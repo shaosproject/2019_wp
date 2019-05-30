@@ -1,5 +1,6 @@
 #pragma once
 #include "CMoveUnit.h"
+
 class CPlayer : public CMoveUnit
 {
 	BOOL R_On, L_On, U_On, D_On;
