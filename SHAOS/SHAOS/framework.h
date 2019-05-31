@@ -22,3 +22,6 @@
 #define TURRET_RADIUS 30
 
 #define  PLAYER_SPEED 2
+
+#define MIN 0
+#define MAX 200
