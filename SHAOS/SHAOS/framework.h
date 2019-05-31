@@ -15,4 +15,14 @@
 
 #define IDC_BUTTON_START 100
 #define IDC_BUTTON_HELP 101
+<<<<<<< HEAD
 #define IDC_BUTTON_EXIT 102
+
+#define PLAYER_RADIUS 10
+#define TURRET_RADIUS 30
+
+#define  PLAYER_SPEED 2
+
+#define MIN 0
+#define MAX 200
+>>>>>>> 복구
