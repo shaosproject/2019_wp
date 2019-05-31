@@ -20,7 +20,7 @@ void CTurret::Turret_Attack()
 }
 RECT* CTurret::Turret_Rect()
 {
-	mrcRng = {(LONG)mptpos.x - TURRET_RADIUS ,(LONG)mptpos.y - TURRET_RADIUS ,(LONG)mptpos.x + TURRET_RADIUS ,(LONG)mptpos.y + TURRET_RADIUS };
+	mrcRng = { (LONG)mptpos.x - TURRET_RADIUS ,(LONG)mptpos.y - TURRET_RADIUS ,(LONG)mptpos.x + TURRET_RADIUS ,(LONG)mptpos.y + TURRET_RADIUS };
 	return &mrcRng;
 }
 void CTurret::Draw(HDC hdc)

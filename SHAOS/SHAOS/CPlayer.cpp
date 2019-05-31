@@ -10,7 +10,7 @@ CPlayer::CPlayer()
 CPlayer::~CPlayer()
 {
 }
- 
+
 void CPlayer::Player_Attack()
 {}
 void CPlayer::Player_Message(UINT message, WPARAM wParam)
@@ -26,8 +26,8 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 		case 'D':
 			R_On = TRUE;
 			break;
-		case 'S' :
-			D_On=TRUE;
+		case 'S':
+			D_On = TRUE;
 			break;
 		case 'W':
 			U_On = TRUE;
@@ -51,7 +51,7 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 		}
 	}
 }
-void CPlayer::Move(POINTFLOAT vector){
+void CPlayer::Move(POINTFLOAT vector) {
 	mptpos.x += Player_Vector().x;
 	mptpos.y += Player_Vector().y;
 }
