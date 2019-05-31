@@ -21,12 +21,8 @@ public:
 
 	void Update();
 
-	void MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam);
 	void MSG_Key(UINT message, WPARAM wParam, LPARAM lParam);
-
-
-
-	void Message(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	void MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Draw(HDC hdc);
 

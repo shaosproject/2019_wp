@@ -10,5 +10,8 @@ class CUser : public CTeam
 public:
 	CUser();
 	~CUser();
+
+	void Update();
+	void Draw(HDC hdc);
 };
 

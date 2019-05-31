@@ -2,11 +2,14 @@
 #include "CTeam.h"
 class CWorld
 {
-	HBITMAP mhMapBit;		//map.bmp 핸들
-	BITMAP mMapBit;			//map.bmp 정보
+	HBITMAP hbackgroundbmp;		//map.bmp 핸들
+	BITMAP bgbmp;
+
 	HDC hUpdateDC;
-	HDC hMapDC;
-	HBITMAP hMapOld, hUdtOld;
+	HDC hBackgroundDC;
+
+	HBITMAP hbackgroundsizebmp;
+	HBITMAP hbackgroundOld, hupdateOld;
 	RECT rcClient;
 
 	CTeam* pUserTeam{ nullptr };
@@ -14,11 +17,15 @@ class CWorld
 
 
 public:
-	CWorld(HWND hwnd, HBITMAP hMap);
+	CWorld(HWND hwnd);
 	~CWorld();
 
+	
+	void MSG_Mouse(UINT, WPARAM, LPARAM);
+	void MSG_Key(UINT, WPARAM, LPARAM);
+
+
+
 	void Draw(HDC);
-	void MSG_Mouse();
-	void MSG_Key();
 };
 
