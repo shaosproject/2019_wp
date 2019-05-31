@@ -3,26 +3,25 @@
 
 
 
-CWorld::CWorld(HWND hwnd, HBITMAP hMap) :mhMapBit(hMap)
+CWorld::CWorld(HWND hwnd)
 {
-	// 비트맵 정보 저장
-	GetObject(hMap, sizeof(BITMAP), &mMapBit);
+	hbackgroundbmp = (HBITMAP)LoadImage(NULL, L"Resource/map.bmp", IMAGE_BITMAP,
+		0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+	GetObject(hbackgroundbmp, sizeof(BITMAP), &bgbmp);
 	GetClientRect(hwnd, &rcClient);
-
 	
-	// 출력 dc와 같은 컬러 포맷을 가지는 dc생성
+	// 출력 dc의 성질 가져오기
 	HDC tmpdc = GetDC(hwnd);
-
 	hUpdateDC = CreateCompatibleDC(tmpdc);
-	hMapDC = CreateCompatibleDC(tmpdc);
-	
+	hBackgroundDC = CreateCompatibleDC(tmpdc);
+	hbackgroundsizebmp = CreateCompatibleBitmap(tmpdc, bgbmp.bmWidth, bgbmp.bmHeight);
 	ReleaseDC(hwnd, tmpdc);
 
 
 	// hMapDC는 맵 이미지를 선택
-	hMapOld = (HBITMAP)SelectObject(hMapDC, hMap);
-	
-	
+	hbackgroundOld = (HBITMAP)SelectObject(hBackgroundDC, hbackgroundbmp);
+	hupdateOld = (HBITMAP)SelectObject(hUpdateDC, hbackgroundsizebmp);
+
 	// 팀 할당받기
 	pUserTeam = new CTeam;
 	pEnemyTeam = new CTeam;
@@ -32,20 +31,42 @@ CWorld::CWorld(HWND hwnd, HBITMAP hMap) :mhMapBit(hMap)
 
 CWorld::~CWorld()
 {
+	// 비트맵 삭제
+	DeleteObject(SelectObject(hUpdateDC, hbackgroundsizebmp));	// 도화지 삭제
+	DeleteObject(SelectObject(hBackgroundDC, hbackgroundOld));	// 배경 삭제
+
+	// dc 삭제
+	DeleteDC(hUpdateDC);
+	DeleteDC(hBackgroundDC);
+
+
+	// 팀 해제
 	delete pUserTeam;
 	delete pEnemyTeam;
 
 }
 
+void CWorld::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+}
+
+void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+}
+
 void CWorld::Draw(HDC clientDC)
 {
-	// hdc = ui추가하기 전, 출력dc와 같은 크기의 dc
+	BitBlt(hUpdateDC, 0, 0, bgbmp.bmWidth, bgbmp.bmHeight,
+		hBackgroundDC, 0, 0, SRCCOPY);
 
-	HBITMAP htmp = CreateCompatibleBitmap(hMapDC, mMapBit.bmWidth, mMapBit.bmHeight);
-	SelectObject(hUpdateDC, htmp);
-	BitBlt(hUpdateDC, 0, 0, mMapBit.bmWidth, mMapBit.bmHeight,
-		hMapDC, 0, 0, SRCCOPY);
+	// 객체 그리기
+	
 
+	
+	//-----
+	
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, 0, 0, SRCCOPY);
 }

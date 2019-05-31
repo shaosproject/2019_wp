@@ -15,12 +15,9 @@ void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 	mhWnd = hwnd;
 	mhhTitleWnd = htitlewnd;
 
-	// 실패시 null을 리턴 
-	HBITMAP hMap = (HBITMAP)LoadImage(NULL, L"Resource/map.bmp", IMAGE_BITMAP,
-		0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 
 
-	pworld = new CWorld(hwnd, hMap);
+	pworld = new CWorld(hwnd);
 
 }
 
@@ -33,13 +30,14 @@ void CGameFramework::Update()
 {
 }
 
-void CGameFramework::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
+void CGameFramework::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	
+	if (pworld) pworld->MSG_Key(message, wParam, lParam);
 }
 
-void CGameFramework::Message(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+void CGameFramework::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (pworld) pworld->MSG_Mouse(message, wParam, lParam);
 }
 
 void CGameFramework::Draw(HDC hdc)
