@@ -22,15 +22,6 @@
     <Filter Include="GameObj">
       <UniqueIdentifier>{cd05b18d-4404-432e-9a53-46d55cc6f151}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObj\MoveUnit">
-      <UniqueIdentifier>{f6a95b70-ef64-4a59-a5a8-6299408572b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObj\MoveUnit\Player">
-      <UniqueIdentifier>{00ae2e6e-34b5-4c88-8e6c-b03ff96a6b8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObj\MoveUnit\Unit">
-      <UniqueIdentifier>{cdcfaa12-ecff-4f9f-8207-7e161617b3de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObj\Building">
       <UniqueIdentifier>{efac8729-94ac-4ed6-9d03-5360f64e395c}</UniqueIdentifier>
     </Filter>
@@ -52,16 +43,22 @@
     <Filter Include="나머지">
       <UniqueIdentifier>{1ad34f93-2dcc-427c-9793-2a65b3856018}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObj\MoveUnit\Unit\Rect">
+    <Filter Include="GameObj\Player">
+      <UniqueIdentifier>{00ae2e6e-34b5-4c88-8e6c-b03ff96a6b8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\Unit">
+      <UniqueIdentifier>{cdcfaa12-ecff-4f9f-8207-7e161617b3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\Unit\Rect">
       <UniqueIdentifier>{2b2b3bfd-0e11-4192-a985-1d0e9dbf7b33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObj\MoveUnit\Unit\Tri">
+    <Filter Include="GameObj\Unit\Tri">
       <UniqueIdentifier>{c47b9ada-9e79-4a81-8a3f-f5a579cb24b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObj\MoveUnit\Unit\Dia">
+    <Filter Include="GameObj\Unit\Dia">
       <UniqueIdentifier>{30d16326-a9b2-4ca3-b880-a842de6e6f3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObj\MoveUnit\Unit\Ellip">
+    <Filter Include="GameObj\Unit\Ellip">
       <UniqueIdentifier>{a3f6d754-fcda-4ba3-85d7-489e7a5dfdcc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -90,14 +87,11 @@
     <ClInclude Include="CGameObject.h">
       <Filter>GameObj</Filter>
     </ClInclude>
-    <ClInclude Include="CMoveUnit.h">
-      <Filter>GameObj\MoveUnit</Filter>
-    </ClInclude>
     <ClInclude Include="CPlayer.h">
-      <Filter>GameObj\MoveUnit\Player</Filter>
+      <Filter>GameObj\Player</Filter>
     </ClInclude>
     <ClInclude Include="CUnit.h">
-      <Filter>GameObj\MoveUnit\Unit</Filter>
+      <Filter>GameObj\Unit</Filter>
     </ClInclude>
     <ClInclude Include="CBuilding.h">
       <Filter>GameObj\Building</Filter>
@@ -124,16 +118,16 @@
       <Filter>나머지</Filter>
     </ClInclude>
     <ClInclude Include="CDia.h">
-      <Filter>GameObj\MoveUnit\Unit\Dia</Filter>
+      <Filter>GameObj\Unit\Dia</Filter>
     </ClInclude>
     <ClInclude Include="CEllip.h">
-      <Filter>GameObj\MoveUnit\Unit\Ellip</Filter>
+      <Filter>GameObj\Unit\Ellip</Filter>
     </ClInclude>
     <ClInclude Include="CRect.h">
-      <Filter>GameObj\MoveUnit\Unit\Rect</Filter>
+      <Filter>GameObj\Unit\Rect</Filter>
     </ClInclude>
     <ClInclude Include="CTri.h">
-      <Filter>GameObj\MoveUnit\Unit\Tri</Filter>
+      <Filter>GameObj\Unit\Tri</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,14 +146,11 @@
     <ClCompile Include="CGameObject.cpp">
       <Filter>GameObj</Filter>
     </ClCompile>
-    <ClCompile Include="CMoveUnit.cpp">
-      <Filter>GameObj\MoveUnit</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayer.cpp">
-      <Filter>GameObj\MoveUnit\Player</Filter>
+      <Filter>GameObj\Player</Filter>
     </ClCompile>
     <ClCompile Include="CUnit.cpp">
-      <Filter>GameObj\MoveUnit\Unit</Filter>
+      <Filter>GameObj\Unit</Filter>
     </ClCompile>
     <ClCompile Include="CBuilding.cpp">
       <Filter>GameObj\Building</Filter>
@@ -186,16 +177,16 @@
       <Filter>나머지</Filter>
     </ClCompile>
     <ClCompile Include="CDia.cpp">
-      <Filter>GameObj\MoveUnit\Unit\Dia</Filter>
+      <Filter>GameObj\Unit\Dia</Filter>
     </ClCompile>
     <ClCompile Include="CEllip.cpp">
-      <Filter>GameObj\MoveUnit\Unit\Ellip</Filter>
+      <Filter>GameObj\Unit\Ellip</Filter>
     </ClCompile>
     <ClCompile Include="CRect.cpp">
-      <Filter>GameObj\MoveUnit\Unit\Rect</Filter>
+      <Filter>GameObj\Unit\Rect</Filter>
     </ClCompile>
     <ClCompile Include="CTri.cpp">
-      <Filter>GameObj\MoveUnit\Unit\Tri</Filter>
+      <Filter>GameObj\Unit\Tri</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -162,7 +162,6 @@
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CHp.h" />
-    <ClInclude Include="CMoveUnit.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CRect.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -195,7 +194,6 @@
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CHp.cpp" />
-    <ClCompile Include="CMoveUnit.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CRect.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

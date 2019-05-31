@@ -1,8 +1,7 @@
 #pragma once
-#include "CMoveUnit.h"
+#include "CGameObject.h"
 
-
-class CPlayer : public CMoveUnit
+class CPlayer : public CGameObject
 {
 	BOOL R_On, L_On, U_On, D_On;
 public:

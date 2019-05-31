@@ -3,7 +3,7 @@ class CHp;
 class CGameObject
 {
 protected:
-	POINTFLOAT		mptos;
+	POINTFLOAT		mptpos;
 	RECT			mrcRng;
 	CHp				*mhp;
 public:
