@@ -1,6 +1,6 @@
 #pragma once
 #include "CGameObject.h"
-class CBuilding : CGameObject
+class CBuilding : public CGameObject
 {
 protected:
 
