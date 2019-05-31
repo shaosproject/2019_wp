@@ -153,13 +153,25 @@
   <ItemGroup>
     <ClInclude Include="CAttack.h" />
     <ClInclude Include="CBuilding.h" />
+    <ClInclude Include="CDia.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CEllip.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CHp.h" />
     <ClInclude Include="CMoveUnit.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CRect.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="CTeam.h" />
     <ClInclude Include="CTower.h" />
+    <ClInclude Include="CTri.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="CTurret.h" />
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="CUser.h" />
@@ -174,13 +186,25 @@
   <ItemGroup>
     <ClCompile Include="CAttack.cpp" />
     <ClCompile Include="CBuilding.cpp" />
+    <ClCompile Include="CDia.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CEllip.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CHp.cpp" />
     <ClCompile Include="CMoveUnit.cpp" />
     <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="CRect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="CTeam.cpp" />
     <ClCompile Include="CTower.cpp" />
+    <ClCompile Include="CTri.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="CTurret.cpp" />
     <ClCompile Include="CUnit.cpp" />
     <ClCompile Include="CUser.cpp" />
@@ -198,6 +222,7 @@
     <ResourceCompile Include="SHAOS.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource\map.bmp" />
     <Image Include="SHAOS.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
