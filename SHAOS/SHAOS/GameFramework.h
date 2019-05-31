@@ -1,5 +1,6 @@
 #pragma once
 #include "CWorld.h"
+#include "resource.h"
 class CGameFramework
 {
 	HINSTANCE		mhInst;
@@ -7,7 +8,7 @@ class CGameFramework
 	HWND			mhhTitleWnd;
 
 	// 월드한테 좌표를 넘길 때 어디서 넘기지...
-	CWorld			*pworld;
+	CWorld* pworld{ nullptr };
 
 
 public:
@@ -19,6 +20,11 @@ public:
 	void Relese();
 
 	void Update();
+
+	void MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam);
+	void MSG_Key(UINT message, WPARAM wParam, LPARAM lParam);
+
+
 
 	void Message(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 

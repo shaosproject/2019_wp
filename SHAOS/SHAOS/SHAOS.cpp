@@ -107,17 +107,17 @@ void MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
-	DWORD dwStyle = WS_POPUPWINDOW;
+	DWORD dwStyle = WS_POPUP;
 
 	RECT rcWindow{};
 	GetWindowRect(GetDesktopWindow(), &rcWindow);         //전체 윈도우에서 창이 어디에 있는지 반환하는 함수(전체 윈도우의 해상도 구하는 함수,)
 	RECT rcClient{ 0,0,CLIENT_WIDTH,CLIENT_HEIGHT };
-	AdjustWindowRect(&rcClient, dwStyle, true);         //dwStyle을 포함한 rect값을 rcClient에 넣어줌
-
-														//AdjustWindowRect가 값을 빼줌으로 그 값에 맞게 값 조절
-	rcClient.right -= rcClient.left;
-	rcClient.bottom -= rcClient.top;
-	rcClient.left = rcClient.top = 0;
+	//AdjustWindowRect(&rcClient, dwStyle, true);         //dwStyle을 포함한 rect값을 rcClient에 넣어줌
+	//
+	//													//AdjustWindowRect가 값을 빼줌으로 그 값에 맞게 값 조절
+	//rcClient.right -= rcClient.left;
+	//rcClient.bottom -= rcClient.top;
+	//rcClient.left = rcClient.top = 0;
 
 	POINT Start{ (rcWindow.right - rcClient.right) / 2         //창이 윈도우 중간에 뜨도록 
 		,(rcWindow.bottom - rcClient.bottom) / 2 };
@@ -271,6 +271,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		UINT ctrlID = LOWORD(wParam);
 		switch (ctrlID) {
 		case IDC_BUTTON_START:
+			g_GameFrameWork.Create(GetParent(hWnd), hWnd, hInst);
 			SetTimer(GetParent(hWnd), 0, 13, nullptr);
 			DestroyWindow(hWnd);
 			break;

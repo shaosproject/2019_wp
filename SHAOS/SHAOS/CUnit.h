@@ -7,6 +7,6 @@ public:
 	CUnit();
 	~CUnit();
 
-	virtual void Draw(HDC hdc);
+	virtual void Draw(HDC hdc) = 0;
 };
 
