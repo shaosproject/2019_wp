@@ -114,9 +114,6 @@
     <ClInclude Include="CHp.h">
       <Filter>나머지</Filter>
     </ClInclude>
-    <ClInclude Include="CAttack.h">
-      <Filter>나머지</Filter>
-    </ClInclude>
     <ClInclude Include="CDia.h">
       <Filter>GameObj\Unit\Dia</Filter>
     </ClInclude>
@@ -128,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="CTri.h">
       <Filter>GameObj\Unit\Tri</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>나머지</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -170,9 +170,6 @@
     <ClCompile Include="CEnemy.cpp">
       <Filter>Team\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="CAttack.cpp">
-      <Filter>나머지</Filter>
-    </ClCompile>
     <ClCompile Include="CHp.cpp">
       <Filter>나머지</Filter>
     </ClCompile>
@@ -187,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="CTri.cpp">
       <Filter>GameObj\Unit\Tri</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>나머지</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

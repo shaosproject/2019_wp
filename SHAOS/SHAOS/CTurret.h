@@ -4,7 +4,6 @@
 
 class CTurret : public CBuilding
 {
-	LONG* mpos;
 public:
 	CTurret();
 	~CTurret();
