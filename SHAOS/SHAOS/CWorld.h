@@ -1,5 +1,7 @@
 #pragma once
-#include "CTeam.h"
+#include "CUser.h"
+#include "CEnemy.h"
+
 class CWorld
 {
 	HBITMAP hbackgroundbmp;		//map.bmp วฺต้
@@ -12,9 +14,10 @@ class CWorld
 	HBITMAP hbackgroundOld, hupdateOld;
 	RECT rcClient;
 
-	CTeam* pUserTeam{ nullptr };
-	CTeam* pEnemyTeam{ nullptr };
-
+	CUser* pUserTeam{ nullptr };
+	CEnemy* pEnemyTeam{ nullptr };
+	
+	INT iViewX;
 
 public:
 	CWorld(HWND hwnd);
@@ -24,7 +27,7 @@ public:
 	void MSG_Mouse(UINT, WPARAM, LPARAM);
 	void MSG_Key(UINT, WPARAM, LPARAM);
 
-
+	void Update();
 
 	void Draw(HDC);
 };

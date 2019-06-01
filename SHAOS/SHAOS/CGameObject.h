@@ -10,4 +10,5 @@ public:
 	CGameObject(POINTFLOAT ainitPos);
 	virtual ~CGameObject();
 
+	POINTFLOAT GetPos();
 };

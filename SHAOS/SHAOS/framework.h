@@ -18,6 +18,14 @@
 #define IDC_BUTTON_HELP 101
 #define IDC_BUTTON_EXIT 102
 
+#pragma region ABOUT_WORLD
+#define MAX_VIEWX 3900
+#define MIN_VIEWX 600
+#define SET_VIEWX(plyx) ((plyx)<(MIN_VIEWX)?(MIN_VIEWX):((plyx)>(MAX_VIEWX)?(MAX_VIEWX):(plyx)))
+#pragma endregion
+
+
+
 #define PLAYER_RADIUS 10
 #define TURRET_RADIUS 30
 

@@ -1,6 +1,5 @@
 #pragma once
 #include "CTeam.h"
-#include "CPlayer.h"
 
 class CUser : public CTeam
 {
@@ -14,6 +13,6 @@ public:
 	void Update();
 	void Draw(HDC hdc);
 
-	POINT GetPlayerPos();
+	POINTFLOAT GetPlayerPos();
 };
 

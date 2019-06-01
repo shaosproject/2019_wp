@@ -23,8 +23,8 @@ CWorld::CWorld(HWND hwnd)
 	hupdateOld = (HBITMAP)SelectObject(hUpdateDC, hbackgroundsizebmp);
 
 	// 팀 할당받기
-	pUserTeam = new CTeam;
-	pEnemyTeam = new CTeam;
+	pUserTeam = new CUser;
+	pEnemyTeam = new CEnemy;
 
 }
 
@@ -56,6 +56,11 @@ void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 
 }
 
+void CWorld::Update()
+{
+	iViewX = (INT)SET_VIEWX(pUserTeam->GetPlayerPos().x);
+}
+
 void CWorld::Draw(HDC clientDC)
 {
 	BitBlt(hUpdateDC, 0, 0, bgbmp.bmWidth, bgbmp.bmHeight,
@@ -65,8 +70,9 @@ void CWorld::Draw(HDC clientDC)
 	
 
 	
-	//-----
-	// 플레이어의 좌표를 받아서
-	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
+	//----
+	// 플레이어의 좌표 범위 제한
+	
+	BitBlt(clientDC, iViewX - MIN_VIEWX, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, 0, 0, SRCCOPY);
 }

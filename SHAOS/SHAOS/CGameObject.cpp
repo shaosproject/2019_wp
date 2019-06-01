@@ -11,3 +11,8 @@ CGameObject::CGameObject(POINTFLOAT ainitPos) : mptpos(ainitPos)
 CGameObject::~CGameObject()
 {
 }
+
+POINTFLOAT CGameObject::GetPos()
+{
+	return mptpos;
+}

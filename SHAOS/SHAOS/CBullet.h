@@ -1,15 +1,13 @@
 #pragma once
-
+#include "CGameObject.h"
 class CBullet
 {
-	POINTFLOAT bulPos;
+	POINTFLOAT ptbulpos;
+	CGameObject* ptargetobj;
+
 	FLOAT d;
-	POINTFLOAT* enemyPos;
 public:
-	CBullet();
-
-	CBullet(POINTFLOAT FstPos, POINTFLOAT* enemy);
-
+	CBullet(POINTFLOAT initPos, CGameObject* target);
 	~CBullet();
 
 	void Bullet_Move();

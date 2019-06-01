@@ -1,14 +1,27 @@
 #include "pch.h"
 #include "CPlayer.h"
+#include "CHp.h"
 
-
-CPlayer::CPlayer()
+CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos)
 {
+	// 충돌체크용 플레이어 영역 설정해주기
+	mrcRng = { mptpos.x - PLAYER_RADIUS, mptpos.y - PLAYER_RADIUS, 
+		mptpos.x + PLAYER_RADIUS, mptpos.y + PLAYER_RADIUS };
+
+	// hp 할당
+	mhp = new CHp(100);
+
+	R_On = FALSE;
+	L_On = FALSE;
+	U_On = FALSE;
+	D_On = FALSE;
 }
 
 
 CPlayer::~CPlayer()
 {
+	// hp 해제
+	delete mhp;
 }
 
 void CPlayer::Player_Attack()

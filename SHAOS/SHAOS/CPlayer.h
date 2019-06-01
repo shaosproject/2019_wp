@@ -5,7 +5,7 @@ class CPlayer : public CGameObject
 {
 	BOOL R_On, L_On, U_On, D_On;
 public:
-	CPlayer();
+	CPlayer(POINTFLOAT ainitPos);
 	~CPlayer();
 
 	void Player_Attack();
