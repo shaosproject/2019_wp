@@ -1,16 +1,18 @@
 #pragma once
-
-class CTower;
-class CUnit;
+class CGameObject;
+class CPlayer;
 class CTeam
 {
 protected:
-	CUnit* mUnitList{ nullptr };
-	CTower* mTower;
+	CGameObject* p_myobj{ nullptr };
+	CGameObject* p_opponentobj{ nullptr };
+
+	INT imyobjnum;
+	INT iopnobjnum;
 public:
 	CTeam();
 	virtual ~CTeam();
+	void UpdateOpponentObj(CGameObject&);
 
-	void Draw(HDC hdc);
 };
 

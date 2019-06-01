@@ -9,13 +9,13 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <cmath>
 
 #define CLIENT_WIDTH 1200
 #define CLIENT_HEIGHT 700
 
 #define IDC_BUTTON_START 100
 #define IDC_BUTTON_HELP 101
-<<<<<<< HEAD
 #define IDC_BUTTON_EXIT 102
 
 #define PLAYER_RADIUS 10
@@ -23,6 +23,10 @@
 
 #define  PLAYER_SPEED 2
 
+#pragma region ABOUT_RECT
+#define RECT_RADIUS 10
+#define RECT_HP 100
+#pragma endregion
+
 #define MIN 0
 #define MAX 200
->>>>>>> 복구

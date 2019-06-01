@@ -4,7 +4,7 @@
 
 class CUser : public CTeam
 {
-	CPlayer mPlayer;
+	CPlayer* mPlayer;
 
 
 public:
@@ -13,5 +13,7 @@ public:
 
 	void Update();
 	void Draw(HDC hdc);
+
+	POINT GetPlayerPos();
 };
 

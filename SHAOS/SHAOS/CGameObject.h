@@ -5,10 +5,9 @@ class CGameObject
 protected:
 	POINTFLOAT		mptpos;
 	RECT			mrcRng;
-	CHp				*mhp;
+	CHp*			mhp{ nullptr };
 public:
-	CGameObject();
+	CGameObject(POINTFLOAT ainitPos);
 	virtual ~CGameObject();
-
 
 };

@@ -66,7 +66,7 @@ void CWorld::Draw(HDC clientDC)
 
 	
 	//-----
-	
+	// 플레이어의 좌표를 받아서
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, 0, 0, SRCCOPY);
 }

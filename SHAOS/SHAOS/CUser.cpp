@@ -14,3 +14,8 @@ CUser::~CUser()
 void CUser::Draw(HDC hdc)
 {
 }
+
+POINT CUser::GetPlayerPos()
+{
+	return mPlayer->;
+}

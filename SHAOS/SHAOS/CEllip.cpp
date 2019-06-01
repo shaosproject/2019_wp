@@ -10,3 +10,7 @@ CEllip::CEllip()
 CEllip::~CEllip()
 {
 }
+
+void CEllip::Draw(HDC hdc)
+{
+}

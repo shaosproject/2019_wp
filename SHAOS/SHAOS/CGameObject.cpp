@@ -3,7 +3,7 @@
 #include "CHp.h"
 
 
-CGameObject::CGameObject()
+CGameObject::CGameObject(POINTFLOAT ainitPos) : mptpos(ainitPos)
 {
 }
 

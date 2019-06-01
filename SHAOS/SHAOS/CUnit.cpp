@@ -2,7 +2,7 @@
 #include "CUnit.h"
 
 
-CUnit::CUnit()
+CUnit::CUnit(POINTFLOAT ainitPos) : CGameObject(ainitPos)
 {
 }
 
