@@ -11,12 +11,6 @@ CTurret::~CTurret()
 {
 }
 
-void CTurret::Turret_Attack()
-{
-
-	mpos = new LONG[100];
-
-}
 RECT* CTurret::Turret_Rect()
 {
 	mrcRng = { (LONG)mptpos.x - TURRET_RADIUS ,(LONG)mptpos.y - TURRET_RADIUS ,(LONG)mptpos.x + TURRET_RADIUS ,(LONG)mptpos.y + TURRET_RADIUS };
