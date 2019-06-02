@@ -9,6 +9,8 @@ CUser::CUser()
 	//tmp
 	POINTFLOAT initPos = { 100,100 };
 	//
+	mTower = new CTower(USERTOWER_POS);
+	this->AddMyObjList(mTower);
 
 	mPlayer = new CPlayer(initPos);
 	this->AddMyObjList(mPlayer);
@@ -31,7 +33,11 @@ void CUser::MSG_Key(UINT message, WPARAM wParam)
 
 void CUser::Draw(HDC hdc)
 {
-	mPlayer->Draw(hdc);
+	CGameObject* tmp = p_myobj;
+	for (int i = 0; i < imyobjnum; i++) {
+		tmp->Draw(hdc);
+		tmp = tmp->next;
+	}
 }
 
 POINTFLOAT CUser::GetPlayerPos()

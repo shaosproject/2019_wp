@@ -2,8 +2,6 @@
 class CHp;
 
 
-
-
 class CGameObject
 {
 protected:
@@ -17,6 +15,6 @@ public:
 
 	CGameObject(POINTFLOAT ainitPos);
 	virtual ~CGameObject();
-
+	virtual void Draw(HDC) = 0;
 	POINTFLOAT GetPos();
 };

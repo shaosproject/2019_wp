@@ -167,9 +167,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="CTeam.h" />
+    <ClInclude Include="CTower.h" />
     <ClInclude Include="CTri.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="CTurret.h" />
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="CUser.h" />
     <ClInclude Include="CWorld.h" />
@@ -197,9 +199,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="CTeam.cpp" />
+    <ClCompile Include="CTower.cpp" />
     <ClCompile Include="CTri.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="CTurret.cpp" />
     <ClCompile Include="CUnit.cpp" />
     <ClCompile Include="CUser.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

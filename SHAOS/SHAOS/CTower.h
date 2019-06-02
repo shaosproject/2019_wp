@@ -1,11 +1,10 @@
-
 #pragma once
 #include "CBuilding.h"
 
 class CTower : public CBuilding
 {
 public:
-	CTower();
+	CTower(POINTFLOAT initPos);
 	~CTower();
 	virtual void Draw(HDC hdc);
 };

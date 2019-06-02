@@ -1,8 +1,6 @@
 #pragma once
 #include "CTeam.h"
 class CPlayer;
-class CTower;
-class CUnit;
 class CUser : public CTeam
 {
 	// gameobjlist에 타워, 플레이어, 유닛 순으로 연결

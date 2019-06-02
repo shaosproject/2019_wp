@@ -1,5 +1,8 @@
 #pragma once
 class CGameObject;
+class CTower;
+class CUnit;
+
 class CTeam
 {
 protected:

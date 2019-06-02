@@ -2,7 +2,7 @@
 #include "CTurret.h"
 
 
-CTurret::CTurret()
+CTurret::CTurret(POINTFLOAT initPos) : CBuilding(initPos)
 {
 }
 

@@ -26,7 +26,7 @@
 
 
 #pragma region ABOUT_PLAYER
-#define PLAYER_RADIUS 10
+#define PLAYER_RADIUS 15
 #define PLAYER_SPEED 3
 #define PLAYER_ROOTSPEED PLAYER_SPEED/1.4
 
@@ -41,7 +41,17 @@ const POINTFLOAT DIRVECTOR_RB = { PLAYER_ROOTSPEED,PLAYER_ROOTSPEED };
 const POINTFLOAT DIRVECTOR_STOP = { 0,0 };
 #pragma endregion
 
+#pragma region ABOUT_BUILDING
+const POINTFLOAT USERTOWER_POS = { 325,350 };
+const POINTFLOAT ENEMYTOWER_POS = { 4175,350 };
+
+#define TOWER_TOP 270
+#define TOWER_BOTTOM 430
+#define TOWER_LEFT(x) x - 70
+#define TOWER_RIGHT(x) x + 70
+
 #define TURRET_RADIUS 30
+#pragma endregion
 
 
 #pragma region ABOUT_RECT

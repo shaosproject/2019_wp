@@ -5,7 +5,7 @@
 class CTurret : public CBuilding
 {
 public:
-	CTurret();
+	CTurret(POINTFLOAT initPos);
 	~CTurret();
 	void Turret_Attack();
 	RECT* Turret_Rect();
