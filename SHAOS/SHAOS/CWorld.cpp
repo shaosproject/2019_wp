@@ -74,6 +74,8 @@ void CWorld::Draw(HDC clientDC)
 	
 	//----
 	// 플레이어의 좌표 범위 제한
+
+
 	
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, iViewX - MIN_VIEWX, 0, SRCCOPY);

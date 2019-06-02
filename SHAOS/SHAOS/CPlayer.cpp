@@ -67,9 +67,9 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 	}
 }
 void CPlayer::Move() {
-	POINTFLOAT dirvector = this->Player_Vector();
-	mptpos.x += dirvector.x;
-	mptpos.y += dirvector.y;
+	POINTFLOAT dirvector = this->Player_Vector();	
+	mptpos.x = PLAY_CLIENTX(mptpos.x + dirvector.x);
+	mptpos.y = PLAY_CLIENTY(mptpos.y + dirvector.y);
 }
 
 POINTFLOAT CPlayer::Player_Vector()
@@ -103,4 +103,5 @@ void CPlayer::Draw(HDC hdc)
 	pt[4] = { (LONG)mptpos.x + (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
 	pt[5] = { (LONG)mptpos.x - (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
 	Polygon(hdc, pt, 6);
+	Ellipse(hdc, mptpos.x - PLAY_ELLIPSE_RAD, mptpos.y - PLAY_ELLIPSE_RAD, mptpos.x + PLAY_ELLIPSE_RAD, mptpos.y + PLAY_ELLIPSE_RAD);
 }
