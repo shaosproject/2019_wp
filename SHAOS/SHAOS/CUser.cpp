@@ -21,7 +21,7 @@ CUser::~CUser()
 
 void CUser::Update()
 {
-	mPlayer->Move(mPlayer->Player_Vector());
+	mPlayer->Move();
 }
 
 void CUser::MSG_Key(UINT message, WPARAM wParam)

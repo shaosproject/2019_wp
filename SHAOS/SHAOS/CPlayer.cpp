@@ -66,9 +66,10 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 		break;
 	}
 }
-void CPlayer::Move(POINTFLOAT vector) {
-	mptpos.x += vector.x;
-	mptpos.y += vector.y;
+void CPlayer::Move() {
+	POINTFLOAT dirvector = this->Player_Vector();
+	mptpos.x += dirvector.x;
+	mptpos.y += dirvector.y;
 }
 
 POINTFLOAT CPlayer::Player_Vector()

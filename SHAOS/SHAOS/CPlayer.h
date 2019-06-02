@@ -12,7 +12,7 @@ public:
 
 	void Player_Message(UINT message, WPARAM wParam);
 
-	void Move(POINTFLOAT vector);
+	void Move();
 
 	virtual void Draw(HDC hdc);
 
