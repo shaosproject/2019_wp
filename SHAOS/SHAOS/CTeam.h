@@ -1,6 +1,5 @@
 #pragma once
 class CGameObject;
-class CPlayer;
 class CTeam
 {
 protected:
@@ -13,6 +12,8 @@ public:
 	CTeam();
 	virtual ~CTeam();
 	void UpdateOpponentObj(CGameObject&);
+	void AddMyObjList(CGameObject*);
+	void DeleteInList(CGameObject*);
 
 };
 

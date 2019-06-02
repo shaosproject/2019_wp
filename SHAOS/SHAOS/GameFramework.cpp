@@ -28,6 +28,7 @@ void CGameFramework::Relese()
 
 void CGameFramework::Update()
 {
+	if (pworld) pworld->Update();
 }
 
 void CGameFramework::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)

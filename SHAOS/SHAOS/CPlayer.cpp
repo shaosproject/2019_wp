@@ -5,8 +5,8 @@
 CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos)
 {
 	// 충돌체크용 플레이어 영역 설정해주기
-	mrcRng = { mptpos.x - PLAYER_RADIUS, mptpos.y - PLAYER_RADIUS, 
-		mptpos.x + PLAYER_RADIUS, mptpos.y + PLAYER_RADIUS };
+	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
+		(LONG)mptpos.x + PLAYER_RADIUS, (LONG)mptpos.y + PLAYER_RADIUS };
 
 	// hp 할당
 	mhp = new CHp(100);
@@ -46,6 +46,7 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 			U_On = TRUE;
 			break;
 		}
+		break;
 	case WM_KEYUP:
 		switch (wParam)
 		{
@@ -62,42 +63,43 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 			U_On = FALSE;
 			break;
 		}
+		break;
 	}
 }
 void CPlayer::Move(POINTFLOAT vector) {
-	mptpos.x += Player_Vector().x;
-	mptpos.y += Player_Vector().y;
+	mptpos.x += vector.x;
+	mptpos.y += vector.y;
 }
 
 POINTFLOAT CPlayer::Player_Vector()
 {
 	if (R_On && U_On)
-		return { 2,2 };
+		return DIRVECTOR_RT;
 	if (R_On && D_On)
-		return { 2,-2 };
+		return DIRVECTOR_RB;
 	if (D_On && L_On)
-		return { -2,-2 };
+		return DIRVECTOR_LB;
 	if (U_On && L_On)
-		return{ -2,2 };
+		return DIRVECTOR_LT;
 	if (R_On)
-		return { 3,0 };
+		return DIRVECTOR_RIGHT;
 	if (L_On)
-		return { -3,0 };
+		return DIRVECTOR_LEFT;
 	if (U_On)
-		return { 0,-3 };
+		return DIRVECTOR_TOP;
 	if (D_On)
-		return { 0,3 };
-
+		return DIRVECTOR_BOTTOM;
+	return DIRVECTOR_STOP;
 }
 void CPlayer::Draw(HDC hdc)
 {
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
-	POINTFLOAT pt[6];
-	pt[0] = { mptpos.x - PLAYER_RADIUS, mptpos.y };
-	pt[1] = { mptpos.x - (PLAYER_RADIUS / 2), mptpos.y - TriHeight };
-	pt[2] = { mptpos.x + (PLAYER_RADIUS / 2), mptpos.y - TriHeight };
-	pt[3] = { mptpos.x + PLAYER_RADIUS, mptpos.y };
-	pt[4] = { mptpos.x + (PLAYER_RADIUS / 2), mptpos.y + TriHeight };
-	pt[5] = { mptpos.x - (PLAYER_RADIUS / 2), mptpos.y + TriHeight };
-	Polygon(hdc, (POINT*)pt, 6);
+	POINT pt[6];
+	pt[0] = { (LONG)mptpos.x - PLAYER_RADIUS, (LONG)mptpos.y };
+	pt[1] = { (LONG)mptpos.x - (PLAYER_RADIUS / 2), (LONG)(mptpos.y - TriHeight) };
+	pt[2] = { (LONG)mptpos.x + (PLAYER_RADIUS / 2), (LONG)(mptpos.y - TriHeight) };
+	pt[3] = { (LONG)mptpos.x + PLAYER_RADIUS, (LONG)mptpos.y };
+	pt[4] = { (LONG)mptpos.x + (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
+	pt[5] = { (LONG)mptpos.x - (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
+	Polygon(hdc, pt, 6);
 }

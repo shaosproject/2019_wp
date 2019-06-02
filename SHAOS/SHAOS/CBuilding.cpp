@@ -2,7 +2,7 @@
 #include "CBuilding.h"
 
 
-CBuilding::CBuilding()
+CBuilding::CBuilding(POINTFLOAT initPos) : CGameObject(initPos)
 {
 }
 

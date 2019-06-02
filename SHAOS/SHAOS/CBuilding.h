@@ -5,6 +5,6 @@ class CBuilding : public CGameObject
 protected:
 
 public:
-	CBuilding();
+	CBuilding(POINTFLOAT initPos);
 	~CBuilding();
 };

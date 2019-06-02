@@ -96,12 +96,6 @@
     <ClInclude Include="CBuilding.h">
       <Filter>GameObj\Building</Filter>
     </ClInclude>
-    <ClInclude Include="CTower.h">
-      <Filter>GameObj\Building\Tower</Filter>
-    </ClInclude>
-    <ClInclude Include="CTurret.h">
-      <Filter>GameObj\Building\Turret</Filter>
-    </ClInclude>
     <ClInclude Include="CTeam.h">
       <Filter>Team</Filter>
     </ClInclude>
@@ -125,9 +119,6 @@
     </ClInclude>
     <ClInclude Include="CTri.h">
       <Filter>GameObj\Unit\Tri</Filter>
-    </ClInclude>
-    <ClInclude Include="CBullet.h">
-      <Filter>나머지</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,12 +146,6 @@
     <ClCompile Include="CBuilding.cpp">
       <Filter>GameObj\Building</Filter>
     </ClCompile>
-    <ClCompile Include="CTower.cpp">
-      <Filter>GameObj\Building\Tower</Filter>
-    </ClCompile>
-    <ClCompile Include="CTurret.cpp">
-      <Filter>GameObj\Building\Turret</Filter>
-    </ClCompile>
     <ClCompile Include="CTeam.cpp">
       <Filter>Team</Filter>
     </ClCompile>
@@ -184,9 +169,6 @@
     </ClCompile>
     <ClCompile Include="CTri.cpp">
       <Filter>GameObj\Unit\Tri</Filter>
-    </ClCompile>
-    <ClCompile Include="CBullet.cpp">
-      <Filter>나머지</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

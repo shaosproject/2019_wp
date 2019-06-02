@@ -1,6 +1,6 @@
 #include "CBullet.h"
 #include "pch.h"
-
+#include "CGameObject.h"
 
 
 

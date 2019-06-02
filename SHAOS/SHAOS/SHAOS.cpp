@@ -203,18 +203,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
-	//case WM_KEYDOWN:
-	//	g_GameFrameWork.MSG_KeyDown(wParam, lParam);
-	//	break;
-	//case WM_KEYUP:
-	//	g_GameFrameWork.MSG_KeyUp(wParam, lParam);
-	//	break;
-	//case WM_LBUTTONUP:
-	//	g_GameFrameWork.MSG_MouseDown(wParam, lParam);
-	//	break;
-	//case WM_LBUTTONDOWN:
-	//	g_GameFrameWork.MSG_MouseUp(wParam, lParam);
-	//	break;
+	case WM_KEYDOWN:
+	case WM_KEYUP:
+		g_GameFrameWork.MSG_Key(message, wParam, lParam);
+		break;
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+	case WM_MOUSEMOVE:
+		g_GameFrameWork.MSG_Mouse(message, wParam, lParam);
+		break;
 
 	case WM_DESTROY:
 		KillTimer(hWnd, 0);
@@ -272,7 +269,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		switch (ctrlID) {
 		case IDC_BUTTON_START:
 			g_GameFrameWork.Create(GetParent(hWnd), hWnd, hInst);
-			SetTimer(GetParent(hWnd), 0, 13, nullptr);
+			SetTimer(GetParent(hWnd), 0, 13, TimerProc);
 			DestroyWindow(hWnd);
 			break;
 		case IDC_BUTTON_HELP:

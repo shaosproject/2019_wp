@@ -1,5 +1,5 @@
 #pragma once
-#include "CGameObject.h"
+class CGameObject;
 class CBullet
 {
 	POINTFLOAT ptbulpos;

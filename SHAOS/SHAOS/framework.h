@@ -25,11 +25,21 @@
 #pragma endregion
 
 
-
+#pragma region ABOUT_PLAYER
 #define PLAYER_RADIUS 10
+const POINTFLOAT DIRVECTOR_LEFT = { -3,0 };
+const POINTFLOAT DIRVECTOR_RIGHT = { 3,0 };
+const POINTFLOAT DIRVECTOR_TOP = { 0,-3 };
+const POINTFLOAT DIRVECTOR_BOTTOM = { 0,3 };
+const POINTFLOAT DIRVECTOR_LT = { -2,-2 };
+const POINTFLOAT DIRVECTOR_LB = { -2,2 };
+const POINTFLOAT DIRVECTOR_RT = { 2,-2 };
+const POINTFLOAT DIRVECTOR_RB = { 2,2 };
+const POINTFLOAT DIRVECTOR_STOP = { 0,0 };
+#pragma endregion
+
 #define TURRET_RADIUS 30
 
-#define  PLAYER_SPEED 2
 
 #pragma region ABOUT_RECT
 #define RECT_RADIUS 10
