@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CUser.h"
-#include "CTower.h"
 #include "CPlayer.h"
-#include "CUnit.h"
+#include "CRect.h"
+#include "CEllip.h"
 
 CUser::CUser()
 {
@@ -14,8 +14,11 @@ CUser::CUser()
 
 	mPlayer = new CPlayer(initPos);
 	this->AddMyObjList(mPlayer);
-}
 
+	mUnithead = new CRect({ 500, 350 });
+	this->AddMyObjList(mUnithead);
+
+}
 
 CUser::~CUser()
 {
@@ -23,7 +26,7 @@ CUser::~CUser()
 
 void CUser::Update()
 {
-	mPlayer->Move();
+	mPlayer->Update();
 }
 
 void CUser::MSG_Key(UINT message, WPARAM wParam)
@@ -36,6 +39,7 @@ void CUser::Draw(HDC hdc)
 	CGameObject* tmp = p_myobj;
 	for (int i = 0; i < imyobjnum; i++) {
 		tmp->Draw(hdc);
+		tmp->DrawHP(hdc);
 		tmp = tmp->next;
 	}
 }

@@ -6,6 +6,7 @@ public:
 	CTri();
 	~CTri();
 	virtual void Draw(HDC hdc);
+	virtual void Update();
 
 };
 

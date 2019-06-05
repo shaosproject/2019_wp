@@ -1,14 +1,14 @@
-
 #pragma once
-#include "CBuilding.h"
+#include "CGameObject.h"
 
-class CTurret : public CBuilding
+class CTurret : public CGameObject
 {
 public:
 	CTurret(POINTFLOAT initPos);
 	~CTurret();
-	void Turret_Attack();
 	RECT* Turret_Rect();
 	virtual void Draw(HDC hdc);
+	virtual void Update() {};
+
 };
 

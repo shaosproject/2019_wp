@@ -5,9 +5,10 @@ class CHp
 	INT ihp;
 	BOOL IsZero;
 public:
-	CHp(INT initHp);
+	CHp(INT initHp) ;
 	~CHp();
 
+	INT GetHp() const;
 	void AddHp(INT addhp);
 	BOOL SubHp(INT subhp);
 };

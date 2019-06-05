@@ -1,10 +1,13 @@
 #pragma once
-#include "CBuilding.h"
+#include "CGameObject.h"
 
-class CTower : public CBuilding
+
+class CTower : public CGameObject
 {
 public:
 	CTower(POINTFLOAT initPos);
 	~CTower();
 	virtual void Draw(HDC hdc);
+	virtual void Update() {};
+
 };

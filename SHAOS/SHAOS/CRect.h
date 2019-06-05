@@ -2,13 +2,13 @@
 #include "CUnit.h"
 class CRect : public CUnit
 {
-	const INT attackRng = RECT_RADIUS + 5;
+	const INT iattakradius = RECT_RADIUS + 5;
 
 public:
 	CRect(POINTFLOAT ainitPos);
 	~CRect();
 	virtual void Draw(HDC hdc);
-
+	virtual void Update();
 	
 	void Attack(CGameObject**, INT opponentNum);
 };

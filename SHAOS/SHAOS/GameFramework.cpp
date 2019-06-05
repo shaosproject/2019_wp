@@ -15,8 +15,6 @@ void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 	mhWnd = hwnd;
 	mhhTitleWnd = htitlewnd;
 
-
-
 	pworld = new CWorld(hwnd);
 
 }

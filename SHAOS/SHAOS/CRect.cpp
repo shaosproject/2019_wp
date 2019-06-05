@@ -4,20 +4,25 @@
 
 CRect::CRect(POINTFLOAT ainitPos) : CUnit(ainitPos)
 {
-	mrcRng = { mptpos.x - RECT_RADIUS, mptpos.y - RECT_RADIUS,
-	mptpos.x + RECT_RADIUS, mptpos.y + RECT_RADIUS };
+	mrcRng = { (LONG)mptpos.x - RECT_RADIUS, (LONG)mptpos.y - RECT_RADIUS,
+		(LONG)mptpos.x + RECT_RADIUS, (LONG)mptpos.y + RECT_RADIUS };
 
-	mhp = new CHp(RECT_HP);
+	mhp = new CHp(RECT_MAXHP);
+	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
 }
-
 
 CRect::~CRect()
 {
+	delete mhp;
 }
 
 void CRect::Draw(HDC hdc)
 {
 	Rectangle(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+}
+
+void CRect::Update()
+{
 }
 
 void CRect::Attack(CGameObject** opponentobj, INT opponentNum)

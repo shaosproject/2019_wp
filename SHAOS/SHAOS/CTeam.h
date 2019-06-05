@@ -1,8 +1,8 @@
 #pragma once
-class CGameObject;
-class CTower;
-class CUnit;
+#include "CUnit.h"
+#include "CTower.h"
 
+class CGameObject;
 class CTeam
 {
 protected:

@@ -8,8 +8,9 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos)
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
 		(LONG)mptpos.x + PLAYER_RADIUS, (LONG)mptpos.y + PLAYER_RADIUS };
 
-	// hp 할당
-	mhp = new CHp(100);
+	// hp 관련 초기화
+	mhp = new CHp(PLAYER_MAXHP);
+	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
 
 	R_On = FALSE;
 	L_On = FALSE;
@@ -67,9 +68,15 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 	}
 }
 void CPlayer::Move() {
+	// 플레이어 중심점 좌표
 	POINTFLOAT dirvector = this->Player_Vector();	
 	mptpos.x = PLAY_CLIENTX(mptpos.x + dirvector.x);
 	mptpos.y = PLAY_CLIENTY(mptpos.y + dirvector.y);
+
+	// 플레이어 영역
+	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
+		(LONG)mptpos.x + PLAYER_RADIUS, (LONG)mptpos.y + PLAYER_RADIUS };
+
 }
 
 POINTFLOAT CPlayer::Player_Vector()
@@ -104,4 +111,16 @@ void CPlayer::Draw(HDC hdc)
 	pt[5] = { (LONG)mptpos.x - (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
 	Polygon(hdc, pt, 6);
 	Ellipse(hdc, mptpos.x - PLAY_ELLIPSE_RAD, mptpos.y - PLAY_ELLIPSE_RAD, mptpos.x + PLAY_ELLIPSE_RAD, mptpos.y + PLAY_ELLIPSE_RAD);
+}
+
+void CPlayer::Update()
+{
+	// 플레이어 움직임
+	Move();
+
+	// hpbar
+	mrchpbar.left = mrcRng.left;
+	mrchpbar.top = mrcRng.top - 5;
+	mrchpbar.right = mrcRng.left + GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
+	mrchpbar.bottom = mrcRng.top - 2;
 }

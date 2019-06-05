@@ -22,15 +22,6 @@
     <Filter Include="GameObj">
       <UniqueIdentifier>{cd05b18d-4404-432e-9a53-46d55cc6f151}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObj\Building">
-      <UniqueIdentifier>{efac8729-94ac-4ed6-9d03-5360f64e395c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObj\Building\Tower">
-      <UniqueIdentifier>{ac653279-a98b-4d57-a7f8-50c9918d4a01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObj\Building\Turret">
-      <UniqueIdentifier>{a50c1b31-6329-4178-a076-82a5d9866243}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Team">
       <UniqueIdentifier>{269fc535-5db4-464e-8886-c875c3f2ce82}</UniqueIdentifier>
     </Filter>
@@ -49,9 +40,6 @@
     <Filter Include="GameObj\Unit">
       <UniqueIdentifier>{cdcfaa12-ecff-4f9f-8207-7e161617b3de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObj\Unit\Rect">
-      <UniqueIdentifier>{2b2b3bfd-0e11-4192-a985-1d0e9dbf7b33}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObj\Unit\Tri">
       <UniqueIdentifier>{c47b9ada-9e79-4a81-8a3f-f5a579cb24b4}</UniqueIdentifier>
     </Filter>
@@ -60,6 +48,15 @@
     </Filter>
     <Filter Include="GameObj\Unit\Ellip">
       <UniqueIdentifier>{a3f6d754-fcda-4ba3-85d7-489e7a5dfdcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\Tower">
+      <UniqueIdentifier>{ac653279-a98b-4d57-a7f8-50c9918d4a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\Turret">
+      <UniqueIdentifier>{a50c1b31-6329-4178-a076-82a5d9866243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\Unit\Rect">
+      <UniqueIdentifier>{2b2b3bfd-0e11-4192-a985-1d0e9dbf7b33}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,12 +84,6 @@
     <ClInclude Include="CPlayer.h">
       <Filter>GameObj\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CUnit.h">
-      <Filter>GameObj\Unit</Filter>
-    </ClInclude>
-    <ClInclude Include="CBuilding.h">
-      <Filter>GameObj\Building</Filter>
-    </ClInclude>
     <ClInclude Include="CTeam.h">
       <Filter>Team</Filter>
     </ClInclude>
@@ -111,20 +102,23 @@
     <ClInclude Include="CEllip.h">
       <Filter>GameObj\Unit\Ellip</Filter>
     </ClInclude>
-    <ClInclude Include="CRect.h">
-      <Filter>GameObj\Unit\Rect</Filter>
-    </ClInclude>
     <ClInclude Include="CTri.h">
       <Filter>GameObj\Unit\Tri</Filter>
     </ClInclude>
     <ClInclude Include="CTower.h">
-      <Filter>GameObj\Building\Tower</Filter>
+      <Filter>GameObj\Tower</Filter>
     </ClInclude>
     <ClInclude Include="SHAOS.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CTurret.h">
-      <Filter>GameObj\Building\Turret</Filter>
+      <Filter>GameObj\Turret</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnit.h">
+      <Filter>GameObj\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="CRect.h">
+      <Filter>GameObj\Unit\Rect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +143,6 @@
     <ClCompile Include="CUnit.cpp">
       <Filter>GameObj\Unit</Filter>
     </ClCompile>
-    <ClCompile Include="CBuilding.cpp">
-      <Filter>GameObj\Building</Filter>
-    </ClCompile>
     <ClCompile Include="CTeam.cpp">
       <Filter>Team</Filter>
     </ClCompile>
@@ -170,17 +161,17 @@
     <ClCompile Include="CEllip.cpp">
       <Filter>GameObj\Unit\Ellip</Filter>
     </ClCompile>
-    <ClCompile Include="CRect.cpp">
-      <Filter>GameObj\Unit\Rect</Filter>
-    </ClCompile>
     <ClCompile Include="CTri.cpp">
       <Filter>GameObj\Unit\Tri</Filter>
     </ClCompile>
     <ClCompile Include="CTower.cpp">
-      <Filter>GameObj\Building\Tower</Filter>
+      <Filter>GameObj\Tower</Filter>
     </ClCompile>
     <ClCompile Include="CTurret.cpp">
-      <Filter>GameObj\Building\Turret</Filter>
+      <Filter>GameObj\Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="CRect.cpp">
+      <Filter>GameObj\Unit\Rect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

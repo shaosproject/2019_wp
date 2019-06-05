@@ -2,8 +2,10 @@
 #include "CTurret.h"
 
 
-CTurret::CTurret(POINTFLOAT initPos) : CBuilding(initPos)
+CTurret::CTurret(POINTFLOAT initPos) : CGameObject(initPos)
 {
+	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
+
 }
 
 

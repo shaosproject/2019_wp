@@ -6,6 +6,7 @@ public:
 	CEllip();
 	~CEllip();
 	virtual void Draw(HDC hdc);
+	virtual void Update();
 
 };
 

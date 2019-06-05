@@ -5,7 +5,6 @@
 class CWorld
 {
 	HBITMAP hbackgroundbmp;		//map.bmp วฺต้
-	BITMAP bgbmp;
 
 	HDC hUpdateDC;
 	HDC hBackgroundDC;
