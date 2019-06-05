@@ -22,7 +22,7 @@ void Bullet::Target_check()
 	}
 }
 void Bullet::Move()
-{	
+{
 	if (bulOn)
 	{
 		if (d <= TARGET_DISTANCE)
@@ -30,8 +30,9 @@ void Bullet::Move()
 			bulpos.x = (enempos->x - bulpos.x) * BULLET_SPEED + bulpos.x;
 			bulpos.y = (enempos->y - bulpos.y) * BULLET_SPEED + bulpos.y;
 
-		if (bulpos.x == enempos->x && bulpos.y == objpos->y)
-			bulstart = TRUE;
+			if (bulpos.x == enempos->x && bulpos.y == objpos->y)
+				bulstart = TRUE;
+		}
 	}
 }
 
