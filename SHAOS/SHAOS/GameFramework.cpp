@@ -47,7 +47,7 @@ void CGameFramework::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
 	if (message == WM_LBUTTONUP) {
 		POINT mousepos = { LOWORD(lParam),HIWORD(lParam) };
 		if (PtInRect(&BUTTONPAUSE_RNG, mousepos)) {
-			DialogBox(mhInst, MAKEINTRESOURCE(IDD_DIALOGPAUSE), mhWnd, DialogProc);
+			DialogBox(mhInst, MAKEINTRESOURCE(IDD_DIALOGPAUSE), mhWnd, (DLGPROC)DialogProc);
 		}
 	}
 	if (pworld) pworld->MSG_Mouse(message, wParam, lParam);
