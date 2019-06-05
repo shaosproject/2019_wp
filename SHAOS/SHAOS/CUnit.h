@@ -8,6 +8,9 @@ class CUnit : public CGameObject
 {
 protected:
 	Move priority = Move::DFTMOVE;
+
+
+
 public:
 	CUnit(POINTFLOAT ainitPos);
 	~CUnit();

@@ -2,7 +2,7 @@
 #include "CPlayer.h"
 #include "CHp.h"
 
-CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos)
+CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER_RADIUS * 2)
 {
 	// 충돌체크용 플레이어 영역 설정해주기
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
@@ -12,10 +12,14 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos)
 	mhp = new CHp(PLAYER_MAXHP);
 	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
 
+
 	R_On = FALSE;
 	L_On = FALSE;
 	U_On = FALSE;
 	D_On = FALSE;
+
+	pressQ = FALSE;
+	returntime = 0;
 }
 
 
@@ -46,6 +50,12 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 		case 'W':
 			U_On = TRUE;
 			break;
+		case 'Q':
+			if (!pressQ) {
+				pressQ = TRUE;
+				ReturnHome();
+			}
+			break;
 		}
 		break;
 	case WM_KEYUP:
@@ -63,6 +73,12 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 		case 'W':
 			U_On = FALSE;
 			break;
+		case 'Q':
+			if (pressQ) {
+				pressQ = FALSE;
+				returntime = 0;
+			}
+			break;
 		}
 		break;
 	}
@@ -77,6 +93,11 @@ void CPlayer::Move() {
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
 		(LONG)mptpos.x + PLAYER_RADIUS, (LONG)mptpos.y + PLAYER_RADIUS };
 
+}
+
+void CPlayer::ReturnHome()
+{
+	returntime = FRAMETIME * 50;
 }
 
 POINTFLOAT CPlayer::Player_Vector()
@@ -99,8 +120,17 @@ POINTFLOAT CPlayer::Player_Vector()
 		return DIRVECTOR_BOTTOM;
 	return DIRVECTOR_STOP;
 }
+void CPlayer::SetPos(INT x, INT y)
+{
+	mptpos.x = x;
+	mptpos.y = y;
+}
 void CPlayer::Draw(HDC hdc)
 {
+	if (pressQ) {
+		// 귀환할 때 어떤 그리기를 할 것인지
+	}
+
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
 	POINT pt[6];
 	pt[0] = { (LONG)mptpos.x - PLAYER_RADIUS, (LONG)mptpos.y };
@@ -123,4 +153,14 @@ void CPlayer::Update()
 	mrchpbar.top = mrcRng.top - 5;
 	mrchpbar.right = mrcRng.left + GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
 	mrchpbar.bottom = mrcRng.top - 2;
+
+	// 귀환 시간 확인
+	if (pressQ) {
+		if (returntime == 0) {
+			SetPos(100, 100);
+			pressQ = FALSE;
+		}
+		returntime -= FRAMETIME;
+	}
+
 }

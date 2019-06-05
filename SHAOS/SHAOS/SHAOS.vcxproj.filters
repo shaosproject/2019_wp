@@ -87,9 +87,6 @@
     <ClInclude Include="CTeam.h">
       <Filter>Team</Filter>
     </ClInclude>
-    <ClInclude Include="CUser.h">
-      <Filter>Team\User</Filter>
-    </ClInclude>
     <ClInclude Include="CEnemy.h">
       <Filter>Team\Enemy</Filter>
     </ClInclude>
@@ -120,6 +117,9 @@
     <ClInclude Include="CRect.h">
       <Filter>GameObj\Unit\Rect</Filter>
     </ClInclude>
+    <ClInclude Include="CUser.h">
+      <Filter>Team\User</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -142,9 +142,6 @@
     </ClCompile>
     <ClCompile Include="CUnit.cpp">
       <Filter>GameObj\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="CTeam.cpp">
-      <Filter>Team</Filter>
     </ClCompile>
     <ClCompile Include="CUser.cpp">
       <Filter>Team\User</Filter>
@@ -172,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="CRect.cpp">
       <Filter>GameObj\Unit\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="CTeam.cpp">
+      <Filter>Team</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

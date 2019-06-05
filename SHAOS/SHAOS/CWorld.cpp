@@ -21,6 +21,7 @@ CWorld::CWorld(HWND hwnd)
 	hbackgroundOld = (HBITMAP)SelectObject(hBackgroundDC, hbackgroundbmp);
 	hupdateOld = (HBITMAP)SelectObject(hUpdateDC, hbackgroundsizebmp);
 
+
 	// 팀 할당받기
 	pUserTeam = new CUser;
 	pEnemyTeam = new CEnemy;
@@ -72,7 +73,6 @@ void CWorld::Draw(HDC clientDC)
 	pUserTeam->Draw(hUpdateDC);
 	pEnemyTeam->Draw(hUpdateDC);
 	//----
-	// 플레이어의 좌표 범위 제한
 
 	
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,

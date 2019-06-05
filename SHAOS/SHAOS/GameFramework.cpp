@@ -17,6 +17,12 @@ void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 
 	pworld = new CWorld(hwnd);
 
+	HDC hdc = GetDC(hwnd);
+	memdc = CreateCompatibleDC(hdc);
+	ReleaseDC(hwnd, hdc);
+
+	hpausebutton = (HBITMAP)LoadImage(NULL, L"Resource/button_pause.bmp", IMAGE_BITMAP,
+		0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 }
 
 void CGameFramework::Relese()
@@ -30,16 +36,67 @@ void CGameFramework::Update()
 }
 
 void CGameFramework::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
-{
+{	
 	if (pworld) pworld->MSG_Key(message, wParam, lParam);
 }
 
 void CGameFramework::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (message == WM_LBUTTONUP) {
+		POINT mousepos = { LOWORD(lParam),HIWORD(lParam) };
+		if (PtInRect(&BUTTONPAUSE_RNG, mousepos)) {
+			DialogBox(mhInst, MAKEINTRESOURCE(IDD_DIALOGPAUSE), mhWnd, DialogProc);
+		}
+	}
 	if (pworld) pworld->MSG_Mouse(message, wParam, lParam);
 }
 
+
+
 void CGameFramework::Draw(HDC hdc)
 {
-	if (pworld) pworld->Draw(hdc);
+	if (pworld) {
+		pworld->Draw(hdc);
+
+		// UI±×¸®±â
+		HBITMAP hOld = (HBITMAP)SelectObject(memdc, hpausebutton);
+		BitBlt(hdc, BUTTONPAUSE_RNG.left, BUTTONPAUSE_RNG.top, PAUSEBUTTONSIZE, PAUSEBUTTONSIZE,
+			memdc, 0, 0, SRCCOPY);
+	}
+}
+
+
+BOOL CALLBACK DialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
+	switch (message) {
+	case WM_INITDIALOG:
+		break;
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+		case IDCANCEL:
+			EndDialog(hDlg, 0);
+			break;
+		case ID_BACKTITLE:
+			break;
+		case ID_EXIT:
+			DestroyWindow(GetParent(hDlg));
+			break;
+		}
+		break;
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hDlg, &ps);
+
+		RECT rcDlgClient;
+		GetClientRect(hDlg, &rcDlgClient);
+		FillRect(hdc, &rcDlgClient, (HBRUSH)GetStockObject(BLACK_BRUSH));
+
+		EndPaint(hDlg, &ps);
+	}
+		break;
+	case WM_DESTROY:
+
+		break;
+	}
+	return false;
 }

@@ -13,10 +13,13 @@ class CWorld
 	HBITMAP hbackgroundOld, hupdateOld;
 	RECT rcClient;
 
+
 	CUser* pUserTeam{ nullptr };
 	CEnemy* pEnemyTeam{ nullptr };
 	
+
 	INT iViewX;
+
 
 public:
 	CWorld(HWND hwnd);

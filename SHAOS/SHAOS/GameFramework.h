@@ -1,11 +1,17 @@
 #pragma once
 #include "CWorld.h"
 #include "resource.h"
+
+BOOL	CALLBACK    DialogProc(HWND, UINT, WPARAM, LPARAM);
+
 class CGameFramework
 {
 	HINSTANCE		mhInst;
 	HWND			mhWnd;
 	HWND			mhhTitleWnd;
+	
+	HDC				memdc;
+	HBITMAP			hpausebutton;
 
 	// 월드한테 좌표를 넘길 때 어디서 넘기지...
 	CWorld* pworld{ nullptr };

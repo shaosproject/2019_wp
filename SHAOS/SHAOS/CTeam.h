@@ -11,6 +11,8 @@ protected:
 
 	INT imyobjnum;
 	INT iopnobjnum;
+
+	UINT iunitgentime;
 public:
 	CTeam();
 	virtual ~CTeam();

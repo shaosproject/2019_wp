@@ -7,6 +7,8 @@ class CUser : public CTeam
 	CTower* mTower;
 	CPlayer* mPlayer;
 	CUnit* mUnithead;
+
+
 public:
 	CUser();
 	~CUser();
