@@ -11,6 +11,9 @@ protected:
 	RECT			mrchpbar;
 
 	INT				mattacktime;
+
+	CGameObject* menemylist{ nullptr };
+
 public:
 	CGameObject* next{ nullptr };
 	CGameObject* prev{ nullptr };

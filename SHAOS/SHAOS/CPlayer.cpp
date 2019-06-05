@@ -25,7 +25,7 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER
 
 CPlayer::~CPlayer()
 {
-	// hp 해제
+	// hp 해제 
 	delete mhp;
 }
 
