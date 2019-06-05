@@ -5,8 +5,8 @@ class CEnemy : public CTeam
 {
 	// gameobjlist에 타워, 포탑, 유닛 순으로 연결
 	CTower* mTower;
-	CTurret* mPlayer;
 	CUnit* mUnithead;
+	CTurret* mTurret;
 public:
 	CEnemy();
 	~CEnemy();

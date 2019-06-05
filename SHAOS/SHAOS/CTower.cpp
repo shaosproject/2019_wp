@@ -14,6 +14,7 @@ CTower::CTower(POINTFLOAT initPos) : CGameObject(initPos)
 
 CTower::~CTower()
 {
+	delete mhp;
 }
 
 

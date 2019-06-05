@@ -120,6 +120,9 @@
     <ClInclude Include="CRect.h">
       <Filter>GameObj\Unit\Rect</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>나머지</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="CRect.cpp">
       <Filter>GameObj\Unit\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>나머지</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
