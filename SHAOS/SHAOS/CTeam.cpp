@@ -11,7 +11,7 @@ CTeam::CTeam()
 
 CTeam::~CTeam()
 {
-
+	
 }
 
 void CTeam::AddMyObjList(CGameObject* addobj)
