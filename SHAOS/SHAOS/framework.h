@@ -11,6 +11,9 @@
 #include <tchar.h>
 #include <cmath>
 
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+
 #define CLIENT_WIDTH 1200
 #define CLIENT_HEIGHT 700
 

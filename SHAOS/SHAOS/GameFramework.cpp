@@ -3,14 +3,14 @@
 CGameFramework::CGameFramework()
 {
 }
-
-
 CGameFramework::~CGameFramework()
 {
+	PlaySound(0, NULL, 0);
 }
 
 void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 {
+	PlaySound(L"Game_BGM.wav", NULL, SND_ASYNC | SND_LOOP);//타이틀화면닫히고나서 부모창이 켜질때
 	mhInst = hInst;
 	mhWnd = hwnd;
 	mhhTitleWnd = htitlewnd;
@@ -27,6 +27,7 @@ void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 
 void CGameFramework::Relese()
 {
+	PlaySound(0, NULL, 0); //부모창이 닫히고 타이틀창이 켜질때
 	DeleteObject(hpausebutton);
 	DeleteDC(memdc);
 	delete pworld;
