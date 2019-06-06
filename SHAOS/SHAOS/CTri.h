@@ -3,7 +3,7 @@
 class CTri : public CUnit
 {
 public:
-	CTri();
+	CTri(POINTFLOAT initPos);
 	~CTri();
 	virtual void Draw(HDC hdc);
 	virtual void Update();

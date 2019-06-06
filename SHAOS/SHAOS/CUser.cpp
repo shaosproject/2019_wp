@@ -3,6 +3,8 @@
 #include "CPlayer.h"
 #include "CRect.h"
 #include "CEllip.h"
+//#include "CDia.h"
+//#include "CTri.h"
 
 CUser::CUser()
 {

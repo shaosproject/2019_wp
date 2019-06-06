@@ -93,15 +93,6 @@
     <ClInclude Include="CHp.h">
       <Filter>나머지</Filter>
     </ClInclude>
-    <ClInclude Include="CDia.h">
-      <Filter>GameObj\Unit\Dia</Filter>
-    </ClInclude>
-    <ClInclude Include="CEllip.h">
-      <Filter>GameObj\Unit\Ellip</Filter>
-    </ClInclude>
-    <ClInclude Include="CTri.h">
-      <Filter>GameObj\Unit\Tri</Filter>
-    </ClInclude>
     <ClInclude Include="CTower.h">
       <Filter>GameObj\Tower</Filter>
     </ClInclude>
@@ -122,6 +113,15 @@
     </ClInclude>
     <ClInclude Include="CUser.h">
       <Filter>Team\User</Filter>
+    </ClInclude>
+    <ClInclude Include="CEllip.h">
+      <Filter>GameObj\Unit\Ellip</Filter>
+    </ClInclude>
+    <ClInclude Include="CDia.h">
+      <Filter>GameObj\Unit\Dia</Filter>
+    </ClInclude>
+    <ClInclude Include="CTri.h">
+      <Filter>GameObj\Unit\Tri</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -155,15 +155,6 @@
     <ClCompile Include="CHp.cpp">
       <Filter>나머지</Filter>
     </ClCompile>
-    <ClCompile Include="CDia.cpp">
-      <Filter>GameObj\Unit\Dia</Filter>
-    </ClCompile>
-    <ClCompile Include="CEllip.cpp">
-      <Filter>GameObj\Unit\Ellip</Filter>
-    </ClCompile>
-    <ClCompile Include="CTri.cpp">
-      <Filter>GameObj\Unit\Tri</Filter>
-    </ClCompile>
     <ClCompile Include="CTower.cpp">
       <Filter>GameObj\Tower</Filter>
     </ClCompile>
@@ -178,6 +169,15 @@
     </ClCompile>
     <ClCompile Include="CTeam.cpp">
       <Filter>Team</Filter>
+    </ClCompile>
+    <ClCompile Include="CEllip.cpp">
+      <Filter>GameObj\Unit\Ellip</Filter>
+    </ClCompile>
+    <ClCompile Include="CDia.cpp">
+      <Filter>GameObj\Unit\Dia</Filter>
+    </ClCompile>
+    <ClCompile Include="CTri.cpp">
+      <Filter>GameObj\Unit\Tri</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

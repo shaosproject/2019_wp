@@ -8,6 +8,7 @@ class CUser : public CTeam
 	CPlayer* mPlayer;
 	CUnit* mUnithead;
 
+	const POINT ptUnitSponPos = { 500, 350 };
 
 public:
 	CUser();

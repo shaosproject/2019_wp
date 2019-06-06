@@ -168,7 +168,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		RECT rcClient;
 		GetClientRect(hWnd, &rcClient);
-		HWND titleWnd = CreateWindow(L"TitleWndClass", NULL, WS_CHILD | WS_VISIBLE,
+		CreateWindow(L"TitleWndClass", NULL, WS_CHILD | WS_VISIBLE,
 			0, 0, rcClient.right, rcClient.bottom, hWnd, NULL, hInst, NULL);
 	
 		//g_GameFrameWork.Create(hWnd, titleWnd, hInst);
@@ -305,4 +305,54 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 void CALLBACK TimerProc(HWND hWnd, UINT iMsg, UINT idEvent, DWORD dwTime) {
 	g_GameFrameWork.Update();
 	InvalidateRect(hWnd, nullptr, false);
+}
+
+BOOL CALLBACK DialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
+
+	//bool값 등 활성화된 상태가 있으면 복귀했을 때 문제다
+
+	switch (message) {
+	case WM_INITDIALOG:
+		KillTimer(GetParent(hDlg), 0);
+		break;
+	case WM_COMMAND:
+		switch (LOWORD(wParam)) {
+		case IDCANCEL:
+			SetTimer(GetParent(hDlg), 0, FRAMETIME, (TIMERPROC)TimerProc);
+			EndDialog(hDlg, 0);
+			break;
+		case ID_BACKTITLE:
+
+			g_GameFrameWork.Relese();	// 게임 종료
+
+			//  타이틀 윈도우 살리기
+			RECT rcClient;
+			GetClientRect(GetParent(hDlg), &rcClient);
+			CreateWindow(L"TitleWndClass", NULL, WS_CHILD | WS_VISIBLE,
+				0, 0, rcClient.right, rcClient.bottom, GetParent(hDlg), NULL, hInst, NULL);
+			
+			EndDialog(hDlg, 0);	//대화상자 종료
+			break;
+		case ID_EXIT:
+			DestroyWindow(GetParent(hDlg));
+			break;
+		}
+		break;
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hDlg, &ps);
+
+		RECT rcDlgClient;
+		GetClientRect(hDlg, &rcDlgClient);
+		FillRect(hdc, &rcDlgClient, (HBRUSH)GetStockObject(BLACK_BRUSH));
+
+		EndPaint(hDlg, &ps);
+	}
+	break;
+	case WM_DESTROY:
+
+		break;
+	}
+	return false;
 }

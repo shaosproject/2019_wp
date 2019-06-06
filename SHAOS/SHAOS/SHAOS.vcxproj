@@ -154,15 +154,8 @@
     <ClInclude Include="Bullet.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="CDia.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="CEllip.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="CDia.h" />
+    <ClInclude Include="CEllip.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CHp.h" />
@@ -170,10 +163,7 @@
     <ClInclude Include="CRect.h" />
     <ClInclude Include="CTeam.h" />
     <ClInclude Include="CTower.h" />
-    <ClInclude Include="CTri.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="CTri.h" />
     <ClInclude Include="CTurret.h" />
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="CUser.h" />
@@ -189,15 +179,8 @@
     <ClCompile Include="Bullet.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="CDia.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="CEllip.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="CDia.cpp" />
+    <ClCompile Include="CEllip.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CHp.cpp" />
@@ -205,10 +188,7 @@
     <ClCompile Include="CRect.cpp" />
     <ClCompile Include="CTeam.cpp" />
     <ClCompile Include="CTower.cpp" />
-    <ClCompile Include="CTri.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="CTri.cpp" />
     <ClCompile Include="CTurret.cpp" />
     <ClCompile Include="CUnit.cpp" />
     <ClCompile Include="CUser.cpp">

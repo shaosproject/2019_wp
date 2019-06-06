@@ -3,7 +3,7 @@
 class CEllip : public CUnit
 {
 public:
-	CEllip();
+	CEllip(POINTFLOAT initPos);
 	~CEllip();
 	virtual void Draw(HDC hdc);
 	virtual void Update();

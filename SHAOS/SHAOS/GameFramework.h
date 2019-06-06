@@ -2,6 +2,7 @@
 #include "CWorld.h"
 #include "resource.h"
 
+void	CALLBACK	TimerProc(HWND, UINT, UINT, DWORD);
 BOOL	CALLBACK    DialogProc(HWND, UINT, WPARAM, LPARAM);
 
 class CGameFramework

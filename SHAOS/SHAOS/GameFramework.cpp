@@ -30,6 +30,7 @@ void CGameFramework::Relese()
 	DeleteObject(hpausebutton);
 	DeleteDC(memdc);
 	delete pworld;
+	pworld = nullptr;
 }
 
 void CGameFramework::Update()
@@ -68,44 +69,3 @@ void CGameFramework::Draw(HDC hdc)
 }
 
 
-BOOL CALLBACK DialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
-
-	//bool값 등 활성화된 상태가 있으면 복귀했을 때 문제다
-
-	switch (message) {
-	case WM_INITDIALOG:
-		// 일시정지 -> 부모 타이틀 죽이기
-		KillTimer(GetParent(hDlg), 0);
-		break;
-	case WM_COMMAND:
-		switch (LOWORD(wParam)) {
-		case IDCANCEL:
-			// 부모 타이틀 살리기
-			EndDialog(hDlg, 0);
-			break;
-		case ID_BACKTITLE:
-			// 월드를 지우고 타이틀 윈도우 생성
-			break;
-		case ID_EXIT:
-			DestroyWindow(GetParent(hDlg));
-			break;
-		}
-		break;
-	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hDlg, &ps);
-
-		RECT rcDlgClient;
-		GetClientRect(hDlg, &rcDlgClient);
-		FillRect(hdc, &rcDlgClient, (HBRUSH)GetStockObject(BLACK_BRUSH));
-
-		EndPaint(hDlg, &ps);
-	}
-		break;
-	case WM_DESTROY:
-
-		break;
-	}
-	return false;
-}

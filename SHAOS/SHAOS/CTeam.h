@@ -16,7 +16,7 @@ protected:
 public:
 	CTeam();
 	virtual ~CTeam();
-	void UpdateOpponentObj(CGameObject&);
+	//void UpdateOpponentObj(CGameObject&);
 	void AddMyObjList(CGameObject*);
 	void DeleteInList(CGameObject*);
 

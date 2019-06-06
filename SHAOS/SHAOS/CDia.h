@@ -3,7 +3,7 @@
 class CDia : public CUnit
 {
 public:
-	CDia();
+	CDia(POINTFLOAT initPos);
 	~CDia();
 	virtual void Draw(HDC hdc);
 	virtual void Update();

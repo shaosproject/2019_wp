@@ -27,6 +27,4 @@ void CRect::Update()
 
 void CRect::Attack(CGameObject** opponentobj, INT opponentNum)
 {
-	// 상대편 오브젝트를 연결하고 있는 헤드를 받아와서 하나하나 검사한다.
-
 }

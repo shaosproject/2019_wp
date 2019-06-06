@@ -73,9 +73,13 @@ const POINTFLOAT ENEMYTOWER_POS = { 4175,350 };
 #pragma endregion
 
 
-#pragma region ABOUT_RECT
+#pragma region ABOUT_UNIT
 #define RECT_RADIUS 10
+#define ELLIP_RADIUS 10
+#define DIA_SHORTRADIUS 10
+#define TRI_INNERCIRCLERADIUS 10
 #pragma endregion
+
 
 #define MIN 0
 #define MAX 200
