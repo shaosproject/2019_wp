@@ -23,6 +23,7 @@ void CTower::Draw(HDC hdc)
 	//HBRUSH hNew, hOld;
 	//hNew = CreateSolidBrush(RGB(25, 25, 112));
 	//hOld = (HBRUSH)SelectObject(hdc, hNew);
+
 	Rectangle(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
 	//DeleteObject(SelectObject(hdc, hOld));
 }

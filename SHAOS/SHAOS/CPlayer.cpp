@@ -12,6 +12,8 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER
 	mhp = new CHp(PLAYER_MAXHP);
 	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
 
+	mrt = new CHp(0, PLAYER_MAXHP);
+	mrcrtbar = { mrcRng.left, mrcRng.bottom +4, mrcRng.right, mrcRng.bottom +7 };
 
 	R_On = FALSE;
 	L_On = FALSE;
@@ -20,6 +22,10 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER
 
 	pressQ = FALSE;
 	returntime = 0;
+
+	pressV = FALSE;
+	shieldtime = 0;
+	rtbartime = 0;
 }
 
 
@@ -27,6 +33,7 @@ CPlayer::~CPlayer()
 {
 	// hp 해제 
 	delete mhp;
+	delete mrt;
 }
 
 void CPlayer::Player_Attack()
@@ -56,6 +63,11 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 				ReturnHome();
 			}
 			break;
+		case 'V':
+			if (!pressV) {
+				ReturnHome_Sh();
+				pressV = TRUE;
+			}
 		}
 		break;
 	case WM_KEYUP:
@@ -77,6 +89,7 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 			if (pressQ) {
 				pressQ = FALSE;
 				returntime = 0;
+				rtbartime = 0;
 			}
 			break;
 		}
@@ -98,6 +111,11 @@ void CPlayer::Move() {
 void CPlayer::ReturnHome()
 {
 	returntime = FRAMETIME * 50;
+}
+
+void CPlayer::ReturnHome_Sh()
+{
+	shieldtime = FRAMETIME * 50;
 }
 
 POINTFLOAT CPlayer::Player_Vector()
@@ -129,7 +147,11 @@ void CPlayer::Draw(HDC hdc)
 {
 	if (pressQ) {
 		// 귀환할 때 어떤 그리기를 할 것인지
+		FillRect(hdc, &mrcrtbar, hRTBRUSH);
 	}
+
+	if (pressV)
+		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD, mptpos.x + SHIELD_RAD, mptpos.y + SHIELD_RAD);
 
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
 	POINT pt[6];
@@ -154,13 +176,34 @@ void CPlayer::Update()
 	mrchpbar.right = mrcRng.left + GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
 	mrchpbar.bottom = mrcRng.top - 2;
 
+	//returnbar
+	mrcrtbar.left = mrcRng.left;
+	mrcrtbar.top = mrcRng.bottom +2;
+	mrcrtbar.right = mrcRng.left + GETHPBAR(mrt->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
+	mrcrtbar.bottom = mrcRng.bottom +5;
+
 	// 귀환 시간 확인
 	if (pressQ) {
-		if (returntime == 0) {
+		if (returntime == 0) 
+		{
 			SetPos(100, 100);
 			pressQ = FALSE;
 		}
+		if (rtbartime == 100)
+		{
+			rtbartime = 0;
+			pressQ = FALSE;
+		}
+		mrt->AddHp(ADDHP);
+		rtbartime += FRAMETIME;
 		returntime -= FRAMETIME;
+	}
+
+	if (pressV) {
+		if (shieldtime == 0) {
+			pressV = FALSE;
+		}
+		shieldtime -= FRAMETIME;
 	}
 
 }

@@ -6,6 +6,7 @@ class CHp
 	BOOL IsZero;
 public:
 	CHp(INT initHp) ;
+	CHp(INT hp, INT initHRt);
 	~CHp();
 
 	INT GetHp() const;

@@ -15,6 +15,7 @@ CGameObject::~CGameObject()
 void CGameObject::DrawHP(HDC hdc)
 {
 	FillRect(hdc, &mrchpbar, hHPBRUSH);
+
 }
 
 POINTFLOAT CGameObject::GetPos()

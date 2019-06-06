@@ -1,7 +1,6 @@
 #pragma once
 #include "CGameObject.h"
 
-
 class CTower : public CGameObject
 {
 public:
