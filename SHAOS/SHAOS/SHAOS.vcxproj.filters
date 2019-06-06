@@ -75,9 +75,6 @@
     <ClInclude Include="GameFramework.h">
       <Filter>FrameWork</Filter>
     </ClInclude>
-    <ClInclude Include="CWorld.h">
-      <Filter>FrameWork\World</Filter>
-    </ClInclude>
     <ClInclude Include="CGameObject.h">
       <Filter>GameObj</Filter>
     </ClInclude>
@@ -122,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="CTri.h">
       <Filter>GameObj\Unit\Tri</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorld.h">
+      <Filter>FrameWork\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

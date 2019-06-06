@@ -7,11 +7,6 @@ CHp::CHp(INT initHp) : ihp(initHp), imaxHp(initHp)
 	IsZero = FALSE;
 }
 
-CHp::CHp(INT hp, INT initHRt) : ihp(0), imaxHp(initHRt)
-{
-	IsZero = FALSE;
-}
-
 CHp::~CHp()
 {
 }

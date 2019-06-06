@@ -12,9 +12,6 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER
 	mhp = new CHp(PLAYER_MAXHP);
 	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
 
-	mrt = new CHp(0, PLAYER_MAXHP);
-	mrcrtbar = { mrcRng.left, mrcRng.bottom +4, mrcRng.right, mrcRng.bottom +7 };
-
 	R_On = FALSE;
 	L_On = FALSE;
 	U_On = FALSE;
@@ -23,9 +20,12 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER
 	pressQ = FALSE;
 	returntime = 0;
 
-	pressV = FALSE;
+	onshield = FALSE;
 	shieldtime = 0;
-	rtbartime = 0;
+
+	cooltime_Shield = 0;
+	cooltime_AoE = 0;
+	cooltime_Shoot = 0;
 }
 
 
@@ -33,7 +33,6 @@ CPlayer::~CPlayer()
 {
 	// hp 해제 
 	delete mhp;
-	delete mrt;
 }
 
 void CPlayer::Player_Attack()
@@ -64,9 +63,9 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 			}
 			break;
 		case 'V':
-			if (!pressV) {
-				ReturnHome_Sh();
-				pressV = TRUE;
+			// 쉴드 쿨타임이 없을 때 = 0일 때
+			if (!cooltime_Shield) {
+				ActiveShield();
 			}
 		}
 		break;
@@ -89,7 +88,6 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 			if (pressQ) {
 				pressQ = FALSE;
 				returntime = 0;
-				rtbartime = 0;
 			}
 			break;
 		}
@@ -110,12 +108,15 @@ void CPlayer::Move() {
 
 void CPlayer::ReturnHome()
 {
-	returntime = FRAMETIME * 50;
+	returntime = CASTINGTIME_RETURN;
 }
 
-void CPlayer::ReturnHome_Sh()
+void CPlayer::ActiveShield()
 {
-	shieldtime = FRAMETIME * 50;
+	onshield = TRUE;
+	shieldtime = ACTIVETIME_SHIELD;
+	cooltime_Shield = COOLTIME_SHIELD;
+
 }
 
 POINTFLOAT CPlayer::Player_Vector()
@@ -146,12 +147,26 @@ void CPlayer::SetPos(INT x, INT y)
 void CPlayer::Draw(HDC hdc)
 {
 	if (pressQ) {
-		// 귀환할 때 어떤 그리기를 할 것인지
-		FillRect(hdc, &mrcrtbar, hRTBRUSH);
-	}
+		// 파란색 바 그리기
+		RECT rcrtbarRng = { mrcRng.left - 2, mrcRng.bottom + 4 -2,
+			mrcRng.right + 1 + 2, mrcRng.bottom + 7 +2 };
+		FillRect(hdc, &rcrtbarRng, hRTBRUSH);
 
-	if (pressV)
-		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD, mptpos.x + SHIELD_RAD, mptpos.y + SHIELD_RAD);
+
+		float crt = returntime / FRAMETIME;
+		float max = CASTINGTIME_RETURN / FRAMETIME;
+		RECT rcemptybar = {
+			rcrtbarRng.right - (INT)((crt * PLAYER_RADIUS * 2) / max),
+			rcrtbarRng.top,
+			rcrtbarRng.right,
+			rcrtbarRng.bottom
+		};
+		FillRect(hdc, &rcemptybar, (HBRUSH)GetStockObject(BLACK_BRUSH));
+	};
+
+	if (onshield)
+		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD, 
+			mptpos.x + SHIELD_RAD, mptpos.y + SHIELD_RAD);
 
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
 	POINT pt[6];
@@ -176,11 +191,11 @@ void CPlayer::Update()
 	mrchpbar.right = mrcRng.left + GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
 	mrchpbar.bottom = mrcRng.top - 2;
 
-	//returnbar
-	mrcrtbar.left = mrcRng.left;
-	mrcrtbar.top = mrcRng.bottom +2;
-	mrcrtbar.right = mrcRng.left + GETHPBAR(mrt->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
-	mrcrtbar.bottom = mrcRng.bottom +5;
+	////returnbar
+	//mrcrtbar.left = mrcRng.left;
+	//mrcrtbar.top = mrcRng.bottom +2;
+	//mrcrtbar.right = mrcRng.left + GETHPBAR(mrt->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
+	//mrcrtbar.bottom = mrcRng.bottom +5;
 
 	// 귀환 시간 확인
 	if (pressQ) {
@@ -189,21 +204,18 @@ void CPlayer::Update()
 			SetPos(100, 100);
 			pressQ = FALSE;
 		}
-		if (rtbartime == 100)
-		{
-			rtbartime = 0;
-			pressQ = FALSE;
-		}
-		mrt->AddHp(ADDHP);
-		rtbartime += FRAMETIME;
 		returntime -= FRAMETIME;
 	}
 
-	if (pressV) {
+	if (onshield) {
 		if (shieldtime == 0) {
-			pressV = FALSE;
+			onshield = FALSE;
 		}
 		shieldtime -= FRAMETIME;
 	}
+	// 쿨타임이 0이 아닐 때 감소
+	if (cooltime_Shield) cooltime_Shield -= FRAMETIME;
+	if (cooltime_AoE) cooltime_AoE -= FRAMETIME;
+	if (cooltime_Shoot) cooltime_Shoot -= FRAMETIME;
 
 }
