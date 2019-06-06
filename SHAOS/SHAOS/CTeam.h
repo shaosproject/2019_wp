@@ -6,20 +6,23 @@ class CGameObject;
 class CTeam
 {
 protected:
-	CGameObject* p_myobj{ nullptr };
-	CGameObject* p_opponentobj{ nullptr };
+	// 헤드는 항상 타워를 가리킨다
+	CGameObject* p_myobjlist{ nullptr };
+	CGameObject* p_opponentobjlist{ nullptr };
+
 
 	INT imyobjnum;
 	INT iopnobjnum;
 
 	UINT iunitgentime;
+
 public:
 	CTeam();
 	virtual ~CTeam();
 
 
 	CGameObject* GetMyObjList() const;
-	void SetOpponentObj(CGameObject*);
+	virtual void SetOpponentObj(CGameObject*) = 0;
 
 
 	void AddMyObjList(CGameObject*);

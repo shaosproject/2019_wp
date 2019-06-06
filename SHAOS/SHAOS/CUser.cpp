@@ -8,22 +8,29 @@
 
 CUser::CUser()
 {
-	//tmp
-	POINTFLOAT initPos = { 100,100 };
-	//
-	mTower = new CTower(USERTOWER_POS, TEAM::USER, p_opponentobj);
-	this->AddMyObjList(mTower);
-
-	mPlayer = new CPlayer(initPos, TEAM::USER, p_opponentobj);
-	this->AddMyObjList(mPlayer);
-
-	mUnithead = new CRect({ 500, 350 }, TEAM::USER, p_opponentobj);
-	this->AddMyObjList(mUnithead);
-
+	mTower = new CTower(USERTOWER_POS, TEAM::USER, nullptr);
+	p_myobjlist = mTower;
+	p_myobjlist->next = p_myobjlist->prev = p_myobjlist;
 }
 
 CUser::~CUser()
 {
+}
+
+void CUser::SetOpponentObj(CGameObject* objlist)
+{
+	p_opponentobjlist = objlist;
+
+
+	//tmp
+	POINTFLOAT initPos = { 100,100 };
+	//
+	mPlayer = new CPlayer(initPos, TEAM::USER, p_opponentobjlist);
+	this->AddMyObjList(mPlayer);
+
+	mUnithead = new CRect({ 500, 350 }, TEAM::USER, p_opponentobjlist);
+	this->AddMyObjList(mUnithead);
+
 }
 
 void CUser::Update()
@@ -57,7 +64,7 @@ void CUser::MSG_Mouse(UINT message, POINT mousepos)
 
 void CUser::Draw(HDC hdc)
 {
-	CGameObject* tmp = p_myobj;
+	CGameObject* tmp = p_myobjlist;
 	for (int i = 0; i < imyobjnum; i++) {
 		tmp->Draw(hdc);
 		tmp->DrawHP(hdc);

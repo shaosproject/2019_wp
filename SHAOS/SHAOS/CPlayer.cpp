@@ -113,13 +113,19 @@ void CPlayer::MSG_MouseUp(POINT mousepos)
 }
 void CPlayer::MSG_MouseDown(POINT mousepos)
 {
-	for (CGameObject* tmp = menemylist; tmp != nullptr; tmp = tmp->next) {
+	CGameObject* tmp = nullptr;
+
+	while (tmp != menemylist) {
+		if (!tmp) tmp = menemylist;
+
 		if (PtInRect(&tmp->GetRng(), mousepos)) {
 			ptarget = tmp;
 			return;
 		}
+
+		tmp = tmp->next;
 	}
-}
+ }
 
 
 
@@ -248,7 +254,7 @@ void CPlayer::Update()
 	
 	if (pbullet) {
 		// 총알이 있으면 움직여라
-		pbullet->Move();
+		pbullet = pbullet->Move();
 	}
 
 	// 귀환 시간 확인

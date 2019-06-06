@@ -13,6 +13,8 @@ class CUser : public CTeam
 public:
 	CUser();
 	~CUser();
+	
+	virtual void SetOpponentObj(CGameObject* objlist);
 
 	void Update();
 	void MSG_Key(UINT message, WPARAM wParam);

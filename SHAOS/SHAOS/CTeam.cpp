@@ -4,57 +4,45 @@
 
 CTeam::CTeam()
 {
-	imyobjnum = 0;
-	iopnobjnum = 0;
+	// Å¸¿ö 1°³
+	imyobjnum = 1;
+	iopnobjnum = 1;
 }
 
 
 CTeam::~CTeam()
 {
 	for (int i = 0; i < imyobjnum; i++) {
-		CGameObject* delp = p_myobj;
-		(p_myobj->next != nullptr) ? p_myobj = p_myobj->next : nullptr;
+		CGameObject* delp = p_myobjlist;
+		(p_myobjlist->next != nullptr) ? p_myobjlist = p_myobjlist->next : nullptr;
 		delete delp;
 	}
 }
 
 CGameObject* CTeam::GetMyObjList() const
 {
-	return p_myobj;
-}
-
-void CTeam::SetOpponentObj(CGameObject* objlist)
-{
-	p_opponentobj = objlist;
+	return p_myobjlist;
 }
 
 void CTeam::AddMyObjList(CGameObject* addobj)
 {
-	imyobjnum++;
-	if (!p_myobj) {
-		p_myobj = addobj;
-		return;
-	}
+	addobj->next = p_myobjlist;
+	addobj->prev = p_myobjlist->prev;
+	p_myobjlist->prev->next = addobj;
+	p_myobjlist->prev = addobj;
 
-	addobj->next = p_myobj;
-	p_myobj->prev = addobj;
-	p_myobj = addobj;
+	imyobjnum++;
 }
 
 void CTeam::DeleteInList(CGameObject* delobj)
 {
 	imyobjnum--;
 	if (imyobjnum == 0) {
-		p_myobj = nullptr;
+		p_myobjlist = nullptr;
 		delete delobj;
 		return;
 	}
-	if (delobj == p_myobj) {
-		p_myobj->next->prev = nullptr;
-		delobj->next = p_myobj;
-		delete delobj;
-		return;
-	}
+
 	delobj->prev->next = delobj->next;
 	delobj->next->prev = delobj->prev;
 	delete delobj;

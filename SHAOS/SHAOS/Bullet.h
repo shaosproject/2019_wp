@@ -14,6 +14,6 @@ class Bullet
 public:
 	Bullet(const POINTFLOAT* initPos, CGameObject* target, INT damage);
 	~Bullet();
-	void Move();
+	Bullet* Move();
 	void Draw(HDC hdc);
 };

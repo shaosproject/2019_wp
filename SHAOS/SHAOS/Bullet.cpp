@@ -12,7 +12,7 @@ Bullet::~Bullet()
 	ptargetobj->PutDamage(idamage);
 }
 
-void Bullet::Move()
+Bullet* Bullet::Move()
 {
 	float projX = ptargetobj->GetPos().x - ptbulletpos.x;
 	float projY = ptargetobj->GetPos().y - ptbulletpos.y;
@@ -20,8 +20,10 @@ void Bullet::Move()
 	float distance = sqrt(projX * projX + projY * projY);
 
 	// 총알이 목표 오브젝트의 안에 들어가면 소멸
-	if (distance < ptargetobj->GetObjRadius())
-		delete this;
+	if (distance < ptargetobj->GetObjRadius()) {
+		this->~Bullet();
+		return nullptr;
+	}
 
 	float nomalizedX = projX / distance;
 	float nomalizedY = projY / distance;
@@ -29,6 +31,7 @@ void Bullet::Move()
 	ptbulletpos.x += nomalizedX * BULLET_SPEED;
 	ptbulletpos.y += nomalizedY * BULLET_SPEED;
 
+	return this;
 }
 
 void Bullet::Draw(HDC hdc)

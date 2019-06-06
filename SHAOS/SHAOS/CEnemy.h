@@ -16,5 +16,8 @@ public:
 	CEnemy();
 	~CEnemy();
 
+	virtual void SetOpponentObj(CGameObject* objlist);
+
+
 	void Draw(HDC hdc);
 };
