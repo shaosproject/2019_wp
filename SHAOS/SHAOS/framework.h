@@ -69,7 +69,7 @@ const POINTFLOAT ENEMYTOWER_POS = { 4175,350 };
 #define TOWER_LEFT(x) x - 70
 #define TOWER_RIGHT(x) x + 70
 
-#define TURRET_RADIUS 30
+#define TURRET_RADIUS 70
 #pragma endregion
 
 
