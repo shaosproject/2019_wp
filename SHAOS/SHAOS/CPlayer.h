@@ -44,4 +44,7 @@ public:
 
 	POINTFLOAT Player_Vector();
 	void SetPos(INT x, INT y);
+
+
+	virtual INT		GetObjRadius();
 };

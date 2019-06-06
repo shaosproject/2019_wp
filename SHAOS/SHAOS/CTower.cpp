@@ -27,3 +27,9 @@ void CTower::Draw(HDC hdc)
 	Rectangle(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
 	//DeleteObject(SelectObject(hdc, hOld));
 }
+
+INT CTower::GetObjRadius()
+{
+	// 충돌체크 어떻게 하지.... 곤란하다
+	return 0;
+}

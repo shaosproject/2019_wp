@@ -26,3 +26,8 @@ void CEllip::Draw(HDC hdc)
 void CEllip::Update()
 {
 }
+
+INT CEllip::GetObjRadius()
+{
+	return ELLIP_RADIUS;
+}

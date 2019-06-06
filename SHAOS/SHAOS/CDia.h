@@ -8,5 +8,6 @@ public:
 	virtual void Draw(HDC hdc);
 	virtual void Update();
 
+	virtual INT		GetObjRadius();
 };
 

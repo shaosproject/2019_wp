@@ -32,3 +32,8 @@ void CTri::Draw(HDC hdc)
 void CTri::Update()
 {
 }
+
+INT CTri::GetObjRadius()
+{
+	return TRI_INNERCIRCLERADIUS;
+}

@@ -23,3 +23,8 @@ void CTurret::Draw(HDC hdc)
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom, TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
 }
 
+INT CTurret::GetObjRadius()
+{
+	return TURRET_RADIUS;
+}
+

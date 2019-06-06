@@ -9,10 +9,10 @@ class Bullet
 	POINTFLOAT ptbulletpos;
 	CGameObject* ptargetobj;
 	
-	FLOAT d;
+	const INT idamage;
 
 public:
-	Bullet(const POINTFLOAT* initPos, CGameObject* target);
+	Bullet(const POINTFLOAT* initPos, CGameObject* target, INT damage);
 	~Bullet();
 	void Move();
 	void Draw(HDC hdc);

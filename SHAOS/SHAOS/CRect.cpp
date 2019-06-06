@@ -28,3 +28,8 @@ void CRect::Update()
 void CRect::Attack(CGameObject** opponentobj, INT opponentNum)
 {
 }
+
+INT CRect::GetObjRadius()
+{
+	return RECT_RADIUS;
+}

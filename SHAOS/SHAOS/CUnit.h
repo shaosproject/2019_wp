@@ -18,5 +18,6 @@ public:
 	virtual void Draw(HDC hdc) = 0;
 	virtual void Update() = 0;
 
+	virtual INT GetObjRadius() = 0;
 };
 

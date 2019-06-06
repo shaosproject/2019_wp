@@ -24,5 +24,13 @@ public:
 	virtual void Draw(HDC) = 0;
 	virtual void Update() = 0;
 	void DrawHP(HDC);
-	POINTFLOAT GetPos();
+
+
+
+	POINTFLOAT		GetPos() const;
+	RECT			GetRng() const; // ? 필요할까?
+	
+	virtual INT		GetObjRadius() = 0;
+
+	void PutDamage(INT damage);
 };

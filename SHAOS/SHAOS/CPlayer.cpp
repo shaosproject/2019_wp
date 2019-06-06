@@ -57,6 +57,7 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 			U_On = TRUE;
 			break;
 		case 'Q':
+			// 쿨타임 조건 추가해야 함
 			if (!pressQ) {
 				pressQ = TRUE;
 				ReturnHome();
@@ -116,7 +117,6 @@ void CPlayer::ActiveShield()
 	onshield = TRUE;
 	shieldtime = ACTIVETIME_SHIELD;
 	cooltime_Shield = COOLTIME_SHIELD;
-
 }
 
 POINTFLOAT CPlayer::Player_Vector()
@@ -144,24 +144,31 @@ void CPlayer::SetPos(INT x, INT y)
 	mptpos.x = x;
 	mptpos.y = y;
 }
+INT CPlayer::GetObjRadius()
+{
+	return PLAYER_RADIUS;
+}
 void CPlayer::Draw(HDC hdc)
 {
 	if (pressQ) {
 		// 파란색 바 그리기
-		RECT rcrtbarRng = { mrcRng.left - 2, mrcRng.bottom + 4 -2,
-			mrcRng.right + 1 + 2, mrcRng.bottom + 7 +2 };
+		RECT rcrtbarRng = { mrcRng.left - 10, mrcRng.bottom + 2,
+			mrcRng.right + 10, mrcRng.bottom + 7 };
 		FillRect(hdc, &rcrtbarRng, hRTBRUSH);
 
-
-		float crt = returntime / FRAMETIME;
-		float max = CASTINGTIME_RETURN / FRAMETIME;
+		// 검은 바 그리기
+		INT width = rcrtbarRng.right - rcrtbarRng.left;
+		INT crt = returntime / FRAMETIME;
+		INT max = CASTINGTIME_RETURN / FRAMETIME;
+		INT leftposX = rcrtbarRng.right - ((crt * width) / max);
 		RECT rcemptybar = {
-			rcrtbarRng.right - (INT)((crt * PLAYER_RADIUS * 2) / max),
-			rcrtbarRng.top,
+			leftposX,
+			rcrtbarRng.top + 1,
 			rcrtbarRng.right,
-			rcrtbarRng.bottom
+			rcrtbarRng.bottom - 1
 		};
 		FillRect(hdc, &rcemptybar, (HBRUSH)GetStockObject(BLACK_BRUSH));
+
 	};
 
 	if (onshield)

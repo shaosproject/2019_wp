@@ -2,14 +2,14 @@
 #include "Bullet.h"
 #include "CGameObject.h"
 
-Bullet::Bullet(const POINTFLOAT* initPos, CGameObject* target)
-	: ptbulletpos(*initPos), ptargetobj(target)
+Bullet::Bullet(const POINTFLOAT* initPos, CGameObject* target, INT damage)
+	: ptbulletpos(*initPos), ptargetobj(target) , idamage(damage)
 {
 }
 Bullet::~Bullet()
 {
 	// »ó´ëÆí hp±ð±â
-	//ptargetobj->
+	ptargetobj->PutDamage(idamage);
 }
 
 void Bullet::Move()
@@ -27,7 +27,6 @@ void Bullet::Move()
 
 	ptbulletpos.x += nomalizedX * BULLET_SPEED;
 	ptbulletpos.y += nomalizedY * BULLET_SPEED;
-
 
 }
 

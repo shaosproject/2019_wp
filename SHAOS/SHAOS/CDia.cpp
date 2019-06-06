@@ -33,3 +33,8 @@ void CDia::Draw(HDC hdc)
 void CDia::Update()
 {
 }
+
+INT CDia::GetObjRadius()
+{
+	return DIA_SHORTRADIUS;
+}

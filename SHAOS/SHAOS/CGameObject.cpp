@@ -18,7 +18,19 @@ void CGameObject::DrawHP(HDC hdc)
 
 }
 
-POINTFLOAT CGameObject::GetPos()
+POINTFLOAT CGameObject::GetPos() const
 {
 	return mptpos;
+}
+
+RECT CGameObject::GetRng() const
+{
+	return mrcRng;
+}
+
+
+void CGameObject::PutDamage(INT damage)
+{
+	// Á×À½ Ã¼Å©
+	mhp->SubHp(damage);
 }

@@ -11,5 +11,8 @@ public:
 	virtual void Update();
 	
 	void Attack(CGameObject**, INT opponentNum);
+
+	virtual INT		GetObjRadius();
+
 };
 
