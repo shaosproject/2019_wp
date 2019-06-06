@@ -25,8 +25,25 @@ void CTurret::Draw(HDC hdc)
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom, TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
 }
 
+void CTurret::Update()
+{
+	// hp바 업데이트
+	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TURRET_RADIUS * 2, PLAYER_MAXHP);
+}
+
 INT CTurret::GetObjRadius()
 {
 	return TURRET_RADIUS;
+}
+
+void CTurret::Death()
+{
+	// 1. 리스트에서 빼줘야함(동적할당 헤제)
+
+	this->prev->next = this->next;
+	this->next->prev = this->prev;
+
+
+	// 2. 죽는 이펙트
 }
 

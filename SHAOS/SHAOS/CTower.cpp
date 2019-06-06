@@ -40,3 +40,8 @@ INT CTower::GetObjRadius()
 	// 충돌체크 어떻게 하지.... 곤란하다
 	return 0;
 }
+
+void CTower::Death()
+{
+	// 게임 끝~~~
+}

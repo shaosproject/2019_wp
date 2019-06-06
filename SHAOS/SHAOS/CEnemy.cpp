@@ -34,6 +34,19 @@ void CEnemy::SetOpponentObj(CGameObject* objlist)
 
 }
 
+void CEnemy::Update()
+{
+	CGameObject* tmp = p_myobjlist;
+	for (int i = 0; i < imyobjnum; i++) {
+		tmp->Update();
+		//if () {
+		//
+		//}
+		tmp = tmp->next;
+	}
+
+}
+
 void CEnemy::Draw(HDC hdc)
 {
 	CGameObject* tmp = p_myobjlist;

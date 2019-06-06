@@ -68,6 +68,7 @@ void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 void CWorld::Update()
 {
 	pUserTeam->Update();
+	pEnemyTeam->Update();
 	iViewX = (INT)SET_VIEWX(pUserTeam->GetPlayerPos().x);	
 }
 

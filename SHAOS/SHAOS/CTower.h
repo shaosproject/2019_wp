@@ -10,4 +10,6 @@ public:
 	virtual void Update() {};
 
 	virtual INT		GetObjRadius();
+	virtual void	Death();
+
 };

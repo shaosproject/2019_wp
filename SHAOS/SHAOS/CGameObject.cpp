@@ -32,6 +32,8 @@ RECT CGameObject::GetRng() const
 
 void CGameObject::PutDamage(INT damage)
 {
-	// 죽음 체크
-	mhp->SubHp(damage);
+	// mhp가 0이면 true리턴
+	if (mhp->SubHp(damage)) {
+		Death();
+	}
 }

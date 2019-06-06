@@ -1,6 +1,6 @@
 #pragma once
 #include "Bullet.h"
-#define BULLET_SPEED 1
+#define BULLET_SPEED 3
 #define BULLET_RAD 3
 
 class CGameObject;

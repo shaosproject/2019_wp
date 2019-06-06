@@ -19,5 +19,6 @@ public:
 	virtual void Update() = 0;
 
 	virtual INT GetObjRadius() = 0;
+	virtual void Death();
 };
 

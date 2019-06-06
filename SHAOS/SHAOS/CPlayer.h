@@ -44,4 +44,6 @@ public:
 
 
 	virtual INT		GetObjRadius();
+	virtual void	Death() {};
+
 };

@@ -7,9 +7,9 @@ public:
 	CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTurret();
 	virtual void Draw(HDC hdc);
-	virtual void Update() {};
+	virtual void Update();
 
 	virtual INT		GetObjRadius();
-
+	virtual void	Death();
 };
 

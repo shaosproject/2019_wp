@@ -13,6 +13,7 @@ public:
 	void Attack(CGameObject**, INT opponentNum);
 
 	virtual INT		GetObjRadius();
+	virtual void Death() {};
 
 };
 
