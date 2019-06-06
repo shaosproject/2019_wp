@@ -8,9 +8,8 @@ protected:
 	RECT			mrcRng;
 
 	CHp*			mhp{ nullptr };
-	CHp*            mrt{ nullptr };
 	RECT			mrchpbar;
-	RECT            mrcrtbar;
+
 	INT				mattacktime;
 
 	CGameObject* menemylist{ nullptr };
