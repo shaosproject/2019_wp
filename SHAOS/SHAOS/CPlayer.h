@@ -2,15 +2,7 @@
 #include "CGameObject.h"
 
 
-#define SHIELD_RAD 20
-const HBRUSH hRTBRUSH= CreateSolidBrush(RGB(60, 100, 250));
-
-#define COOLTIME_SHIELD FRAMETIME*100
-#define COOLTIME_AOE FRAMETIME*100
-#define COOLTIME_SHOOT FRAMETIME*100
-#define CASTINGTIME_RETURN FRAMETIME * 150
-#define ACTIVETIME_SHIELD FRAMETIME * 50
-
+class Bullet;
 class CPlayer : public CGameObject
 {
 	BOOL R_On, L_On, U_On, D_On;
@@ -24,26 +16,31 @@ class CPlayer : public CGameObject
 	UINT cooltime_AoE;
 	UINT cooltime_Shoot;
 
-
+	CGameObject* ptarget;
+	Bullet* pbullet;
 	const INT iAoERadius;
 
+
 public:
-	CPlayer(POINTFLOAT ainitPos);
+	CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
 	~CPlayer();
 
-	void Player_Attack();
+	virtual void Draw(HDC hdc);
+	virtual void Update();
 
-	void Player_Message(UINT message, WPARAM wParam);
+	void MSG_Key(UINT message, WPARAM wParam);
+	void MSG_MouseMove(POINT mousepos);
+	void MSG_MouseUp(POINT mousepos);
+	void MSG_MouseDown(POINT mousepos);
 
 	void Move();
 	void ActiveShield();
 	void ReturnHome();
 
-	virtual void Draw(HDC hdc);
-	virtual void Update();
 
 	POINTFLOAT Player_Vector();
 	void SetPos(INT x, INT y);
+	void Attack();
 
 
 	virtual INT		GetObjRadius();

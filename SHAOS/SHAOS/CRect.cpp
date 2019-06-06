@@ -2,13 +2,19 @@
 #include "CRect.h"
 #include "CHp.h"
 
-CRect::CRect(POINTFLOAT ainitPos) : CUnit(ainitPos)
+CRect::CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
+	: CUnit(ainitPos, team, enemylist)
 {
 	mrcRng = { (LONG)mptpos.x - RECT_RADIUS, (LONG)mptpos.y - RECT_RADIUS,
 		(LONG)mptpos.x + RECT_RADIUS, (LONG)mptpos.y + RECT_RADIUS };
 
 	mhp = new CHp(RECT_MAXHP);
-	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
+	if (team == TEAM::USER) {
+		mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
+	}
+	else {
+		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
+	}
 }
 
 CRect::~CRect()

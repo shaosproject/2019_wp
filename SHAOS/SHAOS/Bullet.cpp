@@ -20,8 +20,9 @@ void Bullet::Move()
 	float distance = sqrt(projX * projX + projY * projY);
 
 	// 총알이 목표 오브젝트의 안에 들어가면 소멸
-	//if(distance < )
-	//delete this
+	if (distance < ptargetobj->GetObjRadius())
+		delete this;
+
 	float nomalizedX = projX / distance;
 	float nomalizedY = projY / distance;
 

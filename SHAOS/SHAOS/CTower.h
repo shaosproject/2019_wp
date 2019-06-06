@@ -4,7 +4,7 @@
 class CTower : public CGameObject
 {
 public:
-	CTower(POINTFLOAT initPos);
+	CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTower();
 	virtual void Draw(HDC hdc);
 	virtual void Update() {};

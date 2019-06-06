@@ -2,13 +2,20 @@
 #include "CTower.h"
 
 
-CTower::CTower(POINTFLOAT initPos) : CGameObject(initPos)
+CTower::CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
+	: CGameObject(initPos, team, enemylist)
 {
 	mrcRng = { (LONG)TOWER_LEFT(initPos.x), (LONG)TOWER_TOP,
 		(LONG)TOWER_RIGHT(initPos.x), (LONG)TOWER_BOTTOM };
 
+
 	mhp = new CHp(TOWER_MAXHP);
-	mrchpbar = {mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4};
+	if (team == TEAM::USER) {
+		mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
+	}
+	else {
+		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
+	}
 }
 
 

@@ -26,6 +26,10 @@ CWorld::CWorld(HWND hwnd)
 	pUserTeam = new CUser;
 	pEnemyTeam = new CEnemy;
 
+	// 상대편 객체 리스트 설정
+	pUserTeam->SetOpponentObj(pEnemyTeam->GetMyObjList());
+	pEnemyTeam->SetOpponentObj(pUserTeam->GetMyObjList());
+
 }
 
 
@@ -48,6 +52,11 @@ CWorld::~CWorld()
 
 void CWorld::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
 {
+	//iViewX - MIN_VIEWX -> 이 값을 더하면 월드좌표인가?
+	POINT mousepos = 
+	{ LOWORD(lParam) + iViewX - MIN_VIEWX,HIWORD(lParam) };
+
+	pUserTeam->MSG_Mouse(message, mousepos);
 
 }
 

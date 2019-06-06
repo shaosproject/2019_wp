@@ -12,7 +12,7 @@ protected:
 
 
 public:
-	CUnit(POINTFLOAT ainitPos);
+	CUnit(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
 	~CUnit();
 
 	virtual void Draw(HDC hdc) = 0;

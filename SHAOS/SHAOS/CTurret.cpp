@@ -2,13 +2,15 @@
 #include "CTurret.h"
 
 
-CTurret::CTurret(POINTFLOAT initPos) : CGameObject(initPos)
+CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
+	: CGameObject(initPos, team, enemylist)
 {
 	mrcRng = { (LONG)initPos.x - TURRET_RADIUS ,(LONG)initPos.y - TURRET_RADIUS,
 		(LONG)initPos.x + TURRET_RADIUS, (LONG)initPos.y + TURRET_RADIUS };
 
-	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
+
 	mhp = new CHp(TOWER_MAXHP);
+	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 }
 
 

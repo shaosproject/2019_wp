@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "CPlayer.h"
 #include "CHp.h"
+#include "Bullet.h"
 
-CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER_RADIUS * 2)
+CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
+	: CGameObject(ainitPos, team, enemylist), iAoERadius(PLAYER_RADIUS * 2)
 {
 	// 충돌체크용 플레이어 영역 설정해주기
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
@@ -10,13 +12,15 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER
 
 	// hp 관련 초기화
 	mhp = new CHp(PLAYER_MAXHP);
-	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
+	mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
 
+	// 이동
 	R_On = FALSE;
 	L_On = FALSE;
 	U_On = FALSE;
 	D_On = FALSE;
 
+	// 스킬
 	pressQ = FALSE;
 	returntime = 0;
 
@@ -26,6 +30,10 @@ CPlayer::CPlayer(POINTFLOAT ainitPos) : CGameObject(ainitPos), iAoERadius(PLAYER
 	cooltime_Shield = 0;
 	cooltime_AoE = 0;
 	cooltime_Shoot = 0;
+
+	//공격
+	ptarget = nullptr;
+	pbullet = nullptr;
 }
 
 
@@ -33,11 +41,11 @@ CPlayer::~CPlayer()
 {
 	// hp 해제 
 	delete mhp;
+	if (pbullet) delete pbullet;
 }
 
-void CPlayer::Player_Attack()
-{}
-void CPlayer::Player_Message(UINT message, WPARAM wParam)
+
+void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 {
 	switch (message)
 	{
@@ -95,6 +103,26 @@ void CPlayer::Player_Message(UINT message, WPARAM wParam)
 		break;
 	}
 }
+
+
+void CPlayer::MSG_MouseMove(POINT mousepos)
+{
+}
+void CPlayer::MSG_MouseUp(POINT mousepos)
+{
+}
+void CPlayer::MSG_MouseDown(POINT mousepos)
+{
+	for (CGameObject* tmp = menemylist; tmp != nullptr; tmp = tmp->next) {
+		if (PtInRect(&tmp->GetRng(), mousepos)) {
+			ptarget = tmp;
+			return;
+		}
+	}
+}
+
+
+
 void CPlayer::Move() {
 	// 플레이어 중심점 좌표
 	POINTFLOAT dirvector = this->Player_Vector();	
@@ -139,6 +167,8 @@ POINTFLOAT CPlayer::Player_Vector()
 		return DIRVECTOR_BOTTOM;
 	return DIRVECTOR_STOP;
 }
+
+
 void CPlayer::SetPos(INT x, INT y)
 {
 	mptpos.x = x;
@@ -148,8 +178,14 @@ INT CPlayer::GetObjRadius()
 {
 	return PLAYER_RADIUS;
 }
+void CPlayer::Attack()
+{
+	pbullet = new Bullet(&mptpos, ptarget, PLAYER_BULLETDAMAGE);
+}
+
 void CPlayer::Draw(HDC hdc)
 {
+
 	if (pressQ) {
 		// 파란색 바 그리기
 		RECT rcrtbarRng = { mrcRng.left - 10, mrcRng.bottom + 2,
@@ -171,9 +207,10 @@ void CPlayer::Draw(HDC hdc)
 
 	};
 
-	if (onshield)
-		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD, 
+	if (onshield) {
+		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD,
 			mptpos.x + SHIELD_RAD, mptpos.y + SHIELD_RAD);
+	}
 
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
 	POINT pt[6];
@@ -184,25 +221,35 @@ void CPlayer::Draw(HDC hdc)
 	pt[4] = { (LONG)mptpos.x + (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
 	pt[5] = { (LONG)mptpos.x - (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
 	Polygon(hdc, pt, 6);
-	Ellipse(hdc, mptpos.x - PLAY_ELLIPSE_RAD, mptpos.y - PLAY_ELLIPSE_RAD, mptpos.x + PLAY_ELLIPSE_RAD, mptpos.y + PLAY_ELLIPSE_RAD);
+	Ellipse(hdc, mptpos.x - PLAY_ELLIPSE_RAD, mptpos.y - PLAY_ELLIPSE_RAD, 
+		mptpos.x + PLAY_ELLIPSE_RAD, mptpos.y + PLAY_ELLIPSE_RAD);
+
+	// 총알
+	if (pbullet) {
+		pbullet->Draw(hdc);
+	}
 }
 
 void CPlayer::Update()
 {
+
 	// 플레이어 움직임
 	Move();
 
-	// hpbar
-	mrchpbar.left = mrcRng.left;
-	mrchpbar.top = mrcRng.top - 5;
-	mrchpbar.right = mrcRng.left + GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
-	mrchpbar.bottom = mrcRng.top - 2;
+	// hpbar 
+	mrchpbar.left = mrcRng.left - 7;
+	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
+	mrchpbar.right = mrcRng.left - 4;
+	mrchpbar.bottom = mrcRng.bottom;
 
-	////returnbar
-	//mrcrtbar.left = mrcRng.left;
-	//mrcrtbar.top = mrcRng.bottom +2;
-	//mrcrtbar.right = mrcRng.left + GETHPBAR(mrt->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
-	//mrcrtbar.bottom = mrcRng.bottom +5;
+	// 총알이 맵에 없고, 타겟이 있을 때 공격
+	if (!pbullet && ptarget)
+		Attack();
+	
+	if (pbullet) {
+		// 총알이 있으면 움직여라
+		pbullet->Move();
+	}
 
 	// 귀환 시간 확인
 	if (pressQ) {
@@ -220,6 +267,7 @@ void CPlayer::Update()
 		}
 		shieldtime -= FRAMETIME;
 	}
+
 	// 쿨타임이 0이 아닐 때 감소
 	if (cooltime_Shield) cooltime_Shield -= FRAMETIME;
 	if (cooltime_AoE) cooltime_AoE -= FRAMETIME;

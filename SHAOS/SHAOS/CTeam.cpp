@@ -18,6 +18,16 @@ CTeam::~CTeam()
 	}
 }
 
+CGameObject* CTeam::GetMyObjList() const
+{
+	return p_myobj;
+}
+
+void CTeam::SetOpponentObj(CGameObject* objlist)
+{
+	p_opponentobj = objlist;
+}
+
 void CTeam::AddMyObjList(CGameObject* addobj)
 {
 	imyobjnum++;

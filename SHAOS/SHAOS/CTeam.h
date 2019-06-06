@@ -16,9 +16,13 @@ protected:
 public:
 	CTeam();
 	virtual ~CTeam();
-	//void UpdateOpponentObj(CGameObject&);
+
+
+	CGameObject* GetMyObjList() const;
+	void SetOpponentObj(CGameObject*);
+
+
 	void AddMyObjList(CGameObject*);
 	void DeleteInList(CGameObject*);
-
 };
 

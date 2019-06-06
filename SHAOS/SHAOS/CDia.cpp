@@ -2,13 +2,14 @@
 #include "CDia.h"
 
 
-CDia::CDia(POINTFLOAT initPos) : CUnit(initPos)
+CDia::CDia(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
+	: CUnit(initPos, team, enemylist)
 {
 	mrcRng = { (LONG)mptpos.x - DIA_SHORTRADIUS, (LONG)mptpos.y - DIA_SHORTRADIUS,
 	(LONG)mptpos.x + DIA_SHORTRADIUS, (LONG)mptpos.y + DIA_SHORTRADIUS };
 
 	mhp = new CHp(DIA_MAXHP);
-	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
+	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 
 }
 

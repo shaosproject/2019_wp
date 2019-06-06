@@ -14,11 +14,12 @@ protected:
 
 	CGameObject* menemylist{ nullptr };
 
+	TEAM team;
 public:
 	CGameObject* next{ nullptr };
 	CGameObject* prev{ nullptr };
 
-	CGameObject(POINTFLOAT ainitPos);
+	CGameObject(POINTFLOAT ainitPos, TEAM ateam ,CGameObject* aenemylist);
 	virtual ~CGameObject();
 
 	virtual void Draw(HDC) = 0;

@@ -16,6 +16,7 @@ public:
 
 	void Update();
 	void MSG_Key(UINT message, WPARAM wParam);
+	void MSG_Mouse(UINT message, POINT mousepos);
 	void Draw(HDC hdc);
 
 	POINTFLOAT GetPlayerPos();

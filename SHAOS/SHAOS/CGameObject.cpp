@@ -3,7 +3,8 @@
 #include "CHp.h"
 
 
-CGameObject::CGameObject(POINTFLOAT ainitPos) : mptpos(ainitPos)
+CGameObject::CGameObject(POINTFLOAT ainitPos, TEAM ateam, CGameObject* aenemylist)
+	: mptpos(ainitPos) , team(ateam), menemylist(aenemylist)
 {
 }
 

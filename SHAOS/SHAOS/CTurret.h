@@ -4,9 +4,8 @@
 class CTurret : public CGameObject
 {
 public:
-	CTurret(POINTFLOAT initPos);
+	CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTurret();
-	RECT* Turret_Rect();
 	virtual void Draw(HDC hdc);
 	virtual void Update() {};
 

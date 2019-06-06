@@ -2,13 +2,19 @@
 #include "CEllip.h"
 
 
-CEllip::CEllip(POINTFLOAT initPos) : CUnit(initPos)
+CEllip::CEllip(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
+	: CUnit(initPos, team, enemylist)
 {
 	mrcRng = { (LONG)mptpos.x - ELLIP_RADIUS, (LONG)mptpos.y - ELLIP_RADIUS,
 		(LONG)mptpos.x + ELLIP_RADIUS, (LONG)mptpos.y + ELLIP_RADIUS };
 
 	mhp = new CHp(ELLIP_MAXHP);
-	mrchpbar = { mrcRng.left, mrcRng.top - 7, mrcRng.right, mrcRng.top - 4 };
+	if (team == TEAM::USER) {
+		mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
+	}
+	else {
+		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
+	}
 
 }
 

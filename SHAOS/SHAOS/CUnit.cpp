@@ -2,7 +2,8 @@
 #include "CUnit.h"
 
 
-CUnit::CUnit(POINTFLOAT ainitPos) : CGameObject(ainitPos)
+CUnit::CUnit(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
+	: CGameObject(ainitPos, team, enemylist)
 {
 }
 

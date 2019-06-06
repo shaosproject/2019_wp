@@ -2,14 +2,15 @@
 #include "CTri.h"
 
 
-CTri::CTri(POINTFLOAT initPos) : CUnit(initPos)
+CTri::CTri(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
+	: CUnit(initPos, team, enemylist)
 {
 	mrcRng = { (LONG)mptpos.x - TRI_INNERCIRCLERADIUS, (LONG)mptpos.y - TRI_INNERCIRCLERADIUS,
 		(LONG)mptpos.x + TRI_INNERCIRCLERADIUS, (LONG)mptpos.y + TRI_INNERCIRCLERADIUS };
 	
 	
 	mhp = new CHp(TRI_MAXHP);
-	mrchpbar = { mrcRng.left, mrcRng.top - 15, mrcRng.right, mrcRng.top - 12 };
+	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 }
 
 
