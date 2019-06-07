@@ -52,7 +52,6 @@ CWorld::~CWorld()
 
 void CWorld::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//iViewX - MIN_VIEWX -> 이 값을 더하면 월드좌표인가?
 	POINT mousepos = 
 	{ LOWORD(lParam) + iViewX - MIN_VIEWX,HIWORD(lParam) };
 
