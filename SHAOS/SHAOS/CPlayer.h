@@ -2,19 +2,23 @@
 #include "CGameObject.h"
 
 
+
+#define DRAWTIME_AOE FRAMETIME * 10
 class Bullet;
 class CPlayer : public CGameObject
 {
 	BOOL R_On, L_On, U_On, D_On;
 	BOOL pressQ, onshield;
 
+
+	UINT AoEdrawtime;
 	UINT returntime, shieldtime;
+	
 
-
-	UINT cooltime_Return;
-	UINT cooltime_Shield;
-	UINT cooltime_AoE;
 	UINT cooltime_Shoot;
+	UINT cooltime_AoE;
+	UINT cooltime_Shield;
+	UINT cooltime_Return;
 
 	CGameObject* ptarget;
 	Bullet* pbullet;
@@ -34,6 +38,7 @@ public:
 	void MSG_MouseDown(POINT mousepos);
 
 	void Move();
+	void Skill_AreaOfEffect();
 	void ActiveShield();
 	void ReturnHome();
 

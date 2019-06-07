@@ -22,13 +22,23 @@ CTurret::~CTurret()
 void CTurret::Draw(HDC hdc)
 {
 	//FillRect(hdc, &mrcRng, (HBRUSH)GetStockObject(WHITE_BRUSH));
-	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom, TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
+	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
+		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
 }
 
 void CTurret::Update()
 {
 	// hp바 업데이트
 	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TURRET_RADIUS * 2, PLAYER_MAXHP);
+}
+
+void CTurret::SelectedDraw(HDC hdc)
+{
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSELECTEDBRUSH);
+	RoundRect(hdc, mrcRng.left - 4, mrcRng.top - 4,
+		mrcRng.right + 4, mrcRng.bottom + 4,
+		TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
+	SelectObject(hdc, hOld);
 }
 
 INT CTurret::GetObjRadius()
@@ -43,7 +53,8 @@ void CTurret::Death()
 	this->prev->next = this->next;
 	this->next->prev = this->prev;
 
-
+	mdeath = TRUE;
+	//delete this; -> 여기서 죽이면 안 된다 나중에 모든 처리가 끝나고 나서...
 	// 2. 죽는 이펙트
 }
 

@@ -4,7 +4,7 @@
 #include "Bullet.h"
 
 CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
-	: CGameObject(ainitPos, team, enemylist), iAoERadius(PLAYER_RADIUS * 2)
+	: CGameObject(ainitPos, team, enemylist), iAoERadius(PLAYER_RADIUS * 4)
 {
 	// 충돌체크용 플레이어 영역 설정해주기
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
@@ -21,6 +21,8 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	D_On = FALSE;
 
 	// 스킬
+	AoEdrawtime = 0;
+
 	pressQ = FALSE;
 	returntime = 0;
 
@@ -34,6 +36,7 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	//공격
 	ptarget = nullptr;
 	pbullet = nullptr;
+
 }
 
 
@@ -64,9 +67,14 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 		case 'W':
 			U_On = TRUE;
 			break;
+		case VK_SPACE:
+			if (!cooltime_AoE) {
+				Skill_AreaOfEffect();
+			}
+			break;
 		case 'Q':
 			// 쿨타임 조건 추가해야 함
-			if (!pressQ) {
+			if (!pressQ && !cooltime_Return) {
 				pressQ = TRUE;
 				ReturnHome();
 			}
@@ -141,6 +149,29 @@ void CPlayer::Move() {
 
 }
 
+void CPlayer::Skill_AreaOfEffect()
+{
+	// 이펙트 신호 주기
+	AoEdrawtime = DRAWTIME_AOE;
+
+	// 충돌체크해서 데미지 주기
+	CGameObject* tmp = nullptr;
+	while (tmp != menemylist) {
+		if (!tmp) tmp = menemylist;
+		
+		// 두 원의 중심의 거리가 두 원의 반지름의 합보다 작은 경우 충돌
+		float dx = mptpos.x - tmp->GetPos().x;
+		float dy = mptpos.y - tmp->GetPos().y;
+
+		float center_d = sqrt(dx * dx + dy * dy);
+		if (center_d <= (iAoERadius + tmp->GetObjRadius())) {
+			tmp->PutDamage(PLAYER_AOEDAMAGE);
+		}
+
+		tmp = tmp->next;
+	}
+}
+
 void CPlayer::ReturnHome()
 {
 	returntime = CASTINGTIME_RETURN;
@@ -186,11 +217,23 @@ INT CPlayer::GetObjRadius()
 }
 void CPlayer::Attack()
 {
-	pbullet = new Bullet(&mptpos, ptarget, PLAYER_BULLETDAMAGE);
+	if (!ptarget) return;
+
+	if (pbullet) pbullet = pbullet->Move();
+	else pbullet = new Bullet(&mptpos, ptarget, PLAYER_BULLETDAMAGE);
+
+	if (ptarget->IsDead()) ptarget = nullptr;
 }
 
 void CPlayer::Draw(HDC hdc)
 {
+	if (AoEdrawtime) {
+		// 광역기 이펙트 그리기
+
+		//Ellipse(hdc, mptpos.x - iAoERadius, mptpos.y - iAoERadius,
+		//	mptpos.x + iAoERadius, mptpos.y + iAoERadius);
+	}
+
 
 	if (pressQ) {
 		// 파란색 바 그리기
@@ -234,6 +277,9 @@ void CPlayer::Draw(HDC hdc)
 	if (pbullet) {
 		pbullet->Draw(hdc);
 	}
+	if (ptarget) {
+		ptarget->SelectedDraw(hdc);
+	}
 }
 
 void CPlayer::Update()
@@ -242,27 +288,27 @@ void CPlayer::Update()
 	// 플레이어 움직임
 	Move();
 
+	// 기지에 있으면 체력 회복
+	if (mrcRng.left <= 650) {
+		mhp->AddHp(RECOVERAMOUNT);
+	}
+
 	// hpbar 
 	mrchpbar.left = mrcRng.left - 7;
 	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
 	mrchpbar.right = mrcRng.left - 4;
 	mrchpbar.bottom = mrcRng.bottom;
 
-	// 총알이 맵에 없고, 타겟이 있을 때 공격
-	if (!pbullet && ptarget)
-		Attack();
-	
-	if (pbullet) {
-		// 총알이 있으면 움직여라
-		pbullet = pbullet->Move();
-	}
+	Attack();
 
-	// 귀환 시간 확인
+	if (AoEdrawtime) AoEdrawtime -= FRAMETIME;
+
 	if (pressQ) {
 		if (returntime == 0) 
 		{
 			SetPos(100, 100);
 			pressQ = FALSE;
+			cooltime_Return = COOLTIME_RETURN;
 		}
 		returntime -= FRAMETIME;
 	}
@@ -275,8 +321,9 @@ void CPlayer::Update()
 	}
 
 	// 쿨타임이 0이 아닐 때 감소
-	if (cooltime_Shield) cooltime_Shield -= FRAMETIME;
-	if (cooltime_AoE) cooltime_AoE -= FRAMETIME;
 	if (cooltime_Shoot) cooltime_Shoot -= FRAMETIME;
+	if (cooltime_AoE) cooltime_AoE -= FRAMETIME;
+	if (cooltime_Shield) cooltime_Shield -= FRAMETIME;
+	if (cooltime_Return) cooltime_Return -= FRAMETIME;
 
 }

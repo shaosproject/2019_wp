@@ -83,7 +83,6 @@ void CWorld::Draw(HDC clientDC)
 	pUserTeam->Draw(hUpdateDC);
 	pEnemyTeam->Draw(hUpdateDC);
 	//----
-
 	
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, iViewX - MIN_VIEWX, 0, SRCCOPY);

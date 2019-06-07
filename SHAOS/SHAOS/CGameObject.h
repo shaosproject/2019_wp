@@ -9,12 +9,12 @@ protected:
 
 	CHp*			mhp{ nullptr };
 	RECT			mrchpbar;
-
-	INT				mattacktime;
+	BOOL			mdeath;
 
 	CGameObject* menemylist{ nullptr };
 
 	TEAM team;
+
 public:
 	CGameObject* next{ nullptr };
 	CGameObject* prev{ nullptr };
@@ -26,6 +26,7 @@ public:
 	virtual void Update() = 0;
 	void DrawHP(HDC);
 
+	virtual void SelectedDraw(HDC) {};
 
 
 	POINTFLOAT		GetPos() const;
@@ -33,7 +34,8 @@ public:
 	
 	virtual INT		GetObjRadius() = 0;
 
-	void PutDamage(INT damage);
+	BOOL PutDamage(INT damage);
 
 	virtual void Death() = 0;
+	BOOL IsDead() const;
 };
