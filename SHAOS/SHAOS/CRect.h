@@ -1,6 +1,8 @@
 #pragma once
 #include "CUnit.h"
 #include "CTower.h"
+#define RECT_DAMAGE 10
+#define UNIT_SPEED 3
 
 class CRect : public CUnit
 {
@@ -9,15 +11,18 @@ class CRect : public CUnit
 public:
 	CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
 	~CRect();
-	virtual void Draw(HDC hdc);
 	virtual void Update();
+	virtual void Draw(HDC hdc);
 	
+	virtual void SelectedDraw(HDC hdc);
+
+
 	void Move();
 	void Attack();
-
+	void SetTarget();
 
 	virtual INT		GetObjRadius();
-	virtual void Death() {};
+	virtual void	Death() {};
 
 };
 

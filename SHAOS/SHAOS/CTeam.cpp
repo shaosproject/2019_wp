@@ -24,6 +24,11 @@ CGameObject* CTeam::GetMyObjList() const
 	return p_myobjlist;
 }
 
+void CTeam::SetOpponentObj(CGameObject* objlist)
+{
+	p_opponentobjlist = objlist;
+}
+
 void CTeam::AddMyObjList(CGameObject* addobj)
 {
 	addobj->next = p_myobjlist;

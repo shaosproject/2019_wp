@@ -16,7 +16,7 @@ CRect::CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 	}
 
-	pattcktarget = menemylist->next;
+	pattacktarget = menemylist;
 }
 
 CRect::~CRect()
@@ -26,15 +26,24 @@ CRect::~CRect()
 
 void CRect::Draw(HDC hdc)
 {
-	Rectangle(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+	Rectangle(hdc, mrcRng.left, mrcRng.top,
+		mrcRng.right, mrcRng.bottom);
+}
+
+void CRect::SelectedDraw(HDC hdc)
+{
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSELECTEDBRUSH);
+	Rectangle(hdc, mrcRng.left + 2, mrcRng.top + 2,
+		mrcRng.right + 2, mrcRng.bottom + 2);
+	SelectObject(hdc, hOld);
 }
 
 void CRect::Update()
 {
-	// move
-	if (moveOn) {
-		Move();
-	}
+	// 공격할 대상 정하기
+	SetTarget();
+
+	if (moveOn) Move();
 
 
 }
@@ -42,18 +51,19 @@ void CRect::Update()
 void CRect::Move()
 {
 
-	float projX = pattcktarget->GetPos().x - mptpos.x - 150;
-	float projY = pattcktarget->GetPos().y - mptpos.y;
-
-	if (!projX && !projY) return;
+	float projX = pattacktarget->GetPos().x - mptpos.x;
+	float projY = pattacktarget->GetPos().y - mptpos.y;
 	
-
+	
 	float distance = sqrt(projX * projX + projY * projY);
+
+	if (distance < 100) moveOn = FALSE;	// 적절한 범위에서 멈추기
 
 	float nomalizedX = projX / distance;
 	float nomalizedY = projY / distance;
 
-	POINTFLOAT movevector = { nomalizedX*5,nomalizedY*5 };
+	POINTFLOAT movevector = { nomalizedX * UNIT_SPEED,nomalizedY * UNIT_SPEED };
+
 
 	// 공격 대상을 향해서 이동
 	mptpos.x += movevector.x;
@@ -68,10 +78,13 @@ void CRect::Move()
 	};
 
 	//hp바 이동
-	mrchpbar.left += movevector.x;
-	mrchpbar.right += movevector.x;
-	mrchpbar.top += movevector.y;
-	mrchpbar.bottom += movevector.y;
+
+	if (team == TEAM::USER) {
+		mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
+	}
+	else {
+		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
+	}
 
 }
 
@@ -87,11 +100,34 @@ void CRect::Attack()
 		float center_d = dx * dx + dy * dy;
 		float range = iattakradius + tmp->GetObjRadius();
 		if (center_d <= range * range) {
-			tmp->PutDamage(PLAYER_AOEDAMAGE);
+			tmp->PutDamage(RECT_DAMAGE);
 		}
 
 		tmp = tmp->next;
 	}
+}
+
+void CRect::SetTarget()
+{
+	CGameObject* tmp = nullptr;
+	while (tmp != menemylist) {
+		if (!tmp) tmp = menemylist;
+		//UNIT_RECOGRNGRADIUS
+
+		float projX = tmp->GetPos().x - mptpos.x;
+		float projY = tmp->GetPos().y - mptpos.y;
+
+		float distance = sqrt(projX * projX + projY * projY);
+
+		if (distance < UNIT_RECOGRNGRADIUS) {
+			pattacktarget = tmp;
+			return;
+		}
+
+		tmp = tmp->next;
+	}
+
+
 }
 
 INT CRect::GetObjRadius()

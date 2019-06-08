@@ -22,7 +22,7 @@ public:
 
 
 	CGameObject* GetMyObjList() const;
-	virtual void SetOpponentObj(CGameObject*) = 0;
+	void SetOpponentObj(CGameObject* objlist);
 
 
 	void AddMyObjList(CGameObject*);
