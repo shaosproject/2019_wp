@@ -21,6 +21,8 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	D_On = FALSE;
 
 	// 스킬
+	pressSft = FALSE;
+
 	AoEdrawtime = 0;
 
 	pressQ = FALSE;
@@ -67,6 +69,12 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 		case 'W':
 			U_On = TRUE;
 			break;
+		case VK_SHIFT:
+			if (!cooltime_Shoot && !pressSft) {
+				pressSft = TRUE;
+				Skill_Shoot();
+			}
+			break;
 		case VK_SPACE:
 			if (!cooltime_AoE) {
 				Skill_AreaOfEffect();
@@ -101,6 +109,10 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 		case 'W':
 			U_On = FALSE;
 			break;
+		case VK_SHIFT:
+			pressSft = TRUE;
+			break;
+
 		case 'Q':
 			if (pressQ) {
 				pressQ = FALSE;
@@ -151,6 +163,8 @@ void CPlayer::Move() {
 
 void CPlayer::Skill_AreaOfEffect()
 {
+	cooltime_AoE = COOLTIME_AOE;
+
 	// 이펙트 신호 주기
 	AoEdrawtime = DRAWTIME_AOE;
 
@@ -163,13 +177,20 @@ void CPlayer::Skill_AreaOfEffect()
 		float dx = mptpos.x - tmp->GetPos().x;
 		float dy = mptpos.y - tmp->GetPos().y;
 
-		float center_d = sqrt(dx * dx + dy * dy);
-		if (center_d <= (iAoERadius + tmp->GetObjRadius())) {
+		float center_d = dx * dx + dy * dy;
+		float range = iAoERadius + tmp->GetObjRadius();
+		if (center_d <= range*range) {
 			tmp->PutDamage(PLAYER_AOEDAMAGE);
 		}
 
 		tmp = tmp->next;
 	}
+}
+
+void CPlayer::Skill_Shoot()
+{
+	cooltime_Shoot = COOLTIME_SHOOT;
+
 }
 
 void CPlayer::ReturnHome()
@@ -227,11 +248,15 @@ void CPlayer::Attack()
 
 void CPlayer::Draw(HDC hdc)
 {
+	if (pressSft) {
+
+	}
+
 	if (AoEdrawtime) {
 		// 광역기 이펙트 그리기
 
-		//Ellipse(hdc, mptpos.x - iAoERadius, mptpos.y - iAoERadius,
-		//	mptpos.x + iAoERadius, mptpos.y + iAoERadius);
+		Ellipse(hdc, mptpos.x - iAoERadius, mptpos.y - iAoERadius,
+			mptpos.x + iAoERadius, mptpos.y + iAoERadius);
 	}
 
 

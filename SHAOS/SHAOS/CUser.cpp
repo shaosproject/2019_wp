@@ -11,6 +11,8 @@ CUser::CUser()
 	mTower = new CTower(USERTOWER_POS, TEAM::USER, nullptr);
 	p_myobjlist = mTower;
 	p_myobjlist->next = p_myobjlist->prev = p_myobjlist;
+
+	iunitgentime = FRAMETIME * 100;
 }
 
 CUser::~CUser()
@@ -35,6 +37,11 @@ void CUser::SetOpponentObj(CGameObject* objlist)
 
 void CUser::Update()
 {
+	if (iunitgentime) iunitgentime -= FRAMETIME;
+	else {
+		UnitGen();
+		iunitgentime = FRAMETIME * 100;
+	}
 	mPlayer->Update();
 }
 
@@ -60,6 +67,10 @@ void CUser::MSG_Mouse(UINT message, POINT mousepos)
 		break;
 
 	}
+}
+
+void CUser::UnitGen()
+{
 }
 
 void CUser::Draw(HDC hdc)

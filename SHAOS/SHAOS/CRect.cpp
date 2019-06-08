@@ -31,8 +31,23 @@ void CRect::Update()
 {
 }
 
-void CRect::Attack(CGameObject** opponentobj, INT opponentNum)
+void CRect::Attack()
 {
+	CGameObject* tmp = nullptr;
+	while (tmp != menemylist) {
+		if (!tmp) tmp = menemylist;
+
+		float dx = mptpos.x - tmp->GetPos().x;
+		float dy = mptpos.y - tmp->GetPos().y;
+
+		float center_d = dx * dx + dy * dy;
+		float range = iattakradius + tmp->GetObjRadius();
+		if (center_d <= range * range) {
+			tmp->PutDamage(PLAYER_AOEDAMAGE);
+		}
+
+		tmp = tmp->next;
+	}
 }
 
 INT CRect::GetObjRadius()

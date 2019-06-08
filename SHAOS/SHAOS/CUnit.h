@@ -1,13 +1,13 @@
 #pragma once
 #include "CGameObject.h"
-enum class Move {
+enum class MoveState {
 	DFTMOVE, TARGETMOVE, NONE
 };
 
 class CUnit : public CGameObject
 {
 protected:
-	Move priority = Move::DFTMOVE;
+	MoveState priority = MoveState::DFTMOVE;
 
 
 

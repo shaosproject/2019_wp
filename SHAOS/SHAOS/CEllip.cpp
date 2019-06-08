@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CEllip.h"
-
+#include "Bullet.h"
 
 CEllip::CEllip(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	: CUnit(initPos, team, enemylist)
@@ -15,7 +15,7 @@ CEllip::CEllip(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	else {
 		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 	}
-
+	ptarget = nullptr;
 }
 
 
@@ -31,6 +31,18 @@ void CEllip::Draw(HDC hdc)
 
 void CEllip::Update()
 {
+
+}
+
+void CEllip::Attack()
+{
+	if (!ptarget) return;
+
+	if (pbullet) pbullet = pbullet->Move();
+	else pbullet = new Bullet(&mptpos, ptarget, ELLIP_BULLETDAMAGE);
+
+	if (ptarget->IsDead()) ptarget = nullptr;
+
 }
 
 INT CEllip::GetObjRadius()

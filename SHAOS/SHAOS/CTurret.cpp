@@ -11,6 +11,8 @@ CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 
 	mhp = new CHp(TOWER_MAXHP);
 	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
+
+	ptarget = nullptr;
 }
 
 
@@ -29,7 +31,14 @@ void CTurret::Draw(HDC hdc)
 void CTurret::Update()
 {
 	// hp바 업데이트
-	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TURRET_RADIUS * 2, PLAYER_MAXHP);
+	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TURRET_RADIUS * 2, TURRET_MAXHP);
+	
+	// 적이 공격범위 안에 들어왔나 확인
+}
+
+void CTurret::Attack()
+{
+	
 }
 
 void CTurret::SelectedDraw(HDC hdc)

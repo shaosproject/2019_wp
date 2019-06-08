@@ -17,9 +17,11 @@ public:
 	virtual void SetOpponentObj(CGameObject* objlist);
 
 	void Update();
+	void Draw(HDC hdc);
 	void MSG_Key(UINT message, WPARAM wParam);
 	void MSG_Mouse(UINT message, POINT mousepos);
-	void Draw(HDC hdc);
+
+	void UnitGen();
 
 	POINTFLOAT GetPlayerPos();
 };

@@ -10,7 +10,7 @@ public:
 	virtual void Draw(HDC hdc);
 	virtual void Update();
 	
-	void Attack(CGameObject**, INT opponentNum);
+	void Attack();
 
 	virtual INT		GetObjRadius();
 	virtual void Death() {};

@@ -8,7 +8,7 @@ class Bullet;
 class CPlayer : public CGameObject
 {
 	BOOL R_On, L_On, U_On, D_On;
-	BOOL pressQ, onshield;
+	BOOL pressQ, pressSft, onshield;
 
 
 	UINT AoEdrawtime;
@@ -39,6 +39,7 @@ public:
 
 	void Move();
 	void Skill_AreaOfEffect();
+	void Skill_Shoot();
 	void ActiveShield();
 	void ReturnHome();
 

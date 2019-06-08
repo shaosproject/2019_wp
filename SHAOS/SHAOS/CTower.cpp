@@ -44,10 +44,15 @@ void CTower::Draw(HDC hdc)
 
 }
 
+void CTower::Update()
+{
+	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TOWER_RADIUS * 2, TOWER_MAXHP);
+
+}
+
 INT CTower::GetObjRadius()
 {
-	// 충돌체크 어떻게 하지.... 곤란하다
-	return 0;
+	return TOWER_RADIUS;
 }
 
 void CTower::Death()
