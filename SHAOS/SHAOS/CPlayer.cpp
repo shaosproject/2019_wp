@@ -151,7 +151,22 @@ void CPlayer::MSG_MouseDown(POINT mousepos)
 
 void CPlayer::Move() {
 	// 플레이어 중심점 좌표
-	POINTFLOAT dirvector = this->Player_Vector();	
+	POINTFLOAT dirvector = this->Player_Vector();
+
+	POINTFLOAT nextpos = {mptpos.x + dirvector.x,mptpos.y + dirvector.y};
+
+	FLOAT etd = sqrt((ENEMYTOWER_POS.x - nextpos.x) * (ENEMYTOWER_POS.x - nextpos.x) +
+		(ENEMYTOWER_POS.y - nextpos.y) * (ENEMYTOWER_POS.y - nextpos.y));
+	
+	if (etd <= TOWER_CENTER2VERTAX + PLAYER_RADIUS)
+		return;
+
+	FLOAT utd = sqrt((USERTOWER_POS.x - nextpos.x) * (USERTOWER_POS.x - nextpos.x) +
+		(USERTOWER_POS.y - nextpos.y) * (USERTOWER_POS.y - nextpos.y));
+
+	if (utd <= TOWER_CENTER2VERTAX + PLAYER_RADIUS)
+		return;
+
 	mptpos.x = PLAY_CLIENTX(mptpos.x + dirvector.x);
 	mptpos.y = PLAY_CLIENTY(mptpos.y + dirvector.y);
 
