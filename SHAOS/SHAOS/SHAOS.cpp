@@ -209,7 +209,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_LBUTTONDOWN:
 	case WM_LBUTTONUP:
-	//case WM_MOUSEMOVE:
+	case WM_RBUTTONDOWN:
+	case WM_MOUSEMOVE:
+
 		g_GameFrameWork.MSG_Mouse(message, wParam, lParam);
 		break;
 	//case WM_COMMAND:
@@ -232,7 +234,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 	case WM_CREATE:
 	{
 
-		g_GameFrameWork.msound->MyPlaySound(1, 1);//창이켜질때
+		//g_GameFrameWork.msound->MyPlaySound(1, 1);//창이켜질때
 
 		HWND hStart = CreateWindow(
 			L"button",
@@ -274,7 +276,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		UINT ctrlID = LOWORD(wParam);
 		switch (ctrlID) {
 		case IDC_BUTTON_START:
-			g_GameFrameWork.msound->SoundStop(1); //타이틀화면이 닫힐때
+			//g_GameFrameWork.msound->SoundStop(1); //타이틀화면이 닫힐때
 			g_GameFrameWork.Create(GetParent(hWnd), hWnd, hInst);
 			SetTimer(GetParent(hWnd), 0, FRAMETIME, (TIMERPROC)TimerProc);
 			DestroyWindow(hWnd);

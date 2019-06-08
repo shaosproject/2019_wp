@@ -26,7 +26,7 @@ public:
 	~CWorld();
 
 	
-	void MSG_Mouse(UINT, WPARAM, LPARAM);
+	void MSG_Mouse(UINT, POINT);
 	void MSG_Key(UINT, WPARAM, LPARAM);
 
 	void Update();

@@ -50,12 +50,12 @@ CWorld::~CWorld()
 
 }
 
-void CWorld::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
+void CWorld::MSG_Mouse(UINT message, POINT clientmousepos)
 {
-	POINT mousepos = 
-	{ LOWORD(lParam) + iViewX - MIN_VIEWX,HIWORD(lParam) };
+	POINT worldmousepos =
+	{ clientmousepos.x + iViewX - MIN_VIEWX,clientmousepos.y };
 
-	pUserTeam->MSG_Mouse(message, mousepos);
+	pUserTeam->MSG_Mouse(message, worldmousepos);
 
 }
 

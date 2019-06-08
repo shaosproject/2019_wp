@@ -2,19 +2,19 @@
 #include "GameFramework.h"
 CGameFramework::CGameFramework()
 {
-	msound = new CSound;
-	msound->SoundSystem();
+	//msound = new CSound;
+	//msound->SoundSystem();
 
 }
 CGameFramework::~CGameFramework()
 {
-	msound->SoundStop(1);
+	//msound->SoundStop(1);
 }
 
 void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 {
 
-	msound->MyPlaySound(0, 0);//타이틀화면닫히고나서 부모창이 켜질때
+	//msound->MyPlaySound(0, 0);//타이틀화면닫히고나서 부모창이 켜질때
 	mhInst = hInst;
 	mhWnd = hwnd;
 	mhhTitleWnd = htitlewnd;
@@ -31,7 +31,7 @@ void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 
 void CGameFramework::Relese()
 {
-	msound->SoundStop(0); //부모창이 닫히고 타이틀창이 켜질때
+	//msound->SoundStop(0); //부모창이 닫히고 타이틀창이 켜질때
 	DeleteObject(hpausebutton);
 	DeleteDC(memdc);
 	delete pworld;
@@ -50,14 +50,16 @@ void CGameFramework::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 
 void CGameFramework::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	if (message == WM_LBUTTONUP) {
-		POINT mousepos = { LOWORD(lParam),HIWORD(lParam) };
-		if (PtInRect(&BUTTONPAUSE_RNG, mousepos)) {
+	POINT mousepos = { LOWORD(lParam),HIWORD(lParam) };
+	if (PtInRect(&BUTTONPAUSE_RNG, mousepos)) {
+		if(message == WM_LBUTTONUP)
 			DialogBox(mhInst, MAKEINTRESOURCE(IDD_DIALOGPAUSE), mhWnd, (DLGPROC)DialogProc);
-			return;
-		}
+		return;
 	}
-	if (pworld) pworld->MSG_Mouse(message, wParam, lParam);
+	else {
+		if (pworld) pworld->MSG_Mouse(message, mousepos);
+	}
+
 }
 
 

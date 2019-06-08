@@ -63,7 +63,7 @@ void CUser::MSG_Mouse(UINT message, POINT mousepos)
 		mPlayer->MSG_MouseDown(mousepos);
 		break;
 	case WM_MOUSEMOVE:
-		//mPlayer->MSG_MouseMove(mousepos);
+		mPlayer->MSG_MouseMove(mousepos);
 		break;
 
 	}

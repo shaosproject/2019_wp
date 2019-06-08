@@ -123,9 +123,6 @@
     <ClInclude Include="CWorld.h">
       <Filter>FrameWork\World</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -181,9 +178,6 @@
     </ClCompile>
     <ClCompile Include="CTri.cpp">
       <Filter>GameObj\Unit\Tri</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
