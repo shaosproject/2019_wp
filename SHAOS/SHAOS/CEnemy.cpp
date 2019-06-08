@@ -2,6 +2,11 @@
 #include "CEnemy.h"
 #include "CTurret.h"
 
+#include "CRect.h"
+#include "CEllip.h"
+#include "CDia.h"
+#include "CTri.h"
+
 CEnemy::CEnemy()
 {
 	mTower = new CTower(ENEMYTOWER_POS, TEAM::ENEMY, nullptr);
@@ -28,6 +33,9 @@ void CEnemy::SetInitObj()
 
 	mTurret4 = new CTurret(TURRET4_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret4);
+
+	CUnit* unit = new CRect(ptUnitSponPos, TEAM::ENEMY, p_opponentobjlist);
+	this->AddMyObjList(unit);
 
 
 }

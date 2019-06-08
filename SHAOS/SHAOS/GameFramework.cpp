@@ -2,19 +2,19 @@
 #include "GameFramework.h"
 CGameFramework::CGameFramework()
 {
-	//msound = new CSound;
-	//msound->SoundSystem();
+	msound = new CSound;
+	msound->SoundSystem();
 
 }
 CGameFramework::~CGameFramework()
 {
-	//msound->SoundStop(1);
+	msound->SoundStop(1);
 }
 
 void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 {
 
-	//msound->MyPlaySound(0, 0);//타이틀화면닫히고나서 부모창이 켜질때
+	msound->MyPlaySound(0, 0);//타이틀화면닫히고나서 부모창이 켜질때
 	mhInst = hInst;
 	mhWnd = hwnd;
 	mhhTitleWnd = htitlewnd;

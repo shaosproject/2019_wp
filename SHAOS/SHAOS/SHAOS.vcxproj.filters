@@ -58,6 +58,9 @@
     <Filter Include="GameObj\Unit\Rect">
       <UniqueIdentifier>{2b2b3bfd-0e11-4192-a985-1d0e9dbf7b33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{231b16d5-2327-46cb-89f5-8a5f75d3ec47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -123,6 +126,9 @@
     <ClInclude Include="CWorld.h">
       <Filter>FrameWork\World</Filter>
     </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -178,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="CTri.cpp">
       <Filter>GameObj\Unit\Tri</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

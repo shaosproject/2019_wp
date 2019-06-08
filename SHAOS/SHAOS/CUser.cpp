@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CUser.h"
 #include "CPlayer.h"
+
 #include "CRect.h"
 #include "CEllip.h"
 //#include "CDia.h"
@@ -36,7 +37,7 @@ void CUser::Update()
 	else {
 		if (this->imyobjnum < 12) {
 			UnitGen();
-			iunitgentime = FRAMETIME * 100;
+			iunitgentime = FRAMETIME * 200;
 		}
 	}
 

@@ -33,7 +33,7 @@ void CRect::Draw(HDC hdc)
 void CRect::SelectedDraw(HDC hdc)
 {
 	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSELECTEDBRUSH);
-	Rectangle(hdc, mrcRng.left + 2, mrcRng.top + 2,
+	Rectangle(hdc, mrcRng.left - 2, mrcRng.top - 2,
 		mrcRng.right + 2, mrcRng.bottom + 2);
 	SelectObject(hdc, hOld);
 }
