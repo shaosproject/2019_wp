@@ -5,6 +5,9 @@
 CUnit::CUnit(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	: CGameObject(ainitPos, team, enemylist)
 {
+	moveOn = TRUE;
+	ptenemytowerpos = menemylist->GetPos();
+
 }
 
 

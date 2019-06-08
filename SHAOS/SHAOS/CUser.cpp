@@ -37,12 +37,23 @@ void CUser::SetOpponentObj(CGameObject* objlist)
 
 void CUser::Update()
 {
+	// À¯´Ö Á¨
 	if (iunitgentime) iunitgentime -= FRAMETIME;
 	else {
 		UnitGen();
 		iunitgentime = FRAMETIME * 100;
 	}
-	mPlayer->Update();
+
+	// °×¿ÀºêÁ§ ¾÷µ¥ÀÌÆ®
+	CGameObject* tmp = nullptr;
+	while (tmp != p_myobjlist) {
+		if (!tmp) tmp = p_myobjlist;
+		
+		tmp->Update();
+
+		tmp = tmp->next;
+	}
+	//mPlayer->Update();
 }
 
 void CUser::MSG_Key(UINT message, WPARAM wParam)

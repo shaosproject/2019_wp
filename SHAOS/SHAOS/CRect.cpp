@@ -15,6 +15,8 @@ CRect::CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	else {
 		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 	}
+
+	pattcktarget = menemylist->next;
 }
 
 CRect::~CRect()
@@ -29,6 +31,48 @@ void CRect::Draw(HDC hdc)
 
 void CRect::Update()
 {
+	// move
+	if (moveOn) {
+		Move();
+	}
+
+
+}
+
+void CRect::Move()
+{
+
+	float projX = pattcktarget->GetPos().x - mptpos.x - 150;
+	float projY = pattcktarget->GetPos().y - mptpos.y;
+
+	if (!projX && !projY) return;
+	
+
+	float distance = sqrt(projX * projX + projY * projY);
+
+	float nomalizedX = projX / distance;
+	float nomalizedY = projY / distance;
+
+	POINTFLOAT movevector = { nomalizedX*5,nomalizedY*5 };
+
+	// 공격 대상을 향해서 이동
+	mptpos.x += movevector.x;
+	mptpos.y += movevector.y;
+
+
+
+	// 영역 이동
+	mrcRng = {
+		(LONG)mptpos.x - RECT_RADIUS, (LONG)mptpos.y - RECT_RADIUS,
+		(LONG)mptpos.x + RECT_RADIUS, (LONG)mptpos.y + RECT_RADIUS
+	};
+
+	//hp바 이동
+	mrchpbar.left += movevector.x;
+	mrchpbar.right += movevector.x;
+	mrchpbar.top += movevector.y;
+	mrchpbar.bottom += movevector.y;
+
 }
 
 void CRect::Attack()
