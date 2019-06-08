@@ -154,7 +154,7 @@ void CPlayer::Move() {
 	POINTFLOAT dirvector = this->Player_Vector();
 
 	POINTFLOAT nextpos = {mptpos.x + dirvector.x,mptpos.y + dirvector.y};
-
+	
 	FLOAT etd = sqrt((ENEMYTOWER_POS.x - nextpos.x) * (ENEMYTOWER_POS.x - nextpos.x) +
 		(ENEMYTOWER_POS.y - nextpos.y) * (ENEMYTOWER_POS.y - nextpos.y));
 	

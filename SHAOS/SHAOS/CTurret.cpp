@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CTurret.h"
-
+#include "Bullet.h"
 
 CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	: CGameObject(initPos, team, enemylist)
@@ -13,12 +13,14 @@ CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 
 	ptarget = nullptr;
+	pbullet = nullptr;
 }
 
 
 CTurret::~CTurret()
 {
 	delete mhp;
+	if (pbullet) delete pbullet;
 }
 
 void CTurret::Draw(HDC hdc)
@@ -38,7 +40,24 @@ void CTurret::Update()
 
 void CTurret::Attack()
 {
-	
+	CGameObject* tmp = nullptr;
+
+	//while (tmp != menemylist) {
+	//	if (!tmp) tmp = menemylist;
+	//
+	//	if (PtInRect(&tmp->GetRng(),(POINT&)tmp->GetPos())) {
+	//		ptarget = tmp;
+	//		return;
+	//	}
+	//
+	//	tmp = tmp->next;
+	//}
+	if (!ptarget) return;
+
+	if (pbullet) pbullet = pbullet->Move();
+	else pbullet = new Bullet(&mptpos, ptarget, TURRET_BULLETDAMAGE);
+
+	if (ptarget->IsDead()) ptarget = nullptr;
 }
 
 void CTurret::SelectedDraw(HDC hdc)

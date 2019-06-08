@@ -1,10 +1,12 @@
 #pragma once
 #include "CGameObject.h"
 
+
+class Bullet;
 class CTurret : public CGameObject
 {
 	CGameObject* ptarget;
-
+	Bullet* pbullet;
 public:
 	CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTurret();
