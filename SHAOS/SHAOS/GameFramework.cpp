@@ -31,7 +31,7 @@ void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 
 void CGameFramework::Relese()
 {
-	//msound->SoundStop(0); //부모창이 닫히고 타이틀창이 켜질때
+	msound->SoundStop(0); //부모창이 닫히고 타이틀창이 켜질때
 	DeleteObject(hpausebutton);
 	DeleteDC(memdc);
 	delete pworld;
