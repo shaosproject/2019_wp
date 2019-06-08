@@ -7,6 +7,7 @@ CGameObject::CGameObject(POINTFLOAT ainitPos, TEAM ateam, CGameObject* aenemylis
 	: mptpos(ainitPos) , team(ateam), menemylist(aenemylist)
 {
 	mdeath = FALSE;
+	ideatheffecttime = 0;
 }
 
 
@@ -31,14 +32,13 @@ RECT CGameObject::GetRng() const
 }
 
 
-BOOL CGameObject::PutDamage(INT damage)
+void CGameObject::PutDamage(INT damage)
 {
 	// mhp가 0이면 true리턴
 	if (mhp->SubHp(damage)) {
+		mdeath = TRUE;
 		Death();
-		return TRUE;
 	}
-	return FALSE;
 }
 
 BOOL CGameObject::IsDead() const

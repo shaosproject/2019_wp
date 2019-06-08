@@ -8,12 +8,14 @@ Bullet::Bullet(const POINTFLOAT* initPos, CGameObject* target, INT damage)
 }
 Bullet::~Bullet()
 {
-	// 상대편 hp깎기
-	ptargetobj->PutDamage(idamage);
 }
 
 Bullet* Bullet::Move()
 {
+	if (ptargetobj->IsDead()) {
+		this->~Bullet();
+		return nullptr;
+	}
 	float projX = ptargetobj->GetPos().x - ptbulletpos.x;
 	float projY = ptargetobj->GetPos().y - ptbulletpos.y;
 
@@ -21,6 +23,9 @@ Bullet* Bullet::Move()
 
 	// 총알이 목표 오브젝트의 안에 들어가면 소멸
 	if (distance < ptargetobj->GetObjRadius()) {
+		// 상대편 hp깎기
+		ptargetobj->PutDamage(idamage);
+
 		this->~Bullet();
 		return nullptr;
 	}

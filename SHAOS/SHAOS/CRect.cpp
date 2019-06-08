@@ -17,6 +17,7 @@ CRect::CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	}
 
 	pattacktarget = menemylist;
+	ideatheffecttime = 0;
 }
 
 CRect::~CRect()
@@ -28,6 +29,11 @@ void CRect::Draw(HDC hdc)
 {
 	Rectangle(hdc, mrcRng.left, mrcRng.top,
 		mrcRng.right, mrcRng.bottom);
+
+	if (mdeath) {
+		Ellipse(hdc, mrcRng.left, mrcRng.top,
+			mrcRng.right, mrcRng.bottom);
+	}
 }
 
 void CRect::SelectedDraw(HDC hdc)
@@ -43,10 +49,8 @@ void CRect::Update()
 	// 공격할 대상 정하기
 	SetTarget();
 
-
 	Move();
 
-	
 
 	if(iattackcooltime)
 		iattackcooltime -= FRAMETIME;
@@ -54,6 +58,18 @@ void CRect::Update()
 		Attack();
 		iattackcooltime = FRAMETIME * 50;
 	}
+
+
+	// 죽음
+	if (ideatheffecttime) {
+		ideatheffecttime -= FRAMETIME;
+		if (!ideatheffecttime) {
+			this->prev->next = next;
+			this->next->prev = prev;
+			delete this;
+		}
+	}
+
 }
 
 void CRect::Move()
@@ -65,7 +81,7 @@ void CRect::Move()
 	
 	float distance = sqrt(projX * projX + projY * projY);
 
-	(distance < pattacktarget->GetObjRadius()) ? moveOn = FALSE : moveOn = TRUE;	// 적절한 범위에서 멈추기
+	(distance < pattacktarget->GetObjRadius() + iattakradius) ? moveOn = FALSE : moveOn = TRUE;	// 적절한 범위에서 멈추기
 
 	if (!moveOn) return;
 
@@ -90,18 +106,20 @@ void CRect::Move()
 	//hp바 이동
 
 	if (team == TEAM::USER) {
-		//mrchpbar = {
-		//	mrcRng.left - 7,
-		//	mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), TOWER_CENTER2VERTAX * 2, RE)
-		//	mrcRng.left - 4,
-		//	mrcRng.bottom
-		//};
-		mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
-
+		mrchpbar = {
+			mrcRng.left - 7,
+			mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), RECT_RADIUS * 2, RECT_MAXHP),
+			mrcRng.left - 4,
+			mrcRng.bottom
+		};
 	}
 	else {
-		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
+		mrchpbar = { mrcRng.right + 4,
+			mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), RECT_RADIUS * 2, RECT_MAXHP),
+			mrcRng.right + 7,
+			mrcRng.bottom };
 	}
+
 
 }
 
@@ -118,6 +136,8 @@ void CRect::Attack()
 		float range = iattakradius + tmp->GetObjRadius();
 		if (center_d <= range * range) {
 			tmp->PutDamage(RECT_DAMAGE);
+			if (tmp->IsDead())
+				pattacktarget = menemylist;
 		}
 
 		tmp = tmp->next;
@@ -150,4 +170,9 @@ void CRect::SetTarget()
 INT CRect::GetObjRadius()
 {
 	return RECT_RADIUS;
+}
+
+void CRect::Death()
+{
+	ideatheffecttime = RECT_EFFECTTIME_DEATH;
 }

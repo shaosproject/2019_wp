@@ -238,7 +238,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
 		HWND hStart = CreateWindow(
 			L"button",
-			nullptr,
+			L"START",
 			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
 			500, 500, 200, 25,
 			hWnd,
@@ -249,7 +249,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
 		HWND hHelp = CreateWindow(
 			L"button",
-			nullptr,
+			L"HELP",
 			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
 			500, 550, 200, 25,
 			hWnd,

@@ -1,12 +1,14 @@
 #pragma once
 #include "CGameObject.h"
 
+#define TURRET_EFFECTTIME_DEATH FRAMETIME * 50
 
 class Bullet;
 class CTurret : public CGameObject
 {
 	CGameObject* ptarget;
 	Bullet* pbullet;
+	INT ideatheffecttime;
 public:
 	CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTurret();

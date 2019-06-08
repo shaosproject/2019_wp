@@ -1,6 +1,8 @@
 #pragma once
 #include "CGameObject.h"
 
+#define TOWER_EFFECTTIME_DEATH FRAMETIME * 100
+
 class CTower : public CGameObject
 {
 	POINT triangle1[3];

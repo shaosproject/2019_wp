@@ -35,7 +35,7 @@ void CUser::Update()
 	// À¯´Ö Á¨
 	if (iunitgentime) iunitgentime -= FRAMETIME;
 	else {
-		if (this->imyobjnum < 12) {
+		if (this->imyobjnum < 6) {
 			UnitGen();
 			iunitgentime = FRAMETIME * 200;
 		}
@@ -50,7 +50,6 @@ void CUser::Update()
 
 		tmp = tmp->next;
 	}
-	//mPlayer->Update();
 }
 
 void CUser::MSG_Key(UINT message, WPARAM wParam)

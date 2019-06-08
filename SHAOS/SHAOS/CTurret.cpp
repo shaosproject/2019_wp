@@ -14,6 +14,8 @@ CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 
 	ptarget = nullptr;
 	pbullet = nullptr;
+
+	ideatheffecttime = 0;
 }
 
 
@@ -25,7 +27,10 @@ CTurret::~CTurret()
 
 void CTurret::Draw(HDC hdc)
 {
-	//FillRect(hdc, &mrcRng, (HBRUSH)GetStockObject(WHITE_BRUSH));
+	if (mdeath) {
+		// 죽음 이펙트
+	}
+
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
 		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
 }
@@ -36,6 +41,10 @@ void CTurret::Update()
 	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TURRET_RADIUS * 2, TURRET_MAXHP);
 	
 	// 적이 공격범위 안에 들어왔나 확인
+
+
+
+	if (mdeath) ideatheffecttime -= FRAMETIME;
 }
 
 void CTurret::Attack()

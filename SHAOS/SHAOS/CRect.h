@@ -4,10 +4,11 @@
 #define RECT_DAMAGE 10
 #define UNIT_SPEED 1
 
+#define RECT_EFFECTTIME_DEATH FRAMETIME*50
+
 class CRect : public CUnit
 {
 	const INT iattakradius = RECT_RADIUS + 5;
-	INT iattackcooltime = FRAMETIME * 50;
 
 public:
 	CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
@@ -23,7 +24,7 @@ public:
 	void SetTarget();
 
 	virtual INT		GetObjRadius();
-	virtual void	Death() {};
+	virtual void	Death();
 
 };
 

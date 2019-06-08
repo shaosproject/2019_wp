@@ -43,6 +43,9 @@ void CTower::Draw(HDC hdc)
 	Polygon(hdc, triangle1, 3);
 	Polygon(hdc, triangle2, 3);
 
+	if (mdeath) {
+
+	}
 }
 
 void CTower::SelectedDraw(HDC hdc)
@@ -60,6 +63,14 @@ void CTower::SelectedDraw(HDC hdc)
 void CTower::Update()
 {
 	mrchpbar.top = mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), TOWER_CENTER2VERTAX * 2, TOWER_MAXHP);
+	
+	
+	if (ideatheffecttime) {
+		ideatheffecttime -= FRAMETIME;
+		if (!ideatheffecttime) {
+			// 게임오버 ...? 어떻게?
+		}
+	}
 }
 
 INT CTower::GetObjRadius()
@@ -69,5 +80,5 @@ INT CTower::GetObjRadius()
 
 void CTower::Death()
 {
-	// 게임 끝~~~
+	ideatheffecttime = TOWER_EFFECTTIME_DEATH;
 }

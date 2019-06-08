@@ -4,6 +4,8 @@
 class CGameObject
 {
 protected:
+	TEAM team;
+
 	POINTFLOAT		mptpos;
 	RECT			mrcRng;
 
@@ -13,7 +15,10 @@ protected:
 
 	CGameObject* menemylist{ nullptr };
 
-	TEAM team;
+
+	INT iattackcooltime = FRAMETIME * 50;
+	INT ideatheffecttime;
+
 
 public:
 	CGameObject* next{ nullptr };
@@ -34,7 +39,7 @@ public:
 	
 	virtual INT		GetObjRadius() = 0;
 
-	BOOL PutDamage(INT damage);
+	void PutDamage(INT damage);
 
 	virtual void	Death() = 0;
 	BOOL			IsDead() const;
