@@ -278,8 +278,20 @@ void CPlayer::Draw(HDC hdc)
 
 	if (iaoeeffecttime) {
 		// ±¤¿ª±â ÀÌÆåÆ® ±×¸®±â
-		Ellipse(hdc, mptpos.x - iAoERadius, mptpos.y - iAoERadius,
-			mptpos.x + iAoERadius, mptpos.y + iAoERadius);
+
+		float tmp1 = iaoeeffecttime / FRAMETIME;
+		float tmp2 = PLAYER_EFFECTTIME_AOE / FRAMETIME;
+
+		INT d = (INT)(iAoERadius * tmp1 / tmp2);
+
+	
+		HBRUSH hIAOEOLDBRUSH = (HBRUSH)SelectObject(hdc, hIAOEBRUSH);
+
+		Ellipse(hdc, mptpos.x - d, mptpos.y - d,
+			mptpos.x + d, mptpos.y + d);
+
+		SelectObject(hdc, hIAOEOLDBRUSH);
+	
 	}
 
 
@@ -305,8 +317,16 @@ void CPlayer::Draw(HDC hdc)
 	};
 
 	if (onshield) {
+
+		
+		HBRUSH hSDOLDBRUSH = (HBRUSH)SelectObject(hdc, hSDBRUSH);
+
 		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD,
 			mptpos.x + SHIELD_RAD, mptpos.y + SHIELD_RAD);
+
+		SelectObject(hdc, hSDOLDBRUSH);
+
+
 	}
 
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);

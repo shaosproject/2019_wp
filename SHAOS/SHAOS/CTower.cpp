@@ -39,9 +39,17 @@ CTower::~CTower()
 
 void CTower::Draw(HDC hdc)
 {
+	HBRUSH hTWOLDBRUSH = (HBRUSH)SelectObject(hdc, hTWBRUSH);
 	Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+    SelectObject(hdc, hTWOLDBRUSH);
+	
+	HBRUSH hTROLDBRUSH1 = (HBRUSH)SelectObject(hdc, hTRIBRUSH1);
 	Polygon(hdc, triangle1, 3);
+	SelectObject(hdc, hTROLDBRUSH1);
+	
+	HBRUSH hTROLDBRUSH2 = (HBRUSH)SelectObject(hdc, hTRIBRUSH2);
 	Polygon(hdc, triangle2, 3);
+	SelectObject(hdc, hTROLDBRUSH2);
 
 	if (mdeath) {
 

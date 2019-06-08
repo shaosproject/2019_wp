@@ -77,7 +77,15 @@ const POINTFLOAT DIRVECTOR_STOP = { 0,0 };
 
 #define SHIELD_RAD 20
 const HBRUSH hRTBRUSH = CreateSolidBrush(RGB(60, 100, 250));
-
+const HBRUSH hIAOEBRUSH= CreateSolidBrush(RGB(160, 82, 45));
+const HBRUSH hSDBRUSH = CreateSolidBrush(RGB(0, 0, 238));
+const HBRUSH hTRBRUSH = CreateSolidBrush(RGB(139, 26, 26));
+//const HBRUSH hTRBRUSH2 = CreateSolidBrush(RGB(255, 220, 200));
+//const HBRUSH hTRBRUSH3 = CreateSolidBrush(RGB(255, 220, 200));
+//const HBRUSH hTRBRUSH4 = CreateSolidBrush(RGB(255, 220, 200));
+const HBRUSH hTWBRUSH = CreateSolidBrush(RGB(255, 255, 255));
+const HBRUSH hTRIBRUSH1 = CreateSolidBrush(RGB(0, 0, 0));
+const HBRUSH hTRIBRUSH2 = CreateSolidBrush(RGB(255, 255, 255));
 
 #define COOLTIME_SHOOT		FRAMETIME * 100
 #define COOLTIME_AOE		FRAMETIME * 100

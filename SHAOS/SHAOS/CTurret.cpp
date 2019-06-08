@@ -30,9 +30,10 @@ void CTurret::Draw(HDC hdc)
 	if (mdeath) {
 		// Á×À½ ÀÌÆåÆ®
 	}
-
+	HBRUSH hTROLDBRUSH = (HBRUSH)SelectObject(hdc, hTRBRUSH);
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
 		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
+	SelectObject(hdc, hTROLDBRUSH);
 }
 
 void CTurret::Update()
