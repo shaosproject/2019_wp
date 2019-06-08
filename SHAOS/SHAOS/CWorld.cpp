@@ -30,6 +30,9 @@ CWorld::CWorld(HWND hwnd)
 	pUserTeam->SetOpponentObj(pEnemyTeam->GetMyObjList());
 	pEnemyTeam->SetOpponentObj(pUserTeam->GetMyObjList());
 
+	// 초기 오브젝트 할당
+	pUserTeam->SetInitObj();
+	pEnemyTeam->SetInitObj();
 }
 
 

@@ -1,5 +1,8 @@
 #pragma once
 #include "CGameObject.h"
+
+#define UNIT_RECOGRNGRADIUS 300
+
 class CTower;
 
 class CUnit : public CGameObject
@@ -7,7 +10,7 @@ class CUnit : public CGameObject
 protected:
 	BOOL moveOn;
 	POINTFLOAT ptenemytowerpos;
-	CGameObject* pattcktarget;
+	CGameObject* pattacktarget;
 public:
 	CUnit(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
 	~CUnit();

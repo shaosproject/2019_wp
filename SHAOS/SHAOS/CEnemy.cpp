@@ -15,10 +15,8 @@ CEnemy::~CEnemy()
 {
 }
 
-void CEnemy::SetOpponentObj(CGameObject* objlist)
+void CEnemy::SetInitObj()
 {
-	p_opponentobjlist = objlist;
-
 	mTurret1 = new CTurret(TURRET1_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret1);
 

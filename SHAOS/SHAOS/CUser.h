@@ -1,20 +1,23 @@
 #pragma once
 #include "CTeam.h"
+
+
+const POINTFLOAT PLAYER_INITPOS = { 100,100 };
+
 class CPlayer;
 class CUser : public CTeam
 {
 	// gameobjlist에 타워, 플레이어, 유닛 순으로 연결
 	CTower* mTower;
 	CPlayer* mPlayer;
-	CUnit* mUnithead;
 
-	const POINT ptUnitSponPos = { 500, 350 };
+	const POINTFLOAT ptUnitSponPos = { 500, 350 };
 
 public:
 	CUser();
 	~CUser();
 	
-	virtual void SetOpponentObj(CGameObject* objlist);
+	void SetInitObj();
 
 	void Update();
 	void Draw(HDC hdc);
