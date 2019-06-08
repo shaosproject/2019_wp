@@ -20,6 +20,7 @@ CTower::CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	triangle2[1] = { (LONG)(mptpos.x - TOWER_HALFSIDE),(LONG)(mptpos.y + TOWER_CENTER2SIDE) };
 	triangle2[2] = { (LONG)(mptpos.x + TOWER_HALFSIDE),(LONG)(mptpos.y + TOWER_CENTER2SIDE) };
 
+
 	mhp = new CHp(TOWER_MAXHP);
 	if (team == TEAM::USER) {
 		mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
@@ -46,13 +47,12 @@ void CTower::Draw(HDC hdc)
 
 void CTower::Update()
 {
-	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TOWER_RADIUS * 2, TOWER_MAXHP);
-
+	mrchpbar.top = mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), TOWER_CENTER2VERTAX * 2, TOWER_MAXHP);
 }
 
 INT CTower::GetObjRadius()
 {
-	return TOWER_RADIUS;
+	return TOWER_CENTER2VERTAX;
 }
 
 void CTower::Death()

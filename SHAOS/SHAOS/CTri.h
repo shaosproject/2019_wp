@@ -8,7 +8,7 @@ public:
 	virtual void Draw(HDC hdc);
 	virtual void Update();
 
-	virtual INT		GetObjRadius();
+	virtual INT	GetObjRadius();
 	virtual void Death() {};
 };
 
