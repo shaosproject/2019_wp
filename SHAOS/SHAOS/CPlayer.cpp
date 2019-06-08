@@ -31,9 +31,12 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	onshield = FALSE;
 	shieldtime = 0;
 
+	mdeath = FALSE;
+
 	cooltime_Shield = 0;
 	cooltime_AoE = 0;
 	cooltime_Shoot = 0;
+	cooltime_Death = 0;
 
 	//공격
 	ptarget = nullptr;
@@ -220,6 +223,12 @@ void CPlayer::ActiveShield()
 	cooltime_Shield = COOLTIME_SHIELD;
 }
 
+ void CPlayer::Death()
+{
+	 mdeath = TRUE;
+	 cooltime_Death = COOLTIME_DEATH;
+}
+
 POINTFLOAT CPlayer::Player_Vector()
 {
 	if (R_On && U_On)
@@ -263,6 +272,8 @@ void CPlayer::Attack()
 
 void CPlayer::Draw(HDC hdc)
 {
+
+
 	if (pressSft) {
 
 	}
@@ -309,8 +320,9 @@ void CPlayer::Draw(HDC hdc)
 	pt[3] = { (LONG)mptpos.x + PLAYER_RADIUS, (LONG)mptpos.y };
 	pt[4] = { (LONG)mptpos.x + (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
 	pt[5] = { (LONG)mptpos.x - (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
+
 	Polygon(hdc, pt, 6);
-	Ellipse(hdc, mptpos.x - PLAY_ELLIPSE_RAD, mptpos.y - PLAY_ELLIPSE_RAD, 
+	Ellipse(hdc, mptpos.x - PLAY_ELLIPSE_RAD, mptpos.y - PLAY_ELLIPSE_RAD,
 		mptpos.x + PLAY_ELLIPSE_RAD, mptpos.y + PLAY_ELLIPSE_RAD);
 
 	// 총알
@@ -324,7 +336,15 @@ void CPlayer::Draw(HDC hdc)
 
 void CPlayer::Update()
 {
-
+	if (mdeath)
+	{
+		if (cooltime_Death == 0)
+		{
+			SetPos(100, 100);
+			mhp->SetHp(PLAYER_MAXHP);
+			mdeath = FALSE;
+		}
+	}
 	// 플레이어 움직임
 	Move();
 
@@ -365,5 +385,5 @@ void CPlayer::Update()
 	if (cooltime_AoE) cooltime_AoE -= FRAMETIME;
 	if (cooltime_Shield) cooltime_Shield -= FRAMETIME;
 	if (cooltime_Return) cooltime_Return -= FRAMETIME;
-
+	if (cooltime_Death) cooltime_Death -= FRAMETIME;
 }

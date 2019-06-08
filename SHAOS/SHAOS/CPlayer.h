@@ -19,6 +19,7 @@ class CPlayer : public CGameObject
 	UINT cooltime_AoE;
 	UINT cooltime_Shield;
 	UINT cooltime_Return;
+	UINT cooltime_Death;
 
 	CGameObject* ptarget;
 	Bullet* pbullet;
@@ -50,6 +51,6 @@ public:
 
 
 	virtual INT		GetObjRadius();
-	virtual void	Death() {};
+	virtual void	Death();
 
 };

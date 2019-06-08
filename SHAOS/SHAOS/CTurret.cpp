@@ -42,16 +42,15 @@ void CTurret::Attack()
 {
 	CGameObject* tmp = nullptr;
 
-	//while (tmp != menemylist) {
-	//	if (!tmp) tmp = menemylist;
-	//
-	//	if (PtInRect(&tmp->GetRng(),(POINT&)tmp->GetPos())) {
-	//		ptarget = tmp;
-	//		return;
-	//	}
-	//
-	//	tmp = tmp->next;
-	//}
+	while (tmp != menemylist) {
+		if (!tmp) tmp = menemylist;
+	
+		if (PtInRect(&tmp->GetRng(),(POINT&)tmp->GetPos())) {
+			ptarget = tmp;
+			return;
+		}
+		tmp = tmp->next;
+	}
 	if (!ptarget) return;
 
 	if (pbullet) pbullet = pbullet->Move();

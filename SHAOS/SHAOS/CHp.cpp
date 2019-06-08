@@ -16,6 +16,11 @@ INT CHp::GetHp() const
 	return ihp;
 }
 
+void CHp::SetHp(INT sethp)
+{
+	ihp = sethp;
+}
+
 void CHp::AddHp(INT addhp)
 {
 	(ihp + addhp > imaxHp) ? ihp = imaxHp : ihp += addhp;
