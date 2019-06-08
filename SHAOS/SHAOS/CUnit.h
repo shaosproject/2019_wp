@@ -11,6 +11,7 @@ protected:
 	BOOL moveOn;
 	POINTFLOAT ptenemytowerpos;
 	CGameObject* pattacktarget;
+
 public:
 	CUnit(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
 	~CUnit();

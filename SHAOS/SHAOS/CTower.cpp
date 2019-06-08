@@ -45,6 +45,18 @@ void CTower::Draw(HDC hdc)
 
 }
 
+void CTower::SelectedDraw(HDC hdc)
+{
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSELECTEDBRUSH);
+
+	Ellipse(hdc, mrcRng.left - 4, mrcRng.top - 4,
+		mrcRng.right + 4, mrcRng.bottom + 4);
+
+
+	SelectObject(hdc, hOld);
+
+}
+
 void CTower::Update()
 {
 	mrchpbar.top = mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), TOWER_CENTER2VERTAX * 2, TOWER_MAXHP);

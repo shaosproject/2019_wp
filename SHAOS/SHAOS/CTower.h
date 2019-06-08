@@ -9,8 +9,11 @@ class CTower : public CGameObject
 public:
 	CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTower();
-	virtual void Draw(HDC hdc);
 	virtual void Update();
+	virtual void Draw(HDC hdc);
+
+	void SelectedDraw(HDC hdc);
+
 
 	virtual INT		GetObjRadius();
 	virtual void	Death();

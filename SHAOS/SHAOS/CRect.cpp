@@ -43,9 +43,17 @@ void CRect::Update()
 	// 공격할 대상 정하기
 	SetTarget();
 
-	if (moveOn) Move();
 
+	Move();
 
+	
+
+	if(iattackcooltime)
+		iattackcooltime -= FRAMETIME;
+	else {
+		Attack();
+		iattackcooltime = FRAMETIME * 50;
+	}
 }
 
 void CRect::Move()
@@ -57,7 +65,9 @@ void CRect::Move()
 	
 	float distance = sqrt(projX * projX + projY * projY);
 
-	if (distance < 100) moveOn = FALSE;	// 적절한 범위에서 멈추기
+	(distance < pattacktarget->GetObjRadius()) ? moveOn = FALSE : moveOn = TRUE;	// 적절한 범위에서 멈추기
+
+	if (!moveOn) return;
 
 	float nomalizedX = projX / distance;
 	float nomalizedY = projY / distance;
@@ -80,7 +90,14 @@ void CRect::Move()
 	//hp바 이동
 
 	if (team == TEAM::USER) {
+		//mrchpbar = {
+		//	mrcRng.left - 7,
+		//	mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), TOWER_CENTER2VERTAX * 2, RE)
+		//	mrcRng.left - 4,
+		//	mrcRng.bottom
+		//};
 		mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
+
 	}
 	else {
 		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };

@@ -36,6 +36,6 @@ public:
 
 	BOOL PutDamage(INT damage);
 
-	virtual void Death() = 0;
-	BOOL IsDead() const;
+	virtual void	Death() = 0;
+	BOOL			IsDead() const;
 };
