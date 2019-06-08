@@ -36,7 +36,6 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	cooltime_Shield = 0;
 	cooltime_AoE = 0;
 	cooltime_Shoot = 0;
-	cooltime_Death = 0;
 
 	//공격
 	ptarget = nullptr;
@@ -225,8 +224,7 @@ void CPlayer::ActiveShield()
 
  void CPlayer::Death()
 {
-	 mdeath = TRUE;
-	 cooltime_Death = COOLTIME_DEATH;
+
 }
 
 POINTFLOAT CPlayer::Player_Vector()
@@ -336,15 +334,7 @@ void CPlayer::Draw(HDC hdc)
 
 void CPlayer::Update()
 {
-	if (mdeath)
-	{
-		if (cooltime_Death == 0)
-		{
-			SetPos(100, 100);
-			mhp->SetHp(PLAYER_MAXHP);
-			mdeath = FALSE;
-		}
-	}
+
 	// 플레이어 움직임
 	Move();
 
@@ -385,5 +375,5 @@ void CPlayer::Update()
 	if (cooltime_AoE) cooltime_AoE -= FRAMETIME;
 	if (cooltime_Shield) cooltime_Shield -= FRAMETIME;
 	if (cooltime_Return) cooltime_Return -= FRAMETIME;
-	if (cooltime_Death) cooltime_Death -= FRAMETIME;
+
 }
