@@ -45,7 +45,7 @@ void CTurret::Update()
 
 
 
-	if (mdeath) ideatheffecttime -= FRAMETIME;
+	//if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
 }
 
 void CTurret::Attack()
@@ -85,13 +85,6 @@ INT CTurret::GetObjRadius()
 
 void CTurret::Death()
 {
-	// 1. 리스트에서 빼줘야함(동적할당 헤제)
-
-	this->prev->next = this->next;
-	this->next->prev = this->prev;
-
-	mdeath = TRUE;
-	//delete this; -> 여기서 죽이면 안 된다 나중에 모든 처리가 끝나고 나서...
-	// 2. 죽는 이펙트
+	ideatheffecttime = TURRET_EFFECTTIME_DEATH;
 }
 

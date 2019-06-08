@@ -45,9 +45,12 @@ void CEnemy::Update()
 	CGameObject* tmp = p_myobjlist;
 	for (int i = 0; i < imyobjnum; i++) {
 		tmp->Update();
-		//if () {
-		//
-		//}
+		if (tmp->IsDelete()) {
+			CGameObject* delp = tmp;
+			tmp = tmp->next;
+			DeleteInList(delp);
+			continue;
+		}
 		tmp = tmp->next;
 	}
 

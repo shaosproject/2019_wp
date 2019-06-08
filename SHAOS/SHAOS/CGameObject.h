@@ -43,4 +43,5 @@ public:
 
 	virtual void	Death() = 0;
 	BOOL			IsDead() const;
+	BOOL			IsDelete() const;
 };
