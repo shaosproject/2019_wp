@@ -136,8 +136,9 @@ void CRect::Attack()
 		float range = iattakradius + tmp->GetObjRadius();
 		if (center_d <= range * range) {
 			tmp->PutDamage(RECT_DAMAGE);
-			if (tmp->IsDead())
+			if (tmp->IsDead()) {
 				pattacktarget = menemylist;
+			}
 		}
 
 		tmp = tmp->next;
@@ -149,7 +150,12 @@ void CRect::SetTarget()
 	CGameObject* tmp = nullptr;
 	while (tmp != menemylist) {
 		if (!tmp) tmp = menemylist;
-		//UNIT_RECOGRNGRADIUS
+
+		//죽었으면 타겟이 될 수 없음
+		if (tmp->IsDead()) {
+			tmp = tmp->next;
+			continue;
+		}
 
 		float projX = tmp->GetPos().x - mptpos.x;
 		float projY = tmp->GetPos().y - mptpos.y;

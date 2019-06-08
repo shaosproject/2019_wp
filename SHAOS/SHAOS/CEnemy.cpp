@@ -62,3 +62,7 @@ void CEnemy::Draw(HDC hdc)
 		tmp = tmp->next;
 	}
 }
+
+void CEnemy::UnitGen()
+{
+}

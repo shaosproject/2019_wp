@@ -1,9 +1,5 @@
 #pragma once
 #include "CTeam.h"
-const POINTFLOAT TURRET1_POS = { 1850,350 };
-const POINTFLOAT TURRET2_POS = { 2315,80 };
-const POINTFLOAT TURRET3_POS = { 2315,620 };
-const POINTFLOAT TURRET4_POS = { 2775,350 };
 
 class CTurret;
 
@@ -25,4 +21,7 @@ public:
 	void Update();
 
 	void Draw(HDC hdc);
+
+	void UnitGen();
+
 };

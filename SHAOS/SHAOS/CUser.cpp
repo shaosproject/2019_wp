@@ -22,7 +22,12 @@ CUser::~CUser()
 
 void CUser::SetInitObj()
 {
-	mPlayer = new CPlayer(PLAYER_INITPOS, TEAM::USER, p_opponentobjlist);
+	POINTFLOAT tmp = {
+		(INT)PLAYER_DEFAULT_POSITION.x,
+		(INT)PLAYER_DEFAULT_POSITION.y
+	};
+	
+	mPlayer = new CPlayer(tmp, TEAM::USER, p_opponentobjlist);
 	this->AddMyObjList(mPlayer);
 
 	CUnit* unit = new CRect(ptUnitSponPos, TEAM::USER, p_opponentobjlist);

@@ -23,7 +23,7 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	// 스킬
 	pressSft = FALSE;
 
-	AoEdrawtime = 0;
+	iaoeeffecttime = 0;
 
 	pressQ = FALSE;
 	returntime = 0;
@@ -112,9 +112,8 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			U_On = FALSE;
 			break;
 		case VK_SHIFT:
-			pressSft = TRUE;
+			pressSft = FALSE;
 			break;
-
 		case 'Q':
 			if (pressQ) {
 				pressQ = FALSE;
@@ -183,7 +182,7 @@ void CPlayer::Skill_AreaOfEffect()
 	cooltime_AoE = COOLTIME_AOE;
 
 	// 이펙트 신호 주기
-	AoEdrawtime = DRAWTIME_AOE;
+	iaoeeffecttime = PLAYER_EFFECTTIME_AOE;
 
 	// 충돌체크해서 데미지 주기
 	CGameObject* tmp = nullptr;
@@ -222,10 +221,6 @@ void CPlayer::ActiveShield()
 	cooltime_Shield = COOLTIME_SHIELD;
 }
 
- void CPlayer::Death()
-{
-
-}
 
 POINTFLOAT CPlayer::Player_Vector()
 {
@@ -249,10 +244,10 @@ POINTFLOAT CPlayer::Player_Vector()
 }
 
 
-void CPlayer::SetPos(INT x, INT y)
+void CPlayer::SetPos(POINT setpos)
 {
-	mptpos.x = x;
-	mptpos.y = y;
+	mptpos.x = (INT)setpos.x;
+	mptpos.y = (INT)setpos.y;
 }
 INT CPlayer::GetObjRadius()
 {
@@ -272,13 +267,17 @@ void CPlayer::Draw(HDC hdc)
 {
 
 
+	if (mdeath) {
+		return;
+	}
+
+
 	if (pressSft) {
 
 	}
 
-	if (AoEdrawtime) {
+	if (iaoeeffecttime) {
 		// 광역기 이펙트 그리기
-
 		Ellipse(hdc, mptpos.x - iAoERadius, mptpos.y - iAoERadius,
 			mptpos.x + iAoERadius, mptpos.y + iAoERadius);
 	}
@@ -323,6 +322,15 @@ void CPlayer::Draw(HDC hdc)
 	Ellipse(hdc, mptpos.x - PLAY_ELLIPSE_RAD, mptpos.y - PLAY_ELLIPSE_RAD,
 		mptpos.x + PLAY_ELLIPSE_RAD, mptpos.y + PLAY_ELLIPSE_RAD);
 
+
+	// hpbar 
+	mrchpbar.left = mrcRng.left - 7;
+	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
+	mrchpbar.right = mrcRng.left - 4;
+	mrchpbar.bottom = mrcRng.bottom;
+
+
+
 	// 총알
 	if (pbullet) {
 		pbullet->Draw(hdc);
@@ -343,20 +351,15 @@ void CPlayer::Update()
 		mhp->AddHp(RECOVERAMOUNT);
 	}
 
-	// hpbar 
-	mrchpbar.left = mrcRng.left - 7;
-	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), PLAYER_RADIUS * 2, PLAYER_MAXHP);
-	mrchpbar.right = mrcRng.left - 4;
-	mrchpbar.bottom = mrcRng.bottom;
 
 	Attack();
 
-	if (AoEdrawtime) AoEdrawtime -= FRAMETIME;
+	if (iaoeeffecttime) iaoeeffecttime -= FRAMETIME;
 
 	if (pressQ) {
 		if (returntime == 0) 
 		{
-			SetPos(100, 100);
+			SetPos(PLAYER_DEFAULT_POSITION);
 			pressQ = FALSE;
 			cooltime_Return = COOLTIME_RETURN;
 		}
@@ -370,10 +373,26 @@ void CPlayer::Update()
 		shieldtime -= FRAMETIME;
 	}
 
+
 	// 쿨타임이 0이 아닐 때 감소
 	if (cooltime_Shoot) cooltime_Shoot -= FRAMETIME;
 	if (cooltime_AoE) cooltime_AoE -= FRAMETIME;
 	if (cooltime_Shield) cooltime_Shield -= FRAMETIME;
 	if (cooltime_Return) cooltime_Return -= FRAMETIME;
 
+
+	// 죽음
+	if (ideatheffecttime) {
+		ideatheffecttime -= FRAMETIME;
+		if (!ideatheffecttime) {
+			SetPos(PLAYER_DEFAULT_POSITION);
+			mhp->SetHp(PLAYER_MAXHP);
+			mdeath = FALSE;
+		}
+	}
+}
+
+void CPlayer::Death()
+{
+	ideatheffecttime = PLAYER_EFFECTTIME_DEATH;
 }

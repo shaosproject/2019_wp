@@ -2,8 +2,6 @@
 #include "CTeam.h"
 
 
-const POINTFLOAT PLAYER_INITPOS = { 100,100 };
-
 class CPlayer;
 class CUser : public CTeam
 {

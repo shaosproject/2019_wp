@@ -17,8 +17,8 @@ CGameObject::~CGameObject()
 
 void CGameObject::DrawHP(HDC hdc)
 {
+	if (mdeath) return;
 	FillRect(hdc, &mrchpbar, hHPBRUSH);
-
 }
 
 POINTFLOAT CGameObject::GetPos() const

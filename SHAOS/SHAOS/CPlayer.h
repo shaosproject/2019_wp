@@ -3,7 +3,9 @@
 
 
 
-#define DRAWTIME_AOE FRAMETIME * 10
+#define PLAYER_EFFECTTIME_AOE FRAMETIME * 10
+#define PLAYER_EFFECTTIME_DEATH FRAMETIME* 500
+
 class Bullet;
 class CPlayer : public CGameObject
 {
@@ -11,7 +13,7 @@ class CPlayer : public CGameObject
 	BOOL pressQ, pressSft, onshield;
 
 
-	UINT AoEdrawtime;
+	UINT iaoeeffecttime;
 	UINT returntime, shieldtime;
 	
 
@@ -46,7 +48,7 @@ public:
 
 
 	POINTFLOAT Player_Vector();
-	void SetPos(INT x, INT y);
+	void SetPos(POINT setpos);
 	void Attack();
 
 
