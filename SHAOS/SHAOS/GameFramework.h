@@ -1,7 +1,7 @@
 #pragma once
 #include "CWorld.h"
 #include "resource.h"
-
+#include "Sound.h"
 void	CALLBACK	TimerProc(HWND, UINT, UINT, DWORD);
 BOOL	CALLBACK    DialogProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -10,7 +10,9 @@ class CGameFramework
 	HINSTANCE		mhInst;
 	HWND			mhWnd;
 	HWND			mhhTitleWnd;
-	
+
+
+
 	HDC				memdc;
 	HBITMAP			hpausebutton;
 
@@ -19,6 +21,7 @@ class CGameFramework
 
 
 public:
+	CSound* msound;
 	CGameFramework();
 	~CGameFramework();
 

@@ -2,15 +2,19 @@
 #include "GameFramework.h"
 CGameFramework::CGameFramework()
 {
+	msound = new CSound;
+	msound->SoundSystem();
+
 }
 CGameFramework::~CGameFramework()
 {
-	PlaySound(0, NULL, 0);
+	msound->SoundStop(1);
 }
 
 void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 {
-	PlaySound(L"Game_BGM.wav", NULL, SND_ASYNC | SND_LOOP);//타이틀화면닫히고나서 부모창이 켜질때
+
+	msound->MyPlaySound(0, 0);//타이틀화면닫히고나서 부모창이 켜질때
 	mhInst = hInst;
 	mhWnd = hwnd;
 	mhhTitleWnd = htitlewnd;
@@ -27,7 +31,7 @@ void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 
 void CGameFramework::Relese()
 {
-	PlaySound(0, NULL, 0); //부모창이 닫히고 타이틀창이 켜질때
+	msound->SoundStop(0); //부모창이 닫히고 타이틀창이 켜질때
 	DeleteObject(hpausebutton);
 	DeleteDC(memdc);
 	delete pworld;
