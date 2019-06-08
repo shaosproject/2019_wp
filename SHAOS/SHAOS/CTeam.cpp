@@ -12,11 +12,7 @@ CTeam::CTeam()
 
 CTeam::~CTeam()
 {
-	for (int i = 0; i < imyobjnum; i++) {
-		CGameObject* delp = p_myobjlist;
-		(p_myobjlist->next != nullptr) ? p_myobjlist = p_myobjlist->next : nullptr;
-		delete delp;
-	}
+
 }
 
 CGameObject* CTeam::GetMyObjList() const
@@ -42,11 +38,6 @@ void CTeam::AddMyObjList(CGameObject* addobj)
 void CTeam::DeleteInList(CGameObject* delobj)
 {
 	imyobjnum--;
-	if (imyobjnum == 0) {
-		p_myobjlist = nullptr;
-		delete delobj;
-		return;
-	}
 
 	delobj->prev->next = delobj->next;
 	delobj->next->prev = delobj->prev;

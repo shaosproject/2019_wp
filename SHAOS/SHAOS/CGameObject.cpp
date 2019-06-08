@@ -45,3 +45,9 @@ BOOL CGameObject::IsDead() const
 {
 	return mdeath;
 }
+
+BOOL CGameObject::IsDelete() const
+{
+	if (mdeath && !ideatheffecttime) return TRUE;
+	return FALSE;
+}

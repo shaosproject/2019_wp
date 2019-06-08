@@ -49,6 +49,10 @@ void CRect::Update()
 	// 공격할 대상 정하기
 	SetTarget();
 
+	if (pattacktarget->IsDead()) {
+		pattacktarget = menemylist;
+	}
+
 	Move();
 
 
@@ -61,14 +65,7 @@ void CRect::Update()
 
 
 	// 죽음
-	if (ideatheffecttime) {
-		ideatheffecttime -= FRAMETIME;
-		if (!ideatheffecttime) {
-			this->prev->next = next;
-			this->next->prev = prev;
-			delete this;
-		}
-	}
+	if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
 
 }
 
