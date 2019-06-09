@@ -7,6 +7,8 @@ CTeam::CTeam()
 	// Å¸¿ö 1°³
 	imyobjnum = 1;
 	iopnobjnum = 1;
+
+	gameover = FALSE;
 }
 
 
@@ -43,3 +45,4 @@ void CTeam::DeleteInList(CGameObject* delobj)
 	delobj->next->prev = delobj->prev;
 	delete delobj;
 }
+

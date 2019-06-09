@@ -1,10 +1,13 @@
 #pragma once
 #include "CGameObject.h"
 
-
-
 #define PLAYER_EFFECTTIME_AOE FRAMETIME * 10
 #define PLAYER_EFFECTTIME_DEATH FRAMETIME* 500
+#define PLAYER_SHOOT_LENGTH 200
+
+
+const HPEN hPLAYERSHOOTPEN = 
+	CreatePen(PS_SOLID, 30, RGB(0, 200, 200));
 
 class Bullet;
 class CPlayer : public CGameObject

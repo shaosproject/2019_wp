@@ -4,7 +4,7 @@
 #include "Bullet.h"
 
 CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
-	: CGameObject(ainitPos, team, enemylist), iAoERadius(PLAYER_RADIUS * 4)
+	: CGameObject(ainitPos, team, enemylist), iAoERadius(PLAYER_RADIUS * 5)
 {
 	// 충돌체크용 플레이어 영역 설정해주기
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
@@ -125,9 +125,8 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 
 void CPlayer::MSG_MouseMove(POINT mousepos)
 {
-	if (pressSft) {
-		worldmousepos = mousepos;
-	}
+	worldmousepos = mousepos;
+
 }
 
 void CPlayer::MSG_MouseUp(POINT mousepos)
@@ -137,6 +136,7 @@ void CPlayer::MSG_MouseDown(POINT mousepos)
 {
 	if (pressSft) {
 		Skill_Shoot();
+		pressSft = FALSE;
 		return;
 	}
 
@@ -166,6 +166,9 @@ void CPlayer::MSG_MouseDown(POINT mousepos)
 
 
 void CPlayer::Move() {
+	if (pressSft) return;
+
+
 	// 플레이어 중심점 좌표
 	POINTFLOAT dirvector = this->Player_Vector();
 
@@ -190,8 +193,6 @@ void CPlayer::Move() {
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
 		(LONG)mptpos.x + PLAYER_RADIUS, (LONG)mptpos.y + PLAYER_RADIUS };
 
-	worldmousepos.x += (INT)dirvector.x;
-	worldmousepos.y += (INT)dirvector.y;
 }
 
 void CPlayer::Skill_AreaOfEffect()
@@ -224,7 +225,8 @@ void CPlayer::Skill_Shoot()
 {
 	cooltime_Shoot = COOLTIME_SHOOT;
 
-	// 충돌체크해서 데미지
+	// 충돌체크해서 데미지 주기....
+	// 진짜 하기 싫어,,,
 }
 
 void CPlayer::ReturnHome()
@@ -280,9 +282,6 @@ BOOL CPlayer::Attack()
 
 void CPlayer::Draw(HDC hdc)
 {
-	Ellipse(hdc, worldmousepos.x - 5, worldmousepos.y - 5,
-		worldmousepos.x + 5, worldmousepos.y + 5);
-
 	if (mdeath) {
 		return;
 	}
@@ -290,8 +289,25 @@ void CPlayer::Draw(HDC hdc)
 
 	if (pressSft) {
 		// shoot의 공격경로 그리기
-		// 마우스가 맵에서 가지는 위치를 어떻게 저장하지...
-		// 플레이어의 위치부터 (그려지는 길이 정하기) 마우스 위치까지 LineTo()
+		// 방향벡터를 노말라이즈해서 길이만큼 곱한다
+
+		float dx = worldmousepos.x - mptpos.x;
+		float dy = worldmousepos.y - mptpos.y;
+
+		float sizeofvector = sqrt(dx * dx + dy * dy);
+
+		float nomalizedx = dx / sizeofvector;
+		float nomalizedy = dy / sizeofvector;
+
+		POINTFLOAT ptdraw = {
+			mptpos.x + nomalizedx * PLAYER_SHOOT_LENGTH,
+			mptpos.y + nomalizedy * PLAYER_SHOOT_LENGTH
+		};
+
+		HPEN hOld = (HPEN)SelectObject(hdc, hPLAYERSHOOTPEN);
+		MoveToEx(hdc, mptpos.x, mptpos.y, nullptr);
+		LineTo(hdc, ptdraw.x, ptdraw.y);
+		SelectObject(hdc, hOld);
 	}
 
 	if (iaoeeffecttime) {

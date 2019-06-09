@@ -44,6 +44,17 @@ void CEnemy::SetInitObj()
 
 void CEnemy::Update()
 {
+	if (gameover) return;
+	// À¯´Ö Á¨
+	if (iunitgentime) iunitgentime -= FRAMETIME;
+	else {
+		if (this->imyobjnum < 10) {
+			UnitGen();
+			iunitgentime = FRAMETIME * 300;
+		}
+	}
+
+
 	CGameObject* tmp = p_myobjlist;
 	for (int i = 0; i < imyobjnum; i++) {
 
@@ -51,8 +62,8 @@ void CEnemy::Update()
 
 		if (tmp->IsDelete()) {
 			if (tmp == p_myobjlist) {
-				GameOver();
-				return;
+				gameover = TRUE;
+				continue;
 			}
 			CGameObject* delp = tmp;
 			tmp = tmp->next;
@@ -77,9 +88,4 @@ void CEnemy::Draw(HDC hdc)
 
 void CEnemy::UnitGen()
 {
-}
-
-void CEnemy::GameOver()
-{
-
 }

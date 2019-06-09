@@ -34,7 +34,7 @@ CWorld::CWorld(HWND hwnd)
 	pUserTeam->SetInitObj();
 	pEnemyTeam->SetInitObj();
 
-	gameend = FALSE;
+	frametime_endingscene = FRAMETIME*50;
 }
 
 
@@ -71,6 +71,11 @@ void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 
 void CWorld::Update()
 {
+	if (pUserTeam->gameover || pEnemyTeam->gameover) {
+		if (frametime_endingscene) frametime_endingscene -= FRAMETIME;
+		return;
+	}
+
 	pUserTeam->Update();
 	pEnemyTeam->Update();
 	iViewX = (INT)SET_VIEWX(pUserTeam->GetPlayerPos().x);	
@@ -78,18 +83,17 @@ void CWorld::Update()
 
 void CWorld::Draw(HDC clientDC)
 {
-	if (gameend) {
-		// 엔딩장면 그리기
-	}
 	BitBlt(hUpdateDC, 0, 0, MAPSIZE_WIDTH, MAPSIZE_HEIGHT,
 		hBackgroundDC, 0, 0, SRCCOPY);
-	
+
+
 	// 객체 그리기
-	
 	pUserTeam->Draw(hUpdateDC);
 	pEnemyTeam->Draw(hUpdateDC);
 	//----
-	
+
+
+
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, iViewX - MIN_VIEWX, 0, SRCCOPY);
 }

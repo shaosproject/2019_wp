@@ -25,5 +25,4 @@ public:
 
 	void UnitGen();
 
-	void GameOver();
 };

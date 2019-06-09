@@ -28,16 +28,12 @@ void CUser::SetInitObj()
 	mPlayer = new CPlayer(tmp, TEAM::USER, p_opponentobjlist);
 	this->AddMyObjList(mPlayer);
 
-	//CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::USER, p_opponentobjlist);
-	//this->AddMyObjList(unit1);
-	//
-	//CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::USER, p_opponentobjlist);
-	//this->AddMyObjList(unit2);
-
 }
 
 void CUser::Update()
 {
+	if (gameover) return;
+
 	// À¯´Ö Á¨
 	if (iunitgentime) iunitgentime -= FRAMETIME;
 	else {
@@ -48,14 +44,26 @@ void CUser::Update()
 	}
 
 	// °×¿ÀºêÁ§ ¾÷µ¥ÀÌÆ®
-	CGameObject* tmp = nullptr;
-	while (tmp != p_myobjlist) {
-		if (!tmp) tmp = p_myobjlist;
-		
+	CGameObject* tmp = p_myobjlist;
+	for (int i = 0; i < imyobjnum; i++) {
+
 		tmp->Update();
+
+		if (tmp->IsDelete()) {
+			if (tmp == p_myobjlist) {
+				gameover = TRUE;
+				continue;
+			}
+
+			CGameObject* delp = tmp;
+			tmp = tmp->next;
+			DeleteInList(delp);
+			continue;
+		}
 
 		tmp = tmp->next;
 	}
+
 }
 
 void CUser::MSG_Key(UINT message, WPARAM wParam)

@@ -20,8 +20,8 @@ class CWorld
 
 	INT iViewX;
 
-	BOOL gameend;
 
+	INT frametime_endingscene;
 public:
 	CWorld(HWND hwnd);
 	~CWorld();
@@ -33,5 +33,6 @@ public:
 	void Update();
 
 	void Draw(HDC);
+
 };
 

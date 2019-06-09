@@ -24,35 +24,38 @@ CTower::CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	mhp = new CHp(TOWER_MAXHP);
 	if (team == TEAM::USER) {
 		mrchpbar = { mrcRng.left - 7, mrcRng.top, mrcRng.left - 4, mrcRng.bottom };
+		hTriBrush = CreateSolidBrush(RGB(0, 0, 200));
 	}
 	else {
 		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
+		hTriBrush = CreateSolidBrush(RGB(200, 0, 0));
 	}
+
 }
 
 
 CTower::~CTower()
 {
+	DeleteObject(hTriBrush);
 	delete mhp;
 }
 
 
 void CTower::Draw(HDC hdc)
 {
-	HBRUSH hTWOLDBRUSH = (HBRUSH)SelectObject(hdc, hTWBRUSH);
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(GRAY_BRUSH));
 	Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
-    SelectObject(hdc, hTWOLDBRUSH);
 	
-	HBRUSH hTROLDBRUSH1 = (HBRUSH)SelectObject(hdc, hTRIBRUSH1);
+	SelectObject(hdc, (HBRUSH)GetStockObject(BLACK_BRUSH));
 	Polygon(hdc, triangle1, 3);
-	SelectObject(hdc, hTROLDBRUSH1);
 	
-	HBRUSH hTROLDBRUSH2 = (HBRUSH)SelectObject(hdc, hTRIBRUSH2);
+	SelectObject(hdc, hTriBrush);
 	Polygon(hdc, triangle2, 3);
-	SelectObject(hdc, hTROLDBRUSH2);
 
-	if (mdeath) {
+	SelectObject(hdc, hOld);
 
+	if (ideatheffecttime) {
+		// 죽는 이펙트
 	}
 }
 
@@ -75,9 +78,6 @@ void CTower::Update()
 	
 	if (ideatheffecttime) {
 		ideatheffecttime -= FRAMETIME;
-		if (!ideatheffecttime) {
-			// 게임오버 ...? 어떻게?
-		}
 	}
 }
 

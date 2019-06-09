@@ -8,6 +8,8 @@ class CTower : public CGameObject
 	POINT triangle1[3];
 	POINT triangle2[3];
 
+	HBRUSH hTriBrush;
+
 public:
 	CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTower();

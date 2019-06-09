@@ -17,6 +17,9 @@ protected:
 	UINT iunitgentime;
 
 public:
+	BOOL gameover;
+
+
 	CTeam();
 	virtual ~CTeam();
 
@@ -27,5 +30,6 @@ public:
 
 	void AddMyObjList(CGameObject*);
 	void DeleteInList(CGameObject*);
+
 };
 

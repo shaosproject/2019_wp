@@ -229,6 +229,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
+	static HBITMAP hTitleBit;
 
 	switch (message) {
 	case WM_CREATE:
@@ -240,7 +241,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 			L"button",
 			L"START",
 			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			500, 500, 200, 25,
+			850, 280, 200, 30,
 			hWnd,
 			(HMENU)IDC_BUTTON_START,
 			hInst,
@@ -251,7 +252,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 			L"button",
 			L"HELP",
 			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			500, 550, 200, 25,
+			850, 340, 200, 30,
 			hWnd,
 			(HMENU)IDC_BUTTON_HELP,
 			hInst,
@@ -262,14 +263,15 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 			L"button",
 			L"EXIT",
 			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			500, 600, 200, 25,
+			850, 400, 200, 30,
 			hWnd,
 			(HMENU)IDC_BUTTON_EXIT,
 			hInst,
 			nullptr
 		);
+		hTitleBit = (HBITMAP)LoadImage(NULL, L"Resource/SHAOS타이틀.bmp", IMAGE_BITMAP,
+			0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 		break;
-	
 	}
 	case WM_COMMAND:
 	{
@@ -295,15 +297,20 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
 
-		SetBkMode(hdc, TRANSPARENT);
-		SetTextColor(hdc, RGB(255, 255, 255));
-		TextOut(hdc, 100, 100, L"SHAOS", lstrlen(L"SHAOS"));
+		HDC memdc = CreateCompatibleDC(hdc);
+		HBITMAP hOld = (HBITMAP)SelectObject(memdc, hTitleBit);
+		RECT rcClient;
+		GetClientRect(hWnd, &rcClient);
+
+		BitBlt(hdc, 0, 0, rcClient.right, rcClient.bottom,
+			memdc, 0, 0, SRCCOPY);
 
 		EndPaint(hWnd, &ps);
 		break;
 	}
 	case WM_DESTROY:
 		// 부모 죽으면 차일드는 알아서 죽는다
+		DeleteObject(hTitleBit);
 		break;
 	}
 	return DefWindowProc(hWnd, message, wParam, lParam);
