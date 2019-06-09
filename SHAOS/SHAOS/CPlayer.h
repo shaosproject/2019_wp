@@ -16,6 +16,7 @@ class CPlayer : public CGameObject
 	UINT iaoeeffecttime;
 	UINT returntime, shieldtime;
 	
+	const INT iAoERadius;
 
 	UINT cooltime_Shoot;
 	UINT cooltime_AoE;
@@ -23,36 +24,37 @@ class CPlayer : public CGameObject
 	UINT cooltime_Return;
 	UINT cooltime_Death;
 
-	CGameObject* ptarget;
-	Bullet* pbullet;
-	const INT iAoERadius;
+	CGameObject*	ptarget;
+	Bullet*			pbullet;
+
 
 
 public:
 	CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
 	~CPlayer();
 
-	virtual void Draw(HDC hdc);
-	virtual void Update();
+	virtual void		Draw(HDC hdc);
+	virtual void		Update();
 
-	void MSG_Key(UINT message, WPARAM wParam);
-	void MSG_MouseMove(POINT mousepos);
-	void MSG_MouseUp(POINT mousepos);
-	void MSG_MouseDown(POINT mousepos);
+	void				MSG_Key(UINT message, WPARAM wParam);
+	void				MSG_MouseMove(POINT mousepos);
+	void				MSG_MouseUp(POINT mousepos);
+	void				MSG_MouseDown(POINT mousepos);
 
-	void Move();
-	void Skill_AreaOfEffect();
-	void Skill_Shoot();
-	void ActiveShield();
-	void ReturnHome();
+	void				Move();
+	BOOL				Attack();
 
 
-	POINTFLOAT Player_Vector();
-	void SetPos(POINT setpos);
-	void Attack();
+	void				Skill_Shoot();
+	void				Skill_AreaOfEffect();
+	void				ActiveShield();
+	void				ReturnHome();
 
 
-	virtual INT		GetObjRadius();
-	virtual void	Death();
 
+	virtual INT			GetObjRadius();
+	virtual void		Death();
+
+	POINTFLOAT			Player_Vector();
+	void				SetPos(POINT setpos);
 };

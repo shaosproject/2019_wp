@@ -9,7 +9,8 @@ class CEnemy : public CTeam
 	CTower* mTower;
 	CTurret* mTurret1, * mTurret2,* mTurret3,* mTurret4;
 
-	const POINTFLOAT ptUnitSponPos = { 3200, 350 };
+	const POINTFLOAT ptUnitSponPos1 = { 3200, 200 };
+	const POINTFLOAT ptUnitSponPos2 = { 3200, 500 };
 
 
 public:
@@ -24,4 +25,5 @@ public:
 
 	void UnitGen();
 
+	void GameOver();
 };

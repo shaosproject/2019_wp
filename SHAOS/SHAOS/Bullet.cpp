@@ -41,6 +41,6 @@ Bullet* Bullet::Move()
 
 void Bullet::Draw(HDC hdc)
 {
-	Ellipse(hdc, ptbulletpos.x - BULLET_RAD, ptbulletpos.y - BULLET_RAD,
-		ptbulletpos.x + BULLET_RAD, ptbulletpos.y + BULLET_RAD);
+	Ellipse(hdc, ptbulletpos.x - BULLET_RADIUS, ptbulletpos.y - BULLET_RADIUS,
+		ptbulletpos.x + BULLET_RADIUS, ptbulletpos.y + BULLET_RADIUS);
 }

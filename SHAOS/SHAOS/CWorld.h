@@ -20,6 +20,7 @@ class CWorld
 
 	INT iViewX;
 
+	BOOL gameend;
 
 public:
 	CWorld(HWND hwnd);

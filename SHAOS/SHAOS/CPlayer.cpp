@@ -38,9 +38,9 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	cooltime_Shoot = 0;
 
 	//공격
+	iattackcooltime = FRAMETIME * 50;
 	ptarget = nullptr;
 	pbullet = nullptr;
-
 }
 
 
@@ -74,7 +74,7 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 		case VK_SHIFT:
 			if (!cooltime_Shoot && !pressSft) {
 				pressSft = TRUE;
-				Skill_Shoot();
+				//Skill_Shoot();
 			}
 			break;
 		case VK_SPACE:
@@ -83,14 +83,12 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			}
 			break;
 		case 'Q':
-			// 쿨타임 조건 추가해야 함
 			if (!pressQ && !cooltime_Return) {
 				pressQ = TRUE;
 				ReturnHome();
 			}
 			break;
 		case 'V':
-			// 쉴드 쿨타임이 없을 때 = 0일 때
 			if (!cooltime_Shield) {
 				ActiveShield();
 			}
@@ -128,25 +126,43 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 
 void CPlayer::MSG_MouseMove(POINT mousepos)
 {
+	if (pressSft) {
+		// 마우스가 움직이는 방향으로 공격 경로가 따라옴
+	}
 }
+
 void CPlayer::MSG_MouseUp(POINT mousepos)
 {
 }
 void CPlayer::MSG_MouseDown(POINT mousepos)
 {
-	CGameObject* tmp = nullptr;
+	if (pressSft) {
+		Skill_Shoot();
+		return;
+	}
 
+	CGameObject* tmp = nullptr;
 	while (tmp != menemylist) {
 		if (!tmp) tmp = menemylist;
 
-		if (PtInRect(&tmp->GetRng(), mousepos)) {
-			ptarget = tmp;
-			return;
+		if (tmp->IsDead()) {
+			tmp = tmp->next;
+			continue;
 		}
+		if (PtInRect(&tmp->GetRng(), mousepos)) {
+			float dx = mptpos.x - tmp->GetPos().x;
+			float dy = mptpos.y - tmp->GetPos().y;
 
+			float center_d = dx * dx + dy * dy;
+			float range = PLAYER_ATTACK_RANGE + tmp->GetObjRadius();
+			if (center_d <= range * range) {
+				ptarget = tmp;
+				return;
+			}
+		}
 		tmp = tmp->next;
 	}
- }
+}
 
 
 
@@ -207,6 +223,7 @@ void CPlayer::Skill_Shoot()
 {
 	cooltime_Shoot = COOLTIME_SHOOT;
 
+	// 충돌체크해서 데미지
 }
 
 void CPlayer::ReturnHome()
@@ -253,19 +270,15 @@ INT CPlayer::GetObjRadius()
 {
 	return PLAYER_RADIUS;
 }
-void CPlayer::Attack()
+BOOL CPlayer::Attack()
 {
-	if (!ptarget) return;
-
-	if (pbullet) pbullet = pbullet->Move();
-	else pbullet = new Bullet(&mptpos, ptarget, PLAYER_BULLETDAMAGE);
-
-	if (ptarget->IsDead()) ptarget = nullptr;
+	if (!ptarget) return FALSE;
+	pbullet = new Bullet(&mptpos, ptarget, PLAYER_BULLETDAMAGE);
+	return TRUE;
 }
 
 void CPlayer::Draw(HDC hdc)
 {
-
 
 	if (mdeath) {
 		return;
@@ -273,7 +286,9 @@ void CPlayer::Draw(HDC hdc)
 
 
 	if (pressSft) {
-
+		// shoot의 공격경로 그리기
+		// 마우스가 맵에서 가지는 위치를 어떻게 저장하지...
+		// 플레이어의 위치부터 (그려지는 길이 정하기) 마우스 위치까지 LineTo()
 	}
 
 	if (iaoeeffecttime) {
@@ -285,12 +300,12 @@ void CPlayer::Draw(HDC hdc)
 		INT d = (INT)(iAoERadius * tmp1 / tmp2);
 
 	
-		HBRUSH hIAOEOLDBRUSH = (HBRUSH)SelectObject(hdc, hIAOEBRUSH);
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hIAOEBRUSH);
 
 		Ellipse(hdc, mptpos.x - d, mptpos.y - d,
 			mptpos.x + d, mptpos.y + d);
 
-		SelectObject(hdc, hIAOEOLDBRUSH);
+		SelectObject(hdc, hOld);
 	
 	}
 
@@ -319,12 +334,12 @@ void CPlayer::Draw(HDC hdc)
 	if (onshield) {
 
 		
-		HBRUSH hSDOLDBRUSH = (HBRUSH)SelectObject(hdc, hSDBRUSH);
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSDBRUSH);
 
 		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD,
 			mptpos.x + SHIELD_RAD, mptpos.y + SHIELD_RAD);
 
-		SelectObject(hdc, hSDOLDBRUSH);
+		SelectObject(hdc, hOld);
 
 
 	}
@@ -351,17 +366,54 @@ void CPlayer::Draw(HDC hdc)
 
 
 
+	CGameObject* tmp = nullptr;
+	while (tmp != menemylist) {
+		if (!tmp) tmp = menemylist;
+
+		if (tmp->IsDead()) {
+			tmp = tmp->next;
+			continue;
+		}
+
+		float dx = mptpos.x - tmp->GetPos().x;
+		float dy = mptpos.y - tmp->GetPos().y;
+
+		float center_d = dx * dx + dy * dy;
+		float range = PLAYER_ATTACK_RANGE + tmp->GetObjRadius();
+		if (center_d <= range * range) {
+			tmp->SelectedDraw(hdc, hINRANGEBRUSH);
+		}
+
+		tmp = tmp->next;
+	}
+
+
 	// 총알
 	if (pbullet) {
 		pbullet->Draw(hdc);
 	}
 	if (ptarget) {
-		ptarget->SelectedDraw(hdc);
+
+		if (ptarget->IsDead()) ptarget = nullptr;			// 다른 유닛에 의해 죽었을 때
+		else ptarget->SelectedDraw(hdc, hSELECTEDBRUSH);
+
 	}
 }
 
+
 void CPlayer::Update()
 {
+
+	// 죽음
+	if (ideatheffecttime) {
+		ideatheffecttime -= FRAMETIME;
+		if (!ideatheffecttime) {
+			SetPos(PLAYER_DEFAULT_POSITION);
+			mhp->SetHp(PLAYER_MAXHP);
+			mdeath = FALSE;
+		}
+	}
+
 
 	// 플레이어 움직임
 	Move();
@@ -371,8 +423,6 @@ void CPlayer::Update()
 		mhp->AddHp(RECOVERAMOUNT);
 	}
 
-
-	Attack();
 
 	if (iaoeeffecttime) iaoeeffecttime -= FRAMETIME;
 
@@ -401,15 +451,33 @@ void CPlayer::Update()
 	if (cooltime_Return) cooltime_Return -= FRAMETIME;
 
 
-	// 죽음
-	if (ideatheffecttime) {
-		ideatheffecttime -= FRAMETIME;
-		if (!ideatheffecttime) {
-			SetPos(PLAYER_DEFAULT_POSITION);
-			mhp->SetHp(PLAYER_MAXHP);
-			mdeath = FALSE;
-		}
+	if (iattackcooltime)
+		iattackcooltime -= FRAMETIME;
+	else {
+		if (Attack())
+			iattackcooltime = FRAMETIME * 50;
 	}
+
+	if (pbullet) pbullet = pbullet->Move();
+
+	if (ptarget) {
+		if (ptarget->IsDead()) {		// 내 공격으로 죽었을 때
+			ptarget = nullptr;
+			return;
+		}
+
+		float dx = mptpos.x - ptarget->GetPos().x;
+		float dy = mptpos.y - ptarget->GetPos().y;
+
+		float center_d = dx * dx + dy * dy;
+		float range = PLAYER_ATTACK_RANGE + ptarget->GetObjRadius();
+		if (center_d > range * range) {
+			ptarget = nullptr;
+			return;
+		}
+
+	}
+	return;
 }
 
 void CPlayer::Death()

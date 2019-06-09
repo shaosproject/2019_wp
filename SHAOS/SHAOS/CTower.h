@@ -14,7 +14,7 @@ public:
 	virtual void Update();
 	virtual void Draw(HDC hdc);
 
-	void SelectedDraw(HDC hdc);
+	void SelectedDraw(HDC, HBRUSH);
 
 
 	virtual INT		GetObjRadius();

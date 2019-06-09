@@ -9,7 +9,8 @@ class CUser : public CTeam
 	CTower* mTower;
 	CPlayer* mPlayer;
 
-	const POINTFLOAT ptUnitSponPos = { 500, 350 };
+	const POINTFLOAT ptUnitSponPos1 = { 500, 200 };
+	const POINTFLOAT ptUnitSponPos2 = { 500, 500 };
 
 public:
 	CUser();

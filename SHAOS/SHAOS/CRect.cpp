@@ -16,6 +16,8 @@ CRect::CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 	}
 
+	iattackcooltime = FRAMETIME * 50;
+
 	pattacktarget = menemylist;
 	ideatheffecttime = 0;
 }
@@ -27,18 +29,26 @@ CRect::~CRect()
 
 void CRect::Draw(HDC hdc)
 {
+	if (iattackcooltime >= FRAMETIME * 45) {
+		// 공격 이펙트 (5프레임)
+		Ellipse(hdc, mptpos.x - iattakradius, mptpos.y - iattakradius,
+			mptpos.x + iattakradius, mptpos.y + iattakradius);
+	}
+
+
 	Rectangle(hdc, mrcRng.left, mrcRng.top,
 		mrcRng.right, mrcRng.bottom);
 
 	if (mdeath) {
+		// 죽었을 때 이펙트
 		Ellipse(hdc, mrcRng.left, mrcRng.top,
 			mrcRng.right, mrcRng.bottom);
 	}
 }
 
-void CRect::SelectedDraw(HDC hdc)
+void CRect::SelectedDraw(HDC hdc, HBRUSH hbr)
 {
-	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSELECTEDBRUSH);
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
 	Rectangle(hdc, mrcRng.left - 2, mrcRng.top - 2,
 		mrcRng.right + 2, mrcRng.bottom + 2);
 	SelectObject(hdc, hOld);
@@ -46,12 +56,19 @@ void CRect::SelectedDraw(HDC hdc)
 
 void CRect::Update()
 {
+	// 죽음
+	if (ideatheffecttime) {
+		ideatheffecttime -= FRAMETIME;
+		return;
+	}
+
+
 	// 공격할 대상 정하기
 	SetTarget();
-
 	if (pattacktarget->IsDead()) {
 		pattacktarget = menemylist;
 	}
+
 
 	Move();
 
@@ -64,8 +81,6 @@ void CRect::Update()
 	}
 
 
-	// 죽음
-	if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
 
 }
 
@@ -159,7 +174,7 @@ void CRect::SetTarget()
 
 		float distance = sqrt(projX * projX + projY * projY);
 
-		if (distance < UNIT_RECOGRNGRADIUS) {
+		if (distance <= UNIT_RECOGRNGRADIUS + RECT_RADIUS) {
 			pattacktarget = tmp;
 			return;
 		}

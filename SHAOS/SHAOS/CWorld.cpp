@@ -33,6 +33,8 @@ CWorld::CWorld(HWND hwnd)
 	// 초기 오브젝트 할당
 	pUserTeam->SetInitObj();
 	pEnemyTeam->SetInitObj();
+
+	gameend = FALSE;
 }
 
 
@@ -76,7 +78,9 @@ void CWorld::Update()
 
 void CWorld::Draw(HDC clientDC)
 {
-
+	if (gameend) {
+		// 엔딩장면 그리기
+	}
 	BitBlt(hUpdateDC, 0, 0, MAPSIZE_WIDTH, MAPSIZE_HEIGHT,
 		hBackgroundDC, 0, 0, SRCCOPY);
 	

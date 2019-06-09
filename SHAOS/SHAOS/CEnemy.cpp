@@ -34,9 +34,11 @@ void CEnemy::SetInitObj()
 	mTurret4 = new CTurret(TURRET4_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret4);
 
-	CUnit* unit = new CRect(ptUnitSponPos, TEAM::ENEMY, p_opponentobjlist);
-	this->AddMyObjList(unit);
+	CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+	this->AddMyObjList(unit1);
 
+	CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+	this->AddMyObjList(unit2);
 
 }
 
@@ -46,6 +48,10 @@ void CEnemy::Update()
 	for (int i = 0; i < imyobjnum; i++) {
 		tmp->Update();
 		if (tmp->IsDelete()) {
+			if (tmp == p_myobjlist) {
+				GameOver();
+				return;
+			}
 			CGameObject* delp = tmp;
 			tmp = tmp->next;
 			DeleteInList(delp);
@@ -68,4 +74,9 @@ void CEnemy::Draw(HDC hdc)
 
 void CEnemy::UnitGen()
 {
+}
+
+void CEnemy::GameOver()
+{
+
 }

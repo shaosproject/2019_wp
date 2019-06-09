@@ -27,9 +27,12 @@ CTurret::~CTurret()
 
 void CTurret::Draw(HDC hdc)
 {
-	if (mdeath) {
-		// Á×À½ ÀÌÆåÆ®
+	if (ideatheffecttime) {
+		// Á×À½ ÀÌÆåÆ® ±×¸®±â
+		
+		return;
 	}
+
 	HBRUSH hTROLDBRUSH = (HBRUSH)SelectObject(hdc, hTRBRUSH);
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
 		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
@@ -45,7 +48,12 @@ void CTurret::Update()
 
 
 
-	//if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
+	if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
+}
+
+void CTurret::FindTarget()
+{
+
 }
 
 void CTurret::Attack()
@@ -69,12 +77,14 @@ void CTurret::Attack()
 	if (ptarget->IsDead()) ptarget = nullptr;
 }
 
-void CTurret::SelectedDraw(HDC hdc)
+void CTurret::SelectedDraw(HDC hdc, HBRUSH hbr)
 {
-	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSELECTEDBRUSH);
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
+
 	RoundRect(hdc, mrcRng.left - 4, mrcRng.top - 4,
 		mrcRng.right + 4, mrcRng.bottom + 4,
 		TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
+
 	SelectObject(hdc, hOld);
 }
 

@@ -8,16 +8,17 @@ class CTurret : public CGameObject
 {
 	CGameObject* ptarget;
 	Bullet* pbullet;
-	INT ideatheffecttime;
+
 public:
 	CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTurret();
 	virtual void Draw(HDC hdc);
 	virtual void Update();
 
+	void FindTarget();
 	void Attack();
 
-	void SelectedDraw(HDC hdc);
+	virtual void SelectedDraw(HDC, HBRUSH);
 
 	virtual INT		GetObjRadius();
 	virtual void	Death();

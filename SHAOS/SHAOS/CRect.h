@@ -8,7 +8,7 @@
 
 class CRect : public CUnit
 {
-	const INT iattakradius = RECT_RADIUS + 5;
+	const INT iattakradius = RECT_RADIUS + 10;
 
 public:
 	CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
@@ -16,7 +16,7 @@ public:
 	virtual void Update();
 	virtual void Draw(HDC hdc);
 	
-	virtual void SelectedDraw(HDC hdc);
+	virtual void SelectedDraw(HDC, HBRUSH);
 
 
 	void Move();

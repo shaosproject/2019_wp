@@ -56,9 +56,9 @@ void CTower::Draw(HDC hdc)
 	}
 }
 
-void CTower::SelectedDraw(HDC hdc)
+void CTower::SelectedDraw(HDC hdc, HBRUSH hbr)
 {
-	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSELECTEDBRUSH);
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
 
 	Ellipse(hdc, mrcRng.left - 4, mrcRng.top - 4,
 		mrcRng.right + 4, mrcRng.bottom + 4);

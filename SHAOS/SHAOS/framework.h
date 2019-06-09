@@ -52,7 +52,7 @@ const RECT WALL_RB = { 2950,430,3050,700 };
 
 #pragma region ABOUT_PLAYER
 #define PLAYER_RADIUS 15
-#define PLAYER_SPEED 15
+#define PLAYER_SPEED 3
 #define PLAYER_ROOTSPEED PLAYER_SPEED/1.4
 
 const POINT PLAYER_DEFAULT_POSITION = { 100,100 };
@@ -83,9 +83,6 @@ const HBRUSH hTRBRUSH = CreateSolidBrush(RGB(139, 26, 26));
 //const HBRUSH hTRBRUSH2 = CreateSolidBrush(RGB(255, 220, 200));
 //const HBRUSH hTRBRUSH3 = CreateSolidBrush(RGB(255, 220, 200));
 //const HBRUSH hTRBRUSH4 = CreateSolidBrush(RGB(255, 220, 200));
-const HBRUSH hTWBRUSH = CreateSolidBrush(RGB(255, 255, 255));
-const HBRUSH hTRIBRUSH1 = CreateSolidBrush(RGB(0, 0, 0));
-const HBRUSH hTRIBRUSH2 = CreateSolidBrush(RGB(255, 255, 255));
 
 #define COOLTIME_SHOOT		FRAMETIME * 100
 #define COOLTIME_AOE		FRAMETIME * 100
@@ -96,9 +93,10 @@ const HBRUSH hTRIBRUSH2 = CreateSolidBrush(RGB(255, 255, 255));
 
 #define PLAYER_BULLETDAMAGE 10
 #define PLAYER_AOEDAMAGE 10
-#define PLAYER_ATTACK_RANGE 150
+#define PLAYER_ATTACK_RANGE 200
 
 const HBRUSH hSELECTEDBRUSH = CreateSolidBrush(RGB(255, 0, 0));
+const HBRUSH hINRANGEBRUSH = CreateSolidBrush(RGB(0, 255, 0));
 
 #pragma endregion
 
@@ -118,6 +116,10 @@ const POINTFLOAT ENEMYTOWER_POS = { 3375,350 };
 #define TOWER_BOTTOM 430
 #define TOWER_LEFT(x) x - 70
 #define TOWER_RIGHT(x) x + 70
+
+const HBRUSH hTWBRUSH = CreateSolidBrush(RGB(255, 255, 255));
+const HBRUSH hTRIBRUSH1 = CreateSolidBrush(RGB(0, 0, 0));
+const HBRUSH hTRIBRUSH2 = CreateSolidBrush(RGB(255, 255, 255));
 
 
 const POINTFLOAT TURRET1_POS = { 1850,350 };

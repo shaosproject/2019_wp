@@ -16,7 +16,7 @@ protected:
 	CGameObject* menemylist{ nullptr };
 
 
-	INT iattackcooltime = FRAMETIME * 50;
+	INT iattackcooltime;
 	INT ideatheffecttime;
 
 
@@ -31,7 +31,7 @@ public:
 	virtual void Update() = 0;
 	void DrawHP(HDC);
 
-	virtual void SelectedDraw(HDC) {};
+	virtual void SelectedDraw(HDC, HBRUSH) {};
 
 
 	POINTFLOAT		GetPos() const;
