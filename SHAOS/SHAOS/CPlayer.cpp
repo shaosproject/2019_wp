@@ -74,7 +74,6 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 		case VK_SHIFT:
 			if (!cooltime_Shoot && !pressSft) {
 				pressSft = TRUE;
-				//Skill_Shoot();
 			}
 			break;
 		case VK_SPACE:
@@ -127,7 +126,7 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 void CPlayer::MSG_MouseMove(POINT mousepos)
 {
 	if (pressSft) {
-		// 마우스가 움직이는 방향으로 공격 경로가 따라옴
+		worldmousepos = mousepos;
 	}
 }
 
@@ -191,6 +190,8 @@ void CPlayer::Move() {
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
 		(LONG)mptpos.x + PLAYER_RADIUS, (LONG)mptpos.y + PLAYER_RADIUS };
 
+	worldmousepos.x += (INT)dirvector.x;
+	worldmousepos.y += (INT)dirvector.y;
 }
 
 void CPlayer::Skill_AreaOfEffect()
@@ -279,6 +280,8 @@ BOOL CPlayer::Attack()
 
 void CPlayer::Draw(HDC hdc)
 {
+	Ellipse(hdc, worldmousepos.x - 5, worldmousepos.y - 5,
+		worldmousepos.x + 5, worldmousepos.y + 5);
 
 	if (mdeath) {
 		return;

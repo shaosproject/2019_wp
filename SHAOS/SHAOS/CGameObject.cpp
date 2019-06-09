@@ -51,3 +51,14 @@ BOOL CGameObject::IsDelete() const
 	if (mdeath && !ideatheffecttime) return TRUE;
 	return FALSE;
 }
+
+
+BOOL IsInRange(CGameObject* me, CGameObject* obj, INT range) {
+	float dx = me->GetPos().x - obj->GetPos().x;
+	float dy = me->GetPos().y - obj->GetPos().y;
+
+	float center_d = dx * dx + dy * dy;
+
+	if (center_d <= range * range) return TRUE;
+	else return FALSE;
+}

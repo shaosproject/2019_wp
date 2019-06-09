@@ -161,3 +161,5 @@ const HBRUSH hHPBRUSH = CreateSolidBrush(RGB(60, 255, 30));
 #define TRI_MAXHP 100
 
 #pragma endregion
+
+

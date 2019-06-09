@@ -2,6 +2,7 @@
 #include "CGameObject.h"
 
 #define TURRET_EFFECTTIME_DEATH FRAMETIME * 50
+#define TOWER_ATTACK_RANGE 300
 
 class Bullet;
 class CTurret : public CGameObject
@@ -15,7 +16,7 @@ public:
 	virtual void Draw(HDC hdc);
 	virtual void Update();
 
-	void FindTarget();
+	CGameObject* FindTarget();
 	void Attack();
 
 	virtual void SelectedDraw(HDC, HBRUSH);

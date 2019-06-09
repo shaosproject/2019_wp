@@ -46,7 +46,9 @@ void CEnemy::Update()
 {
 	CGameObject* tmp = p_myobjlist;
 	for (int i = 0; i < imyobjnum; i++) {
+
 		tmp->Update();
+
 		if (tmp->IsDelete()) {
 			if (tmp == p_myobjlist) {
 				GameOver();
@@ -57,6 +59,7 @@ void CEnemy::Update()
 			DeleteInList(delp);
 			continue;
 		}
+
 		tmp = tmp->next;
 	}
 

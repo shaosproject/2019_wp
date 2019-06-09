@@ -26,7 +26,16 @@ CEllip::~CEllip()
 
 void CEllip::Draw(HDC hdc)
 {
-	Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+	Ellipse(hdc, mrcRng.left, mrcRng.top,
+		mrcRng.right, mrcRng.bottom);
+}
+
+void CEllip::SelectedDraw(HDC hdc, HBRUSH hbr)
+{
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
+	Ellipse(hdc, mrcRng.left - 2, mrcRng.top - 2,
+		mrcRng.right + 2, mrcRng.bottom + 2);
+	SelectObject(hdc, hOld);
 }
 
 void CEllip::Update()

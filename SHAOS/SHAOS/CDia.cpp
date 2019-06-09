@@ -31,6 +31,20 @@ void CDia::Draw(HDC hdc)
 	Polygon(hdc, vertax, 4);
 }
 
+void CDia::SelectedDraw(HDC hdc, HBRUSH hbr)
+{
+	POINT vertax[4];
+	vertax[0] = { (LONG)mptpos.x, mrcRng.top - 2 };
+	vertax[1] = { mrcRng.right + 7, (LONG)mptpos.y };
+	vertax[2] = { (LONG)mptpos.x, mrcRng.bottom + 2 };
+	vertax[3] = { mrcRng.left - 7, (LONG)mptpos.y };
+
+
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
+	Polygon(hdc, vertax, 4);
+	SelectObject(hdc, hOld);
+}
+
 void CDia::Update()
 {
 }
@@ -38,4 +52,8 @@ void CDia::Update()
 INT CDia::GetObjRadius()
 {
 	return DIA_SHORTRADIUS;
+}
+
+void CDia::Death()
+{
 }

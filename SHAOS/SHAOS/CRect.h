@@ -13,6 +13,7 @@ class CRect : public CUnit
 public:
 	CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
 	~CRect();
+
 	virtual void Update();
 	virtual void Draw(HDC hdc);
 	

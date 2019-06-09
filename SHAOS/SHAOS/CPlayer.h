@@ -27,7 +27,7 @@ class CPlayer : public CGameObject
 	CGameObject*	ptarget;
 	Bullet*			pbullet;
 
-
+	POINT worldmousepos;
 
 public:
 	CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);

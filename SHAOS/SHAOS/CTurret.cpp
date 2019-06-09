@@ -12,6 +12,7 @@ CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	mhp = new CHp(TOWER_MAXHP);
 	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 
+	iattackcooltime = FRAMETIME * 100;
 	ptarget = nullptr;
 	pbullet = nullptr;
 
@@ -27,6 +28,9 @@ CTurret::~CTurret()
 
 void CTurret::Draw(HDC hdc)
 {
+	Ellipse(hdc, mptpos.x - TOWER_ATTACK_RANGE, mptpos.y - TOWER_ATTACK_RANGE,
+		mptpos.x + TOWER_ATTACK_RANGE, mptpos.y + TOWER_ATTACK_RANGE);
+
 	if (ideatheffecttime) {
 		// 죽음 이펙트 그리기
 		
@@ -37,6 +41,8 @@ void CTurret::Draw(HDC hdc)
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
 		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
 	SelectObject(hdc, hTROLDBRUSH);
+
+	if (pbullet) pbullet->Draw(hdc);
 }
 
 void CTurret::Update()
@@ -44,37 +50,60 @@ void CTurret::Update()
 	// hp바 업데이트
 	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TURRET_RADIUS * 2, TURRET_MAXHP);
 	
-	// 적이 공격범위 안에 들어왔나 확인
 
+
+	// 공격 -> 쿨타임 설정하는거 마음에 안 든다....
+	ptarget = FindTarget();
+	if (iattackcooltime) {
+		iattackcooltime -= FRAMETIME;
+		if (!iattackcooltime) {
+			if (ptarget && !pbullet) Attack();	// 총알 만들기
+			iattackcooltime = FRAMETIME * 100;
+		}
+	}
+	if (pbullet) pbullet = pbullet->Move();
 
 
 	if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
 }
 
-void CTurret::FindTarget()
+CGameObject* CTurret::FindTarget()
 {
-
-}
-
-void CTurret::Attack()
-{
-	CGameObject* tmp = nullptr;
-
+	// 먼저 생성된 유닛 먼저 공격하는 알고리즘
+	CGameObject* tmp = menemylist->next;	//유닛 먼저 검사
 	while (tmp != menemylist) {
-		if (!tmp) tmp = menemylist;
-	
-		if (PtInRect(&tmp->GetRng(),(POINT&)tmp->GetPos())) {
-			ptarget = tmp;
-			return;
+		if (tmp->IsDead()) {
+			tmp = tmp->next;
+			continue;
+		}
+
+		INT range = TOWER_ATTACK_RANGE + tmp->GetObjRadius();
+		if (IsInRange(this, tmp, range)) {
+			return tmp;					// 뭐가 됐든 타겟이 있으면 리턴
 		}
 		tmp = tmp->next;
 	}
-	if (!ptarget) return;
 
-	if (pbullet) pbullet = pbullet->Move();
+	//tmp = menemylist->next;				// 플레이어 검사
+	//INT range = TOWER_ATTACK_RANGE + PLAYER_RADIUS;
+	//if (IsInRange(this, tmp, range)) {
+	//	ptarget = tmp;
+	//	return TRUE;
+	//}
+
+	return nullptr;
+}
+
+
+
+
+void CTurret::Attack()
+{
+	if (ptarget == menemylist->next) // 플레이어이면
+	{
+		pbullet = new Bullet(&mptpos, ptarget, TURRET_BULLETDAMAGE*5);
+	}
 	else pbullet = new Bullet(&mptpos, ptarget, TURRET_BULLETDAMAGE);
-
-	if (ptarget->IsDead()) ptarget = nullptr;
 }
 
 void CTurret::SelectedDraw(HDC hdc, HBRUSH hbr)

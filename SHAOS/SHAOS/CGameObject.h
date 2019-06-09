@@ -45,3 +45,5 @@ public:
 	BOOL			IsDead() const;
 	BOOL			IsDelete() const;
 };
+
+BOOL IsInRange(CGameObject* me, CGameObject* obj, INT range);

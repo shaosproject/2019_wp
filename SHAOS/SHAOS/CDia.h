@@ -2,14 +2,22 @@
 #include "CUnit.h"
 class CDia : public CUnit
 {
+
 public:
 	CDia(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CDia();
-	virtual void Draw(HDC hdc);
+
+
 	virtual void Update();
+	virtual void Draw(HDC hdc);
+
+	virtual void SelectedDraw(HDC, HBRUSH);
+
+	void Move();
+	void Attack();
 
 	virtual INT		GetObjRadius();
-	virtual void Death() {};
+	virtual void	Death();
 
 };
 
