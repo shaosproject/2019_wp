@@ -29,21 +29,29 @@ CRect::~CRect()
 
 void CRect::Draw(HDC hdc)
 {
+	if (mdeath) {
+		// Á×¾úÀ» ¶§ ÀÌÆåÆ®
+		INT tmp = ideatheffecttime / FRAMETIME;
+		if (tmp % 20 > 10) {
+			Rectangle(hdc, mrcRng.left, mrcRng.top,
+				mrcRng.right, mrcRng.bottom);
+		}
+		return;
+	}
+
 	if (iattackcooltime >= FRAMETIME * 45) {
 		// °ø°Ý ÀÌÆåÆ® (5ÇÁ·¹ÀÓ)
-		Ellipse(hdc, mptpos.x - iattakradius, mptpos.y - iattakradius,
-			mptpos.x + iattakradius, mptpos.y + iattakradius);
+		//if(iattackcooltime)
+			Ellipse(hdc, mptpos.x - iattakradius, mptpos.y - iattakradius,
+				mptpos.x + iattakradius, mptpos.y + iattakradius);
+		
 	}
 
 
 	Rectangle(hdc, mrcRng.left, mrcRng.top,
 		mrcRng.right, mrcRng.bottom);
 
-	if (mdeath) {
-		// Á×¾úÀ» ¶§ ÀÌÆåÆ®
-		Ellipse(hdc, mrcRng.left, mrcRng.top,
-			mrcRng.right, mrcRng.bottom);
-	}
+	
 }
 
 void CRect::SelectedDraw(HDC hdc, HBRUSH hbr)

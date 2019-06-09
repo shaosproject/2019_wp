@@ -28,12 +28,26 @@ CTurret::~CTurret()
 
 void CTurret::Draw(HDC hdc)
 {
-	Ellipse(hdc, mptpos.x - TOWER_ATTACK_RANGE, mptpos.y - TOWER_ATTACK_RANGE,
-		mptpos.x + TOWER_ATTACK_RANGE, mptpos.y + TOWER_ATTACK_RANGE);
+	//Ellipse(hdc, mptpos.x - TOWER_ATTACK_RANGE, mptpos.y - TOWER_ATTACK_RANGE,
+	//	mptpos.x + TOWER_ATTACK_RANGE, mptpos.y + TOWER_ATTACK_RANGE);
 
 	if (ideatheffecttime) {
 		// 죽음 이펙트 그리기
-		
+		INT tmp1 = ideatheffecttime / FRAMETIME;
+		INT tmp2 = TURRET_EFFECTTIME_DEATH / FRAMETIME;
+
+		INT d = (INT)(TURRET_RADIUS/2 * tmp1 / tmp2);
+		if (tmp1 % 20>=0&&tmp1%20<4)
+			Ellipse(hdc, (mptpos.x-35)-d, (mptpos.y - 35)-d, (mptpos.x - 35)+d, (mptpos.y - 35)+d);
+		if (tmp1 % 20 >=4&&tmp1 % 20 < 8)
+		Ellipse(hdc, (mptpos.x + 35) - d, (mptpos.y - 35) - d, (mptpos.x + 35) + d, (mptpos.y - 35) + d);
+		if (tmp1 % 20 >= 8 && tmp1 % 20 < 12)
+		Ellipse(hdc, (mptpos.x + 35) - d, (mptpos.y +35) - d, (mptpos.x + 35) + d, (mptpos.y + 35) + d);
+		if (tmp1 % 20 >= 12 && tmp1 % 20 < 16)
+		Ellipse(hdc, (mptpos.x - 35) - d, (mptpos.y + 35) - d, (mptpos.x - 35) + d, (mptpos.y + 35) + d);		
+		if (tmp1 % 20 >= 16 && tmp1 % 20 <20 )
+		Ellipse(hdc, mptpos.x  - d, mptpos.y  - d,mptpos.x  + d, mptpos.y  + d);
+
 		return;
 	}
 
@@ -41,6 +55,9 @@ void CTurret::Draw(HDC hdc)
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
 		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
 	SelectObject(hdc, hTROLDBRUSH);
+
+
+
 
 	if (pbullet) pbullet->Draw(hdc);
 }
@@ -53,15 +70,15 @@ void CTurret::Update()
 
 
 	// 공격 -> 쿨타임 설정하는거 마음에 안 든다....
-	ptarget = FindTarget();
-	if (iattackcooltime) {
-		iattackcooltime -= FRAMETIME;
-		if (!iattackcooltime) {
-			if (ptarget && !pbullet) Attack();	// 총알 만들기
-			iattackcooltime = FRAMETIME * 100;
-		}
-	}
-	if (pbullet) pbullet = pbullet->Move();
+	//ptarget = FindTarget();
+	//if (iattackcooltime) {
+	//	iattackcooltime -= FRAMETIME;
+	//	if (!iattackcooltime) {
+	//		if (ptarget && !pbullet) Attack();	// 총알 만들기
+	//		iattackcooltime = FRAMETIME * 100;
+	//	}
+	//}
+	//if (pbullet) pbullet = pbullet->Move();
 
 
 	if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
