@@ -20,6 +20,8 @@ CRect::CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 
 	pattacktarget = menemylist;
 	ideatheffecttime = 0;
+
+	
 }
 
 CRect::~CRect()
@@ -41,17 +43,46 @@ void CRect::Draw(HDC hdc)
 
 	if (iattackcooltime >= FRAMETIME * 45) {
 		// 공격 이펙트 (5프레임)
-		//if(iattackcooltime)
-			Ellipse(hdc, mptpos.x - iattakradius, mptpos.y - iattakradius,
-				mptpos.x + iattakradius, mptpos.y + iattakradius);
+		float rad = 3.14 / 180;
+		float cos15 = cos(rad * 15);
+		float sin15 = sin(rad * 15);
+		float cos75 = cos(rad * 75);
+		float sin75 = sin(rad * 75);
+		float Cos = RECT_RADIUS * cos75 * 1.4;
+		float Sin = RECT_RADIUS * sin75 * 1.4;
+		if (iattackcooltime <= FRAMETIME * 50 && iattackcooltime >= FRAMETIME * 49)
+		{
+			POINT RECT_POINT1[4] = { {(LONG)mptpos.x + Sin,(LONG)(mptpos.y + Cos) },
+			{(LONG)(mptpos.x + Cos),(LONG)mptpos.y -Sin},
+			{(LONG)mptpos.x - Sin,(LONG)(mptpos.y - Cos)} ,
+			{(LONG)(mptpos.x - Cos),(LONG)mptpos.y + Sin} };
+		
+			Polygon(hdc, RECT_POINT1, 4);
+		}
+		if (iattackcooltime <= FRAMETIME * 46 && iattackcooltime >= FRAMETIME * 45)
+		{
+			POINT RECT_POINT2[4] = { 
+				{((LONG)mptpos.x + Cos),(LONG)mptpos.y +Sin},
+				{(LONG)mptpos.x +Sin,(LONG)(mptpos.y - Cos)},
+				{(LONG)(mptpos.x -Cos),(LONG)mptpos.y - Sin } ,
+				{(LONG)mptpos.x - Sin ,(LONG)(mptpos.y + Cos)}
+			};
+		
+			Polygon(hdc, RECT_POINT2, 4);
+		}
+		if (iattackcooltime <= FRAMETIME * 48 && iattackcooltime >= FRAMETIME * 47)
+		{
+			POINT RECT_POINT3[4] = { {(LONG)(mptpos.x + RECT_RADIUS * 1.4),mptpos.y},
+			{mptpos.x,(LONG)(mptpos.y - RECT_RADIUS * 1.4)},
+			{(LONG)(mptpos.x - RECT_RADIUS * 1.4),mptpos.y },
+			{mptpos.x,(LONG)(mptpos.y + RECT_RADIUS * 1.4)} };
+
+			Polygon(hdc, RECT_POINT3, 4);
+		}	
 		
 	}
 
-
-	Rectangle(hdc, mrcRng.left, mrcRng.top,
-		mrcRng.right, mrcRng.bottom);
-
-	
+	else Rectangle(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
 }
 
 void CRect::SelectedDraw(HDC hdc, HBRUSH hbr)

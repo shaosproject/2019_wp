@@ -1,6 +1,7 @@
 #pragma once
 #include "CHp.h"
 
+class CSound;
 class CGameObject
 {
 protected:
@@ -19,6 +20,7 @@ protected:
 	INT iattackcooltime;
 	INT ideatheffecttime;
 
+	CSound* msound;
 
 public:
 	CGameObject* next{ nullptr };

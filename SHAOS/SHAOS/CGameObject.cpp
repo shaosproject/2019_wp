@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CGameObject.h"
 #include "CHp.h"
-
+#include "Sound.h"
 
 CGameObject::CGameObject(POINTFLOAT ainitPos, TEAM ateam, CGameObject* aenemylist)
 	: mptpos(ainitPos) , team(ateam), menemylist(aenemylist)
