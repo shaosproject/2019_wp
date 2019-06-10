@@ -81,15 +81,21 @@ void CGameFramework::Draw(HDC hdc)
 		INT p_hp, p_ctshoot, p_ctAoE, p_ctshield, p_ctreturn;
 		pworld->UI_GetPlayerInfo(&p_hp, &p_ctshoot, &p_ctAoE, &p_ctshield, &p_ctreturn);
 
-		FillRect(hdc,  , (HBRUSH)GetStockObject(RGB(255, 255, 255)));
+		RECT UI_Rect = { 20,20,80,680 };
+		FillRect(hdc, &UI_Rect , (HBRUSH)GetStockObject(WHITE_BRUSH));
 
-
+		Rectangle(hdc, 30, 30, 70, 220);
+		Rectangle(hdc, 30, 255, 70, 445);
+		Rectangle(hdc, 30, 480, 70 ,520);
+		Rectangle(hdc, 30, 530, 70, 570);
+		Rectangle(hdc, 30, 580, 70, 620);
+		Rectangle(hdc, 30, 630, 70, 670);
 
 
 		if (pworld->ending) {
 			// 여기다가 엔딩장면 그려라~~
 			RECT endRect = {0,200,1200,500};
-			FillRect(hdc,&endRect, (HBRUSH)GetStockObject(RGB(0, 0, 0)));
+			FillRect(hdc,&endRect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 			HFONT myFont = CreateFont(100, 0, 0, 0, 10, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, L"궁서체");
 			HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
 			SetTextColor(hdc, RGB(255, 255, 0));
