@@ -2,7 +2,7 @@
 #include "CPlayer.h"
 #include "CHp.h"
 #include "Bullet.h"
-
+#include "Sound.h"
 CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	: CGameObject(ainitPos, team, enemylist), iAoERadius(PLAYER_RADIUS * 5)
 {
@@ -41,6 +41,9 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	iattackcooltime = FRAMETIME * 50;
 	ptarget = nullptr;
 	pbullet = nullptr;
+	
+	msound->SoundRelease();
+	msound->SoundSystem();
 }
 
 
@@ -83,6 +86,7 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			break;
 		case 'Q':
 			if (!pressQ && !cooltime_Return) {
+				msound->MyPlaySound(2, 2);
 				pressQ = TRUE;
 				ReturnHome();
 			}
@@ -113,6 +117,7 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			break;
 		case 'Q':
 			if (pressQ) {
+				msound->SoundStop(2);
 				pressQ = FALSE;
 				returntime = 0;
 			}

@@ -10,6 +10,7 @@ const HPEN hPLAYERSHOOTPEN =
 	CreatePen(PS_SOLID, 30, RGB(0, 200, 200));
 
 class Bullet;
+class Sound;
 class CPlayer : public CGameObject
 {
 	BOOL R_On, L_On, U_On, D_On;

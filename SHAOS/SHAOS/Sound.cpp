@@ -14,7 +14,7 @@ void CSound::SoundSystem()
 {
 	FMOD_System_Create(&pSystem);
 
-	FMOD_System_Init(pSystem, 2, FMOD_INIT_NORMAL,nullptr);
+	FMOD_System_Init(pSystem, 10, FMOD_INIT_NORMAL,nullptr);
 
 	FMOD_System_CreateSound(pSystem, "Game_BGM.wav", FMOD_LOOP_NORMAL, nullptr, &pSound[0]);
 	FMOD_System_CreateSound(pSystem, "Title_BGM.wav", FMOD_LOOP_NORMAL, nullptr, &pSound[1]);
