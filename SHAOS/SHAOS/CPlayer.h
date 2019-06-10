@@ -62,4 +62,6 @@ public:
 
 	POINTFLOAT			Player_Vector();
 	void				SetPos(POINT setpos);
+	void				UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return);
+
 };

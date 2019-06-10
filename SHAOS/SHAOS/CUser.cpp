@@ -125,3 +125,8 @@ void CUser::SetSound(CSound* sound)
 {
 	mPlayer->msound = sound;
 }
+
+void CUser::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return)
+{
+	mPlayer->UI_GetPlayerInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return);
+}

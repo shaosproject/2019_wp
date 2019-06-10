@@ -77,6 +77,12 @@ void CGameFramework::Draw(HDC hdc)
 		BitBlt(hdc, BUTTONPAUSE_RNG.left, BUTTONPAUSE_RNG.top, PAUSEBUTTONSIZE, PAUSEBUTTONSIZE,
 			memdc, 0, 0, SRCCOPY);
 
+		// 플레이어 정보에 관한 UI
+		INT p_hp, p_ctshoot, p_ctAoE, p_ctshield, p_ctreturn;
+		pworld->UI_GetPlayerInfo(&p_hp, &p_ctshoot, &p_ctAoE, &p_ctshield, &p_ctreturn);
+
+		FillRect(hdc,  , (HBRUSH)GetStockObject(RGB(255, 255, 255)));
+
 
 
 

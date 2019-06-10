@@ -274,6 +274,15 @@ void CPlayer::SetPos(POINT setpos)
 	mptpos.x = (INT)setpos.x;
 	mptpos.y = (INT)setpos.y;
 }
+void CPlayer::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return)
+{
+	*ahp = mhp->GetHp();
+	*ct_shoot = cooltime_Shoot;
+	*ct_AoE = cooltime_AoE;
+	*ct_shield = cooltime_Shield;
+	*ct_return = cooltime_Return;
+
+}
 INT CPlayer::GetObjRadius()
 {
 	return PLAYER_RADIUS;

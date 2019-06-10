@@ -27,5 +27,6 @@ public:
 
 	POINTFLOAT GetPlayerPos();
 	void SetSound(CSound*);
+	void UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return);
 };
 
