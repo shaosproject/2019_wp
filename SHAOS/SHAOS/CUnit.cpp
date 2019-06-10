@@ -7,7 +7,6 @@ CUnit::CUnit(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 {
 	moveOn = TRUE;
 	ptenemytowerpos = menemylist->GetPos();
-
 }
 
 
@@ -21,5 +20,5 @@ void CUnit::Draw(HDC hdc)
 
 void CUnit::Death()
 {
-	// 유닛이 죽는 건 공통적으로 작성할 수 있지 않을까..?
+	ideatheffecttime = UNIT_EFFECTTIME_DEATH;
 }

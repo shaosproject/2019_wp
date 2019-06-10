@@ -4,8 +4,8 @@
 class Bullet;
 class CEllip : public CUnit
 {
-	CGameObject* ptarget;
 	Bullet* pbullet;
+	INT iattakradius = 200;
 public:
 	CEllip(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CEllip();
@@ -15,10 +15,11 @@ public:
 	virtual void SelectedDraw(HDC, HBRUSH);
 
 	void Move();
-	void Attack();
+	BOOL Attack();
+
+	void SetTarget();
 
 	virtual INT		GetObjRadius();
-	virtual void Death() {};
 
 };
 

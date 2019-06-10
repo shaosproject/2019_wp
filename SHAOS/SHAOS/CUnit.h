@@ -2,6 +2,7 @@
 #include "CGameObject.h"
 
 #define UNIT_RECOGRNGRADIUS 300
+#define UNIT_EFFECTTIME_DEATH (FRAMETIME*50)
 
 class CTower;
 
