@@ -1,5 +1,8 @@
 #pragma once
 #include "CUnit.h"
+
+#define DIA_SPEED 2
+
 class CDia : public CUnit
 {
 

@@ -36,10 +36,10 @@ void CDia::Draw(HDC hdc)
 void CDia::SelectedDraw(HDC hdc, HBRUSH hbr)
 {
 	POINT vertax[4];
-	vertax[0] = { (LONG)mptpos.x, mrcRng.top - 2 };
-	vertax[1] = { mrcRng.right + 7, (LONG)mptpos.y };
-	vertax[2] = { (LONG)mptpos.x, mrcRng.bottom + 2 };
-	vertax[3] = { mrcRng.left - 7, (LONG)mptpos.y };
+	vertax[0] = { (LONG)mptpos.x, mrcRng.top - 3 };
+	vertax[1] = { mrcRng.right + 8, (LONG)mptpos.y };
+	vertax[2] = { (LONG)mptpos.x, mrcRng.bottom + 3 };
+	vertax[3] = { mrcRng.left - 8, (LONG)mptpos.y };
 
 
 	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
@@ -50,7 +50,12 @@ void CDia::SelectedDraw(HDC hdc, HBRUSH hbr)
 void CDia::Move()
 {
 	if (mptpos.x > MAPSIZE_WIDTH / 2) {
-		mptpos.x += 3;
+		mptpos.x -= 2;
+	}
+	else {
+		// 타워를 향해서 이동
+		// 이동 알고리즘을 다르게 해야지 안 겹친다
+
 	}
 
 
@@ -68,6 +73,7 @@ void CDia::Move()
 
 void CDia::Update()
 {
+	Move();
 }
 
 INT CDia::GetObjRadius()
@@ -77,4 +83,5 @@ INT CDia::GetObjRadius()
 
 void CDia::Death()
 {
+	ideatheffecttime = FRAMETIME * 50;
 }

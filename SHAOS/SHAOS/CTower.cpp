@@ -43,7 +43,7 @@ CTower::~CTower()
 
 void CTower::Draw(HDC hdc)
 {
-	HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(GRAY_BRUSH));
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(LTGRAY_BRUSH));
 	Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
 	
 	SelectObject(hdc, (HBRUSH)GetStockObject(BLACK_BRUSH));
@@ -55,7 +55,9 @@ void CTower::Draw(HDC hdc)
 	SelectObject(hdc, hOld);
 
 	if (ideatheffecttime) {
-		// Á×´Â ÀÌÆåÆ®
+		INT color = 255 * ideatheffecttime / TOWER_EFFECTTIME_DEATH;
+		DeleteObject(hTriBrush);
+		(team == TEAM::USER) ? hTriBrush = CreateSolidBrush(RGB(0, 0, color)) : hTriBrush = CreateSolidBrush(RGB(color, 0, 0));
 	}
 }
 

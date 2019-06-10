@@ -73,7 +73,13 @@ void CGameFramework::Draw(HDC hdc)
 		HBITMAP hOld = (HBITMAP)SelectObject(memdc, hpausebutton);
 		BitBlt(hdc, BUTTONPAUSE_RNG.left, BUTTONPAUSE_RNG.top, PAUSEBUTTONSIZE, PAUSEBUTTONSIZE,
 			memdc, 0, 0, SRCCOPY);
+
+		if (pworld->ending) {
+			// 여기다가 엔딩장면 그려라~~
+			Rectangle(hdc, 0, 0, 101, 100);
+		}
 	}
+
 }
 
 

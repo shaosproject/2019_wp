@@ -34,7 +34,7 @@ CWorld::CWorld(HWND hwnd)
 	pUserTeam->SetInitObj();
 	pEnemyTeam->SetInitObj();
 
-	frametime_endingscene = FRAMETIME*50;
+	ending = FALSE;
 }
 
 
@@ -72,7 +72,7 @@ void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 void CWorld::Update()
 {
 	if (pUserTeam->gameover || pEnemyTeam->gameover) {
-		if (frametime_endingscene) frametime_endingscene -= FRAMETIME;
+		ending = TRUE;
 		return;
 	}
 
@@ -91,7 +91,6 @@ void CWorld::Draw(HDC clientDC)
 	pUserTeam->Draw(hUpdateDC);
 	pEnemyTeam->Draw(hUpdateDC);
 	//----
-
 
 
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,

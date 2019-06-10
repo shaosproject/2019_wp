@@ -19,10 +19,10 @@ class CWorld
 	
 
 	INT iViewX;
+	
 
-
-	INT frametime_endingscene;
 public:
+	BOOL ending;
 	CWorld(HWND hwnd);
 	~CWorld();
 

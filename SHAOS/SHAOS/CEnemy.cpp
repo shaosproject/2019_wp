@@ -37,7 +37,7 @@ void CEnemy::SetInitObj()
 	CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(unit1);
 
-	CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+	CUnit* unit2 = new CDia(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(unit2);
 
 }
