@@ -2,10 +2,11 @@
 #include "CUnit.h"
 
 #define DIA_SPEED 2
+#define DIA_ATTACKDAMAGE 10
 
 class CDia : public CUnit
 {
-	INT moveroute;
+	BOOL attackOn;
 public:
 	CDia(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CDia();

@@ -13,7 +13,8 @@ CDia::CDia(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 
 	pattacktarget = menemylist;	// 타겟은 상대편 타워
 
-	moveroute = rand() % 6;
+	iattackcooltime = 0;
+	ideatheffecttime = 0;
 }
 
 
@@ -26,7 +27,19 @@ void CDia::Draw(HDC hdc)
 {
 	if (ideatheffecttime) {
 		//죽음 이펙트
+		INT tmp = ideatheffecttime / FRAMETIME;
+		if (tmp % 20 > 10) {
+			POINT vertax[4];
+			vertax[0] = { (LONG)mptpos.x, mrcRng.top };
+			vertax[1] = { mrcRng.right + 10, (LONG)mptpos.y };
+			vertax[2] = { (LONG)mptpos.x, mrcRng.bottom };
+			vertax[3] = { mrcRng.left - 10, (LONG)mptpos.y };
+
+			Polygon(hdc, vertax, 4);
+		}
+		return;
 	}
+
 
 	POINT vertax[4];
 	vertax[0] = { (LONG)mptpos.x, mrcRng.top };
@@ -36,6 +49,11 @@ void CDia::Draw(HDC hdc)
 
 	Polygon(hdc, vertax, 4);
 
+	if (iattackcooltime >= FRAMETIME * 45) {
+		// 공격 이펙트
+		Rectangle(hdc, mptpos.x - 5, mptpos.y - 5,
+			mptpos.x + 5, mptpos.y + 5);
+	}
 
 }
 
@@ -57,14 +75,14 @@ void CDia::Move()
 {
 	POINTFLOAT movevector;
 	if (mptpos.x > MAPSIZE_WIDTH / 2) {
-		movevector = { -2,0 };
+		movevector = { -DIA_SPEED,0 };
 	}
 	else if (mptpos.x > MAPSIZE_WIDTH/6 && mptpos.x <= MAPSIZE_WIDTH / 2) {
 		float movey;
 		if (mptpos.y > MAPSIZE_HEIGHT / 2 && mptpos.y < MAPSIZE_HEIGHT - 50) movey = 1;
-		else if(mptpos.y < MAPSIZE_HEIGHT / 2 && mptpos.y > 50) movey = -1;
-		else movey = -0;
-		movevector = { -2, movey };
+		else if(mptpos.y < MAPSIZE_HEIGHT / 2 && mptpos.y > 50) movey = -DIA_SPEED;
+		else movey = 0;
+		movevector = { -DIA_SPEED, movey };
 	}
 	else {
 		float projX = pattacktarget->GetPos().x - mptpos.x;
@@ -78,6 +96,7 @@ void CDia::Move()
 	
 		if (!moveOn) {
 			movevector = { 0,0 };
+			if (!attackOn) attackOn = TRUE;
 		}
 		else {
 			float nomalizedX = projX / distance;
@@ -109,9 +128,34 @@ void CDia::Move()
 
 }
 
+void CDia::Attack()
+{
+	// 타워가 앞에 있을 때
+	pattacktarget->PutDamage(DIA_ATTACKDAMAGE);
+	
+}
+
 void CDia::Update()
 {
+	if (ideatheffecttime) {
+		ideatheffecttime -= FRAMETIME;
+		return;
+	}
+
+
 	Move();
+
+
+	if (iattackcooltime)
+		iattackcooltime -= FRAMETIME;
+	else {
+		if (attackOn) {
+			Attack();
+			iattackcooltime = FRAMETIME * 50;
+		}
+	}
+
+
 }
 
 INT CDia::GetObjRadius()

@@ -21,7 +21,7 @@ class CGameFramework
 
 
 public:
-	CSound* msound;
+	CSound* msound{ nullptr };
 	CGameFramework();
 	~CGameFramework();
 

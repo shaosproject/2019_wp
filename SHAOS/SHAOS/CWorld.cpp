@@ -34,7 +34,7 @@ CWorld::CWorld(HWND hwnd)
 	pUserTeam->SetInitObj();
 	pEnemyTeam->SetInitObj();
 
-	ending = FALSE;
+	gamestate = 0;	// ÁøÇàÁß
 }
 
 
@@ -71,8 +71,12 @@ void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 
 void CWorld::Update()
 {
-	if (pUserTeam->gameover || pEnemyTeam->gameover) {
-		ending = TRUE;
+	if (pUserTeam->gameover) {
+		gamestate = 2;
+		return;
+	}
+	if (pEnemyTeam->gameover) {
+		gamestate = 1;
 		return;
 	}
 
@@ -105,4 +109,9 @@ void CWorld::SetSound(CSound* sound)
 void CWorld::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return)
 {
 	pUserTeam->UI_GetPlayerInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return);
+}
+
+INT CWorld::IsEnding()
+{
+	return gamestate;
 }

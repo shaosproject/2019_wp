@@ -20,9 +20,8 @@ class CWorld
 
 	INT iViewX;
 	
-
+	INT gamestate;	//0:진행 1:유저 승 2: 유저 패
 public:
-	BOOL ending;
 	CWorld(HWND hwnd);
 	~CWorld();
 
@@ -37,5 +36,7 @@ public:
 	void SetSound(CSound*);
 
 	void UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return);
+
+	INT IsEnding();
 };
 

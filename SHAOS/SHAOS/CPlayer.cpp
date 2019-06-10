@@ -229,7 +229,7 @@ void CPlayer::Skill_AreaOfEffect()
 void CPlayer::Skill_Shoot()
 {
 	cooltime_Shoot = COOLTIME_SHOOT;
-	
+	// 강공격 충돌체크.... 힘내자
 
 
 }

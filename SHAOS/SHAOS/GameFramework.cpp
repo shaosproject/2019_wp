@@ -92,15 +92,25 @@ void CGameFramework::Draw(HDC hdc)
 		Rectangle(hdc, 30, 630, 70, 670);
 
 
-		if (pworld->ending) {
+		if (pworld->IsEnding() != 0) {
 			// 여기다가 엔딩장면 그려라~~
+
 			RECT endRect = {0,200,1200,500};
 			FillRect(hdc,&endRect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 			HFONT myFont = CreateFont(100, 0, 0, 0, 10, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, L"궁서체");
 			HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
 			SetTextColor(hdc, RGB(255, 255, 0));
 			SetBkMode(hdc, TRANSPARENT);
-			TextOut(hdc, 400, 300, L"VICTORY!", strlen("VICTORY!"));
+
+			switch (pworld->IsEnding()) {
+			case 1:
+				TextOut(hdc, 400, 300, L"VICTORY!", lstrlen(L"VICTORY!"));
+				break;
+			case 2:
+				TextOut(hdc, 400, 300, L"  LOSE!", lstrlen(L"  LOSE!"));
+				break;
+			}
+
 			SelectObject(hdc, oldFont);
 			DeleteObject(myFont);
 		}
