@@ -500,6 +500,7 @@ void CPlayer::Update()
 			return;
 		}
 
+		// 플레이어 공격 범위에서 벗어났을 때
 		float dx = mptpos.x - ptarget->GetPos().x;
 		float dy = mptpos.y - ptarget->GetPos().y;
 

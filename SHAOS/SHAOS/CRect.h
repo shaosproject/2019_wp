@@ -2,9 +2,9 @@
 #include "CUnit.h"
 #include "CTower.h"
 #define RECT_DAMAGE 10
-#define UNIT_SPEED 1
 
-#define RECT_EFFECTTIME_DEATH FRAMETIME*50
+
+
 
 class CRect : public CUnit
 {
@@ -25,7 +25,5 @@ public:
 	void SetTarget();
 
 	virtual INT		GetObjRadius();
-	virtual void	Death();
-
 };
 

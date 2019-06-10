@@ -88,5 +88,10 @@ void CEnemy::Draw(HDC hdc)
 
 void CEnemy::UnitGen()
 {
+	CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+	this->AddMyObjList(unit1);
+
+	CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+	this->AddMyObjList(unit2);
 
 }

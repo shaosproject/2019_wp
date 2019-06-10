@@ -114,9 +114,6 @@
     <ClInclude Include="CUser.h">
       <Filter>Team\User</Filter>
     </ClInclude>
-    <ClInclude Include="CEllip.h">
-      <Filter>GameObj\Unit\Ellip</Filter>
-    </ClInclude>
     <ClInclude Include="CDia.h">
       <Filter>GameObj\Unit\Dia</Filter>
     </ClInclude>
@@ -128,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="CEllip.h">
+      <Filter>GameObj\Unit\Ellip</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -21,7 +21,6 @@ CRect::CRect(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	pattacktarget = menemylist;
 	ideatheffecttime = 0;
 
-	
 }
 
 CRect::~CRect()
@@ -31,7 +30,7 @@ CRect::~CRect()
 
 void CRect::Draw(HDC hdc)
 {
-	if (mdeath) {
+	if (ideatheffecttime) {
 		// 죽었을 때 이펙트
 		INT tmp = ideatheffecttime / FRAMETIME;
 		if (tmp % 20 > 10) {
@@ -44,42 +43,37 @@ void CRect::Draw(HDC hdc)
 	if (iattackcooltime >= FRAMETIME * 45) {
 		// 공격 이펙트 (5프레임)
 		float rad = 3.14 / 180;
-		float cos15 = cos(rad * 15);
-		float sin15 = sin(rad * 15);
 		float cos75 = cos(rad * 75);
 		float sin75 = sin(rad * 75);
 		float Cos = RECT_RADIUS * cos75 * 1.4;
 		float Sin = RECT_RADIUS * sin75 * 1.4;
-		if (iattackcooltime <= FRAMETIME * 50 && iattackcooltime >= FRAMETIME * 49)
-		{
-			POINT RECT_POINT1[4] = { {(LONG)mptpos.x + Sin,(LONG)(mptpos.y + Cos) },
-			{(LONG)(mptpos.x + Cos),(LONG)mptpos.y -Sin},
-			{(LONG)mptpos.x - Sin,(LONG)(mptpos.y - Cos)} ,
-			{(LONG)(mptpos.x - Cos),(LONG)mptpos.y + Sin} };
+		POINT rectpoint[4] = { 0 };
 		
-			Polygon(hdc, RECT_POINT1, 4);
+		switch (iattackcooltime) {
+		case FRAMETIME * 50:
+		case FRAMETIME * 49:
+			rectpoint[0] = { (LONG)(mptpos.x + Sin),(LONG)(mptpos.y + Cos) };
+			rectpoint[1] = { (LONG)(mptpos.x + Cos),(LONG)(mptpos.y - Sin) };
+			rectpoint[2] = { (LONG)(mptpos.x - Sin),(LONG)(mptpos.y - Cos) };
+			rectpoint[3] = { (LONG)(mptpos.x - Cos),(LONG)(mptpos.y + Sin) };
+			break;
+		case FRAMETIME * 48:
+		case FRAMETIME * 47:
+			rectpoint[0] = { (LONG)(mptpos.x + RECT_RADIUS * 1.4),(LONG)mptpos.y };
+			rectpoint[1] = { (LONG)mptpos.x,(LONG)(mptpos.y - RECT_RADIUS * 1.4) };
+			rectpoint[2] = { (LONG)(mptpos.x - RECT_RADIUS * 1.4),(LONG)mptpos.y };
+			rectpoint[3] = { (LONG)mptpos.x,(LONG)(mptpos.y + RECT_RADIUS * 1.4) };
+			break;
+		case FRAMETIME * 46:
+		case FRAMETIME * 45:
+			rectpoint[0] = { (LONG)(mptpos.x + Cos),(LONG)(mptpos.y + Sin) };
+			rectpoint[1] = { (LONG)(mptpos.x + Sin),(LONG)(mptpos.y - Cos) };
+			rectpoint[2] = { (LONG)(mptpos.x - Cos),(LONG)(mptpos.y - Sin) };
+			rectpoint[3] = { (LONG)(mptpos.x - Sin),(LONG)(mptpos.y + Cos) };
+			break;
 		}
-		if (iattackcooltime <= FRAMETIME * 46 && iattackcooltime >= FRAMETIME * 45)
-		{
-			POINT RECT_POINT2[4] = { 
-				{((LONG)mptpos.x + Cos),(LONG)mptpos.y +Sin},
-				{(LONG)mptpos.x +Sin,(LONG)(mptpos.y - Cos)},
-				{(LONG)(mptpos.x -Cos),(LONG)mptpos.y - Sin } ,
-				{(LONG)mptpos.x - Sin ,(LONG)(mptpos.y + Cos)}
-			};
 		
-			Polygon(hdc, RECT_POINT2, 4);
-		}
-		if (iattackcooltime <= FRAMETIME * 48 && iattackcooltime >= FRAMETIME * 47)
-		{
-			POINT RECT_POINT3[4] = { {(LONG)(mptpos.x + RECT_RADIUS * 1.4),mptpos.y},
-			{mptpos.x,(LONG)(mptpos.y - RECT_RADIUS * 1.4)},
-			{(LONG)(mptpos.x - RECT_RADIUS * 1.4),mptpos.y },
-			{mptpos.x,(LONG)(mptpos.y + RECT_RADIUS * 1.4)} };
-
-			Polygon(hdc, RECT_POINT3, 4);
-		}	
-		
+		Polygon(hdc, rectpoint, 4);
 	}
 
 	else Rectangle(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
@@ -125,24 +119,25 @@ void CRect::Update()
 
 void CRect::Move()
 {
+	POINTFLOAT movevector;
 
+	// 타겟과 거리 구하기
 	float projX = pattacktarget->GetPos().x - mptpos.x;
 	float projY = pattacktarget->GetPos().y - mptpos.y;
 	
-	
 	float distance = sqrt(projX * projX + projY * projY);
+	INT stopdistance = pattacktarget->GetObjRadius() + iattakradius;
 
-	(distance < pattacktarget->GetObjRadius() + iattakradius) ? moveOn = FALSE : moveOn = TRUE;	// 적절한 범위에서 멈추기
+	// movevector 구하는 곳
+	if (distance > stopdistance) {
+		float nomalizedX = projX / distance;
+		float nomalizedY = projY / distance;
 
-	if (!moveOn) return;
-
-	float nomalizedX = projX / distance;
-	float nomalizedY = projY / distance;
-
-	POINTFLOAT movevector = { nomalizedX * UNIT_SPEED,nomalizedY * UNIT_SPEED };
+		movevector = { nomalizedX,nomalizedY };
+	}
+	else movevector = { 0,0 };
 
 
-	// 공격 대상을 향해서 이동
 	mptpos.x += movevector.x;
 	mptpos.y += movevector.y;
 
@@ -208,28 +203,17 @@ void CRect::SetTarget()
 			continue;
 		}
 
-		float projX = tmp->GetPos().x - mptpos.x;
-		float projY = tmp->GetPos().y - mptpos.y;
-
-		float distance = sqrt(projX * projX + projY * projY);
-
-		if (distance <= UNIT_RECOGRNGRADIUS + RECT_RADIUS) {
+		INT range = UNIT_RECOGRNGRADIUS + RECT_RADIUS;
+		if (IsInRange(this, tmp, range)) {
 			pattacktarget = tmp;
-			return;
 		}
 
 		tmp = tmp->next;
 	}
-
 
 }
 
 INT CRect::GetObjRadius()
 {
 	return RECT_RADIUS;
-}
-
-void CRect::Death()
-{
-	ideatheffecttime = RECT_EFFECTTIME_DEATH;
 }
