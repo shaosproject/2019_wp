@@ -77,7 +77,7 @@ const POINTFLOAT DIRVECTOR_STOP = { 0,0 };
 
 #define SHIELD_RAD 20
 const HBRUSH hRTBRUSH = CreateSolidBrush(RGB(60, 100, 250));
-const HBRUSH hIAOEBRUSH= CreateSolidBrush(RGB(160, 82, 45));
+const HBRUSH hIAOEBRUSH= CreateSolidBrush(RGB(255, 69, 0));
 const HBRUSH hSDBRUSH = CreateSolidBrush(RGB(0, 0, 238));
 const HBRUSH hTRBRUSH = CreateSolidBrush(RGB(139, 26, 26));
 //const HBRUSH hTRBRUSH2 = CreateSolidBrush(RGB(255, 220, 200));

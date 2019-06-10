@@ -41,6 +41,8 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	iattackcooltime = FRAMETIME * 50;
 	ptarget = nullptr;
 	pbullet = nullptr;
+
+	msound = new CSound;
 	
 }
 
@@ -86,6 +88,7 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			if (!pressQ && !cooltime_Return) {
 				pressQ = TRUE;
 				ReturnHome();
+				msound->MyPlaySound(3, 3);
 			}
 			break;
 		case 'V':
@@ -116,6 +119,7 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			if (pressQ) {
 				pressQ = FALSE;
 				returntime = 0;
+				//msound->SoundStop(3);
 			}
 			break;
 		}
@@ -314,19 +318,27 @@ void CPlayer::Draw(HDC hdc)
 	if (iaoeeffecttime) {
 		// ±¤¿ª±â ÀÌÆåÆ® ±×¸®±â
 
-		float tmp1 = iaoeeffecttime / FRAMETIME;
-		float tmp2 = PLAYER_EFFECTTIME_AOE / FRAMETIME;
+		//float tmp1 = iaoeeffecttime / FRAMETIME;
+		//float tmp2 = PLAYER_EFFECTTIME_AOE / FRAMETIME;
+		//
+		//INT d = (INT)(iAoERadius * tmp1 / tmp2);
+		//
+		//
+		//HBRUSH hOld = (HBRUSH)SelectObject(hdc, hIAOEBRUSH);
+		//
+		//Ellipse(hdc, mptpos.x - d, mptpos.y - d,
+		//	mptpos.x + d, mptpos.y + d);
+		//
+		//SelectObject(hdc, hOld);
 
-		INT d = (INT)(iAoERadius * tmp1 / tmp2);
-
-	
 		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hIAOEBRUSH);
-
-		Ellipse(hdc, mptpos.x - d, mptpos.y - d,
-			mptpos.x + d, mptpos.y + d);
-
+		POINT iAoe[8] = { {mrcRng.left, mrcRng.top},{mptpos.x,mptpos.y - iAoERadius},{mrcRng.right, mrcRng.top}
+			,{mptpos.x + iAoERadius,mptpos.y},{mrcRng.right, mrcRng.bottom}
+			,{mptpos.x , mptpos.y+ iAoERadius},{mrcRng.left, mrcRng.bottom}
+			,{mptpos.x- iAoERadius,mptpos.y} };
+		//Ellipse(hdc, mptpos.x - iAoERadius, mptpos.y - iAoERadius, mptpos.x + iAoERadius, mptpos.y + iAoERadius);
+		Polygon(hdc,iAoe, 8);
 		SelectObject(hdc, hOld);
-	
 	}
 
 
@@ -447,6 +459,8 @@ void CPlayer::Update()
 	if (iaoeeffecttime) iaoeeffecttime -= FRAMETIME;
 
 	if (pressQ) {
+		//if(returntime==FRAMETIME*20)
+		//	msound->MyPlaySound(3, 4);
 		if (returntime == 0) 
 		{
 			SetPos(PLAYER_DEFAULT_POSITION);

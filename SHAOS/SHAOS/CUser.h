@@ -26,5 +26,6 @@ public:
 	void UnitGen();
 
 	POINTFLOAT GetPlayerPos();
+	void SetSound(CSound*);
 };
 

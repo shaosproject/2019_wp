@@ -18,7 +18,8 @@ void CSound::SoundSystem()
 
 	FMOD_System_CreateSound(pSystem, "Game_BGM.wav", FMOD_LOOP_NORMAL, nullptr, &pSound[0]);
 	FMOD_System_CreateSound(pSystem, "Title_BGM.wav", FMOD_LOOP_NORMAL, nullptr, &pSound[1]);
-	FMOD_System_CreateSound(pSystem, "vgum.wav", FMOD_LOOP_OFF, nullptr, &pSound[2]);
+	FMOD_System_CreateSound(pSystem, "basic_Attack.wav", FMOD_LOOP_OFF, nullptr, &pSound[2]);
+	FMOD_System_CreateSound(pSystem, "return_Sound.wav", FMOD_LOOP_OFF, nullptr, &pSound[3]);
 }
 
 void CSound::MyPlaySound(int nsound, int nchannel)

@@ -34,6 +34,7 @@ class CPlayer : public CGameObject
 	POINT worldmousepos;
 
 public:
+	CSound* msound{ nullptr };
 	CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);
 	~CPlayer();
 

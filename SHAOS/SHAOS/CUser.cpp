@@ -120,3 +120,8 @@ POINTFLOAT CUser::GetPlayerPos()
 {
 	return mPlayer->GetPos();
 }
+
+void CUser::SetSound(CSound* sound)
+{
+	mPlayer->msound = sound;
+}

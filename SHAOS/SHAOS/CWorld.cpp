@@ -96,3 +96,8 @@ void CWorld::Draw(HDC clientDC)
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, iViewX - MIN_VIEWX, 0, SRCCOPY);
 }
+
+void CWorld::SetSound(CSound* sound)
+{
+	pUserTeam->SetSound(sound);
+}

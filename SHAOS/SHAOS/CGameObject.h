@@ -20,8 +20,6 @@ protected:
 	INT iattackcooltime;
 	INT ideatheffecttime;
 
-	CSound* msound;
-
 public:
 	CGameObject* next{ nullptr };
 	CGameObject* prev{ nullptr };

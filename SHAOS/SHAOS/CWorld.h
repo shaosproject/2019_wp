@@ -34,5 +34,6 @@ public:
 
 	void Draw(HDC);
 
+	void SetSound(CSound*);
 };
 
