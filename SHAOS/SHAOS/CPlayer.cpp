@@ -229,9 +229,9 @@ void CPlayer::Skill_AreaOfEffect()
 void CPlayer::Skill_Shoot()
 {
 	cooltime_Shoot = COOLTIME_SHOOT;
+	
 
-	// 충돌체크해서 데미지 주기....
-	// 진짜 하기 싫어,,,
+
 }
 
 void CPlayer::ReturnHome()

@@ -90,5 +90,7 @@ INT CTower::GetObjRadius()
 
 void CTower::Death()
 {
-	ideatheffecttime = TOWER_EFFECTTIME_DEATH;
+	if (!ideatheffecttime) {
+		ideatheffecttime = TOWER_EFFECTTIME_DEATH;
+	}
 }
