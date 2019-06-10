@@ -11,7 +11,7 @@ CUser::CUser()
 	p_myobjlist = mTower;
 	p_myobjlist->next = p_myobjlist->prev = p_myobjlist;
 
-	iunitgentime = FRAMETIME * 500;
+	iunitgentime = FRAMETIME * 300;
 }
 
 CUser::~CUser()
@@ -28,6 +28,12 @@ void CUser::SetInitObj()
 	mPlayer = new CPlayer(tmp, TEAM::USER, p_opponentobjlist);
 	this->AddMyObjList(mPlayer);
 
+	CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::USER, p_opponentobjlist);
+	this->AddMyObjList(unit1);
+
+	CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::USER, p_opponentobjlist);
+	this->AddMyObjList(unit2);
+
 }
 
 void CUser::Update()
@@ -37,9 +43,9 @@ void CUser::Update()
 	// À¯´Ö Á¨
 	if (iunitgentime) iunitgentime -= FRAMETIME;
 	else {
-		if (this->imyobjnum < 10) {
+		if (this->imyobjnum < 6) {
 			UnitGen();
-			iunitgentime = FRAMETIME * 300;
+			iunitgentime = FRAMETIME * 500;
 		}
 	}
 
@@ -92,11 +98,11 @@ void CUser::MSG_Mouse(UINT message, POINT mousepos)
 
 void CUser::UnitGen()
 {
-	CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::USER, p_opponentobjlist);
-	this->AddMyObjList(unit1);
-
-	CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::USER, p_opponentobjlist);
-	this->AddMyObjList(unit2);
+	//CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::USER, p_opponentobjlist);
+	//this->AddMyObjList(unit1);
+	//
+	//CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::USER, p_opponentobjlist);
+	//this->AddMyObjList(unit2);
 
 }
 

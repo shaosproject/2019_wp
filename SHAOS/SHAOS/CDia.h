@@ -5,7 +5,7 @@
 
 class CDia : public CUnit
 {
-
+	INT moveroute;
 public:
 	CDia(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CDia();

@@ -42,8 +42,6 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	ptarget = nullptr;
 	pbullet = nullptr;
 	
-	msound->SoundRelease();
-	msound->SoundSystem();
 }
 
 
@@ -86,7 +84,6 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			break;
 		case 'Q':
 			if (!pressQ && !cooltime_Return) {
-				msound->MyPlaySound(2, 2);
 				pressQ = TRUE;
 				ReturnHome();
 			}
@@ -117,7 +114,6 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			break;
 		case 'Q':
 			if (pressQ) {
-				msound->SoundStop(2);
 				pressQ = FALSE;
 				returntime = 0;
 			}
