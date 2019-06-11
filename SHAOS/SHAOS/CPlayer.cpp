@@ -22,20 +22,24 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 
 	// 스킬
 	pressSft = FALSE;
-
-	iaoeeffecttime = 0;
-
-	pressQ = FALSE;
-	returntime = 0;
-
 	onshield = FALSE;
-	shieldtime = 0;
+	pressQ = FALSE;
 
-	mdeath = FALSE;
+	activetime_shield = 0;
+	castingtime_return = 0;
 
-	cooltime_Shield = 0;
-	cooltime_AoE = 0;
+
+	effecttime_Shoot = 0;
+	effecttime_AoE = 0;
+	effecttime_Return = 0;
+
+
+
 	cooltime_Shoot = 0;
+	cooltime_AoE = 0;
+	cooltime_Shield = 0;
+	cooltime_Return = 0;
+	cooltime_Death = 0;
 
 	//공격
 	iattackcooltime = FRAMETIME * 50;
@@ -44,6 +48,9 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 
 	msound = new CSound;
 	
+	for (int i = 0; i < 7; i++) {
+		shootattackrange[i] = { 0,0 };
+	}
 }
 
 
@@ -118,7 +125,7 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 		case 'Q':
 			if (pressQ) {
 				pressQ = FALSE;
-				returntime = 0;
+				castingtime_return = 0;
 				//msound->SoundStop(3);
 			}
 			break;
@@ -172,6 +179,14 @@ void CPlayer::MSG_MouseDown(POINT mousepos)
 
 void CPlayer::Move() {
 	if (pressSft) return;
+	if (effecttime_Return) return;
+	if (pressQ) {
+		if (R_On || L_On || U_On || D_On) {
+			pressQ = FALSE;
+			castingtime_return = 0;
+		}
+
+	}
 
 
 	// 플레이어 중심점 좌표
@@ -205,7 +220,7 @@ void CPlayer::Skill_AreaOfEffect()
 	cooltime_AoE = COOLTIME_AOE;
 
 	// 이펙트 신호 주기
-	iaoeeffecttime = PLAYER_EFFECTTIME_AOE;
+	effecttime_AoE = PLAYER_EFFECTTIME_AOE;
 
 	// 충돌체크해서 데미지 주기
 	CGameObject* tmp = nullptr;
@@ -229,20 +244,58 @@ void CPlayer::Skill_AreaOfEffect()
 void CPlayer::Skill_Shoot()
 {
 	cooltime_Shoot = COOLTIME_SHOOT;
-	// 강공격 충돌체크.... 힘내자
+	effecttime_Shoot = FRAMETIME * 50;
 
+	float dx = worldmousepos.x - mptpos.x;
+	float dy = worldmousepos.y - mptpos.y;
+
+	float sizeofvector = sqrt(dx * dx + dy * dy);
+	
+	float standardx = dx / sizeofvector * 25;
+	float standardy = dy / sizeofvector * 25;
+	// 노말라이즈 구했고 사각형 7개 구하기
+
+
+	for (int i = 0; i < 7; i++) {
+		POINT centerpos = { (INT)(mptpos.x + standardx * (i + 1)),
+			(INT)(mptpos.y + standardy * (i + 1)) };
+
+		shootattackrange[i] = {
+			centerpos.x - 25, centerpos.y - 25,
+			centerpos.x + 25, centerpos.y + 25
+		};
+
+	}
+
+	CGameObject* tmp = nullptr;
+	while (tmp != menemylist) {
+		if (!tmp) tmp = menemylist;
+
+		RECT lprcDest;
+		if (IntersectRect(&lprcDest, &shootattackrange[0], &tmp->GetRng()) ||
+			IntersectRect(&lprcDest, &shootattackrange[1], &tmp->GetRng()) ||
+			IntersectRect(&lprcDest, &shootattackrange[2], &tmp->GetRng()) ||
+			IntersectRect(&lprcDest, &shootattackrange[3], &tmp->GetRng()) ||
+			IntersectRect(&lprcDest, &shootattackrange[4], &tmp->GetRng()) ||
+			IntersectRect(&lprcDest, &shootattackrange[5], &tmp->GetRng()) ||
+			IntersectRect(&lprcDest, &shootattackrange[6], &tmp->GetRng())) {
+			tmp->PutDamage(PLAYER_SHOOTDAMAGE);
+		}
+
+		tmp = tmp->next;
+	}
 
 }
 
 void CPlayer::ReturnHome()
 {
-	returntime = CASTINGTIME_RETURN;
+	castingtime_return = CASTINGTIME_RETURN;
 }
 
 void CPlayer::ActiveShield()
 {
 	onshield = TRUE;
-	shieldtime = ACTIVETIME_SHIELD;
+	activetime_shield = ACTIVETIME_SHIELD;
 	cooltime_Shield = COOLTIME_SHIELD;
 }
 
@@ -284,6 +337,15 @@ void CPlayer::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shi
 }
 void CPlayer::PutDamage(INT damage)
 {
+	if (effecttime_Return) return;
+	// 귀환 취소
+	if (pressQ) {
+		pressQ = FALSE;
+		castingtime_return = 0;
+		cooltime_Return = FRAMETIME * 20;
+	}
+	
+
 	// 쉴드가 켜져있을 때 데미지가 1/2만 들어가게
 	if (onshield) damage /= 2;
 
@@ -305,6 +367,7 @@ BOOL CPlayer::Attack()
 
 void CPlayer::Draw(HDC hdc)
 {
+
 	if (mdeath) {
 		// 죽었을 때 이펙트 그리기
 		return;
@@ -334,7 +397,15 @@ void CPlayer::Draw(HDC hdc)
 		SelectObject(hdc, hOld);
 	}
 
-	if (iaoeeffecttime) {
+	if (effecttime_Shoot) {
+		for (int i = 0; i < 7; i++) {
+			// Shoot 이펙트 그리기
+			FillRect(hdc, &shootattackrange[i], (HBRUSH)GetStockObject(WHITE_BRUSH));
+		}
+	}
+
+
+	if (effecttime_AoE) {
 		// 광역기 이펙트 그리기
 
 		//float tmp1 = iaoeeffecttime / FRAMETIME;
@@ -360,6 +431,17 @@ void CPlayer::Draw(HDC hdc)
 		SelectObject(hdc, hOld);
 	}
 
+	if (onshield) {
+
+		
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSDBRUSH);
+
+		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD,
+			mptpos.x + SHIELD_RAD, mptpos.y + SHIELD_RAD);
+
+		SelectObject(hdc, hOld);
+
+	}
 
 	if (pressQ) {
 		// 파란색 바 그리기
@@ -369,7 +451,7 @@ void CPlayer::Draw(HDC hdc)
 
 		// 검은 바 그리기
 		INT width = rcrtbarRng.right - rcrtbarRng.left;
-		INT crt = returntime / FRAMETIME;
+		INT crt = castingtime_return / FRAMETIME;
 		INT max = CASTINGTIME_RETURN / FRAMETIME;
 		INT leftposX = rcrtbarRng.right - ((crt * width) / max);
 		RECT rcemptybar = {
@@ -382,16 +464,9 @@ void CPlayer::Draw(HDC hdc)
 
 	};
 
-	if (onshield) {
-
-		
-		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hSDBRUSH);
-
-		Ellipse(hdc, mptpos.x - SHIELD_RAD, mptpos.y - SHIELD_RAD,
-			mptpos.x + SHIELD_RAD, mptpos.y + SHIELD_RAD);
-
-		SelectObject(hdc, hOld);
-
+	if (effecttime_Return) {
+		// 귀환 이펙트 그리기
+		Rectangle(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
 	}
 
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
@@ -475,25 +550,33 @@ void CPlayer::Update()
 	}
 
 
-	if (iaoeeffecttime) iaoeeffecttime -= FRAMETIME;
+	if (effecttime_Shoot) effecttime_Shoot -= FRAMETIME;
+	if (effecttime_AoE) effecttime_AoE -= FRAMETIME;
+
+	if (effecttime_Return) {
+		effecttime_Return -= FRAMETIME;
+		if(!effecttime_Return)
+			SetPos(PLAYER_DEFAULT_POSITION);
+	}
 
 	if (pressQ) {
 		//if(returntime==FRAMETIME*20)
 		//	msound->MyPlaySound(3, 4);
-		if (returntime == 0) 
+		if (castingtime_return == 0)
 		{
-			SetPos(PLAYER_DEFAULT_POSITION);
-			pressQ = FALSE;
 			cooltime_Return = COOLTIME_RETURN;
+			effecttime_Return = FRAMETIME * 50;
+			pressQ = FALSE;
+			//SetPos(PLAYER_DEFAULT_POSITION);
 		}
-		returntime -= FRAMETIME;
+		castingtime_return -= FRAMETIME;
 	}
 
 	if (onshield) {
-		if (shieldtime == 0) {
+		if (activetime_shield == 0) {
 			onshield = FALSE;
 		}
-		shieldtime -= FRAMETIME;
+		activetime_shield -= FRAMETIME;
 	}
 
 

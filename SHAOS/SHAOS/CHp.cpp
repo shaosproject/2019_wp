@@ -29,7 +29,10 @@ void CHp::AddHp(INT addhp)
 BOOL CHp::SubHp(INT subhp)
 {
 	ihp -= subhp;
-	if (ihp <= 0) IsZero = TRUE;
+	if (ihp <= 0) {
+		ihp = 0;
+		IsZero = TRUE;
+	}
 	return IsZero;
 }
 

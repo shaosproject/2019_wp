@@ -1,10 +1,10 @@
 #pragma once
 #include "CGameObject.h"
 
-#define PLAYER_EFFECTTIME_AOE FRAMETIME * 10
-#define PLAYER_EFFECTTIME_DEATH FRAMETIME* 500
+#define PLAYER_EFFECTTIME_AOE (FRAMETIME * 10)
+#define PLAYER_EFFECTTIME_DEATH (FRAMETIME* 500)
 #define PLAYER_SHOOT_LENGTH 200
-
+#define PLAYER_SHOOTDAMAGE 20
 
 const HPEN hPLAYERSHOOTPEN = 
 	CreatePen(PS_SOLID, 50, RGB(0, 200, 200));
@@ -17,8 +17,12 @@ class CPlayer : public CGameObject
 	BOOL pressQ, pressSft, onshield;
 
 
-	UINT iaoeeffecttime;
-	UINT returntime, shieldtime;
+	UINT effecttime_AoE;
+	UINT effecttime_Shoot;
+	UINT effecttime_Return;
+
+	UINT castingtime_return;
+	UINT activetime_shield;
 	
 	const INT iAoERadius;
 
@@ -28,10 +32,13 @@ class CPlayer : public CGameObject
 	UINT cooltime_Return;
 	UINT cooltime_Death;
 
+
 	CGameObject*	ptarget;
 	Bullet*			pbullet;
 
 	POINT worldmousepos;
+
+	RECT shootattackrange[7];
 
 public:
 	CSound* msound{ nullptr };
