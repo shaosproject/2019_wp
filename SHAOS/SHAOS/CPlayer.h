@@ -32,6 +32,8 @@ class CPlayer : public CGameObject
 	UINT cooltime_Return;
 	UINT cooltime_Death;
 
+	POINT triangle1[3];
+	POINT triangle2[3];
 
 	CGameObject*	ptarget;
 	Bullet*			pbullet;
