@@ -28,6 +28,7 @@ CTurret::~CTurret()
 
 void CTurret::Draw(HDC hdc)
 {
+	// 공격 범위 그리기...
 	//Ellipse(hdc, mptpos.x - TOWER_ATTACK_RANGE, mptpos.y - TOWER_ATTACK_RANGE,
 	//	mptpos.x + TOWER_ATTACK_RANGE, mptpos.y + TOWER_ATTACK_RANGE);
 
@@ -70,15 +71,15 @@ void CTurret::Update()
 
 
 	// 공격 -> 쿨타임 설정하는거 마음에 안 든다....
-	//ptarget = FindTarget();
-	//if (iattackcooltime) {
-	//	iattackcooltime -= FRAMETIME;
-	//	if (!iattackcooltime) {
-	//		if (ptarget && !pbullet) Attack();	// 총알 만들기
-	//		iattackcooltime = FRAMETIME * 100;
-	//	}
-	//}
-	//if (pbullet) pbullet = pbullet->Move();
+	ptarget = FindTarget();
+	if (iattackcooltime) {
+		iattackcooltime -= FRAMETIME;
+		if (!iattackcooltime) {
+			if (ptarget && !pbullet) Attack();	// 총알 만들기
+			iattackcooltime = FRAMETIME * 100;
+		}
+	}
+	if (pbullet) pbullet = pbullet->Move();
 
 
 	if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
@@ -101,12 +102,10 @@ CGameObject* CTurret::FindTarget()
 		tmp = tmp->next;
 	}
 
-	//tmp = menemylist->next;				// 플레이어 검사
-	//INT range = TOWER_ATTACK_RANGE + PLAYER_RADIUS;
-	//if (IsInRange(this, tmp, range)) {
-	//	ptarget = tmp;
-	//	return TRUE;
-	//}
+	INT range = TOWER_ATTACK_RANGE + PLAYER_RADIUS;
+	if (IsInRange(this, menemylist->next, range)) {
+		return menemylist->next;
+	}
 
 	return nullptr;
 }

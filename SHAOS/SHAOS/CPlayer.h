@@ -39,7 +39,7 @@ class CPlayer : public CGameObject
 	POINT worldmousepos;
 
 	RECT shootattackrange[7];
-
+	BOOL immotal;
 public:
 	CSound* msound{ nullptr };
 	CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist);

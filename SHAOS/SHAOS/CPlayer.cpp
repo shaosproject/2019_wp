@@ -51,6 +51,7 @@ CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
 	for (int i = 0; i < 7; i++) {
 		shootattackrange[i] = { 0,0 };
 	}
+	immotal = FALSE;
 }
 
 
@@ -69,6 +70,9 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
+		case VK_F1:
+			(immotal) ? immotal = FALSE : immotal = TRUE;
+			break;
 		case 'A':
 			L_On = TRUE;
 			break;
@@ -337,6 +341,7 @@ void CPlayer::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shi
 }
 void CPlayer::PutDamage(INT damage)
 {
+	if (immotal) return;
 	if (effecttime_Return) return;
 	// ±ÍÈ¯ Ãë¼Ò
 	if (pressQ) {
