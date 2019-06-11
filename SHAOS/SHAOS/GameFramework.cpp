@@ -124,13 +124,9 @@ void CGameFramework::Draw(HDC hdc)
 
 			switch (pworld->IsEnding()) {
 			case 1:
-				//msound->SoundStop(2);
-				msound->MyPlaySound(6, 4);
 				TextOut(hdc, 400, 300, L"VICTORY!", lstrlen(L"VICTORY!"));
 				break;
 			case 2:
-				//msound->SoundStop(2);
-				msound->MyPlaySound(5, 4);
 				TextOut(hdc, 400, 300, L"  LOSE!", lstrlen(L"  LOSE!"));
 				break;
 			}

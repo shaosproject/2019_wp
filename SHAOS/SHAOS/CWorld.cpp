@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CWorld.h"
-
+#include "Sound.h"
 
 
 CWorld::CWorld(HWND hwnd)
@@ -72,12 +72,15 @@ void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 void CWorld::Update()
 {
 	if (pUserTeam->gameover) {
-		if (gamestate == 0); // 사운드 넣기 
+		if (gamestate == 0) 
+			sound->MyPlaySound(6, 4);// 사운드 넣기 
 		gamestate = 2;
 		return;
 	}
-	if (pEnemyTeam->gameover) {
-		if (gamestate == 0); // 사운드 넣기 
+	if (pEnemyTeam->gameover)
+	{
+		if (gamestate == 0)
+			sound->MyPlaySound(5, 4); // 사운드 넣기 
 		gamestate = 1;
 		return;
 	}
@@ -103,9 +106,10 @@ void CWorld::Draw(HDC clientDC)
 		hUpdateDC, iViewX - MIN_VIEWX, 0, SRCCOPY);
 }
 
-void CWorld::SetSound(CSound* sound)
+void CWorld::SetSound(CSound* asound)
 {
-	pUserTeam->SetSound(sound);
+	sound = asound;
+	pUserTeam->SetSound(asound);
 }
 
 void CWorld::GetUIInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
