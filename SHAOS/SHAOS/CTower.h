@@ -21,5 +21,5 @@ public:
 
 	virtual INT		GetObjRadius();
 	virtual void	Death();
-
+	INT				GetTowerHp();
 };

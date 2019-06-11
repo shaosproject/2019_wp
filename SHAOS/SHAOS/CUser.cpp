@@ -21,10 +21,9 @@ CUser::~CUser()
 void CUser::SetInitObj()
 {
 	POINTFLOAT tmp = {
-		(INT)PLAYER_DEFAULT_POSITION.x,
-		(INT)PLAYER_DEFAULT_POSITION.y
+		PLAYER_DEFAULT_POSITION.x,
+		PLAYER_DEFAULT_POSITION.y
 	};
-	
 	mPlayer = new CPlayer(tmp, TEAM::USER, p_opponentobjlist);
 	this->AddMyObjList(mPlayer);
 
@@ -126,7 +125,9 @@ void CUser::SetSound(CSound* sound)
 	mPlayer->msound = sound;
 }
 
-void CUser::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return)
+void CUser::GetUIInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
+	INT* ct_shield, INT* ct_return, INT* towerhp)
 {
 	mPlayer->UI_GetPlayerInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return);
+	*towerhp = mTower->GetTowerHp();
 }

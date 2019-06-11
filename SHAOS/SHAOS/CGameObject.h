@@ -39,7 +39,7 @@ public:
 	
 	virtual INT		GetObjRadius() = 0;
 
-	void PutDamage(INT damage);
+	virtual void	PutDamage(INT damage);
 
 	virtual void	Death() = 0;
 	BOOL			IsDead() const;

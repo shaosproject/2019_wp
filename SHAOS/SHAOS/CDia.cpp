@@ -50,9 +50,16 @@ void CDia::Draw(HDC hdc)
 	Polygon(hdc, vertax, 4);
 
 	if (iattackcooltime >= FRAMETIME * 45) {
-		// °ø°Ý ÀÌÆåÆ®
-		Rectangle(hdc, mptpos.x - 5, mptpos.y - 5,
-			mptpos.x + 5, mptpos.y + 5);
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hDIAATTACKBRUSH);
+
+		POINT pt[3] = {
+			{mrcRng.left - 10, (LONG)mptpos.y },
+			{mptpos.x - DIA_SHORTRADIUS, (LONG)mptpos.y - DIA_SHORTRADIUS},
+			{mptpos.x - DIA_SHORTRADIUS, (LONG)mptpos.y + DIA_SHORTRADIUS}
+		};
+		Polygon(hdc, pt, 3);
+
+		SelectObject(hdc, hOld);
 	}
 
 }
@@ -79,8 +86,10 @@ void CDia::Move()
 	}
 	else if (mptpos.x > MAPSIZE_WIDTH/6 && mptpos.x <= MAPSIZE_WIDTH / 2) {
 		float movey;
-		if (mptpos.y > MAPSIZE_HEIGHT / 2 && mptpos.y < MAPSIZE_HEIGHT - 50) movey = 1;
-		else if(mptpos.y < MAPSIZE_HEIGHT / 2 && mptpos.y > 50) movey = -DIA_SPEED;
+		if (mptpos.y > MAPSIZE_HEIGHT / 2 && mptpos.y < MAPSIZE_HEIGHT - 50) 
+			movey = DIA_SPEED;
+		else if(mptpos.y < MAPSIZE_HEIGHT / 2 && mptpos.y > 50) 
+			movey = -DIA_SPEED;
 		else movey = 0;
 		movevector = { -DIA_SPEED, movey };
 	}

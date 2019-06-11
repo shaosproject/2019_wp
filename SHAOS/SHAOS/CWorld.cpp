@@ -106,9 +106,10 @@ void CWorld::SetSound(CSound* sound)
 	pUserTeam->SetSound(sound);
 }
 
-void CWorld::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return)
+void CWorld::GetUIInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
+	INT* ct_shield, INT* ct_return, INT* towerhp)
 {
-	pUserTeam->UI_GetPlayerInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return);
+	pUserTeam->GetUIInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return, towerhp);
 }
 
 INT CWorld::IsEnding()

@@ -281,7 +281,16 @@ void CPlayer::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shi
 	*ct_AoE = cooltime_AoE;
 	*ct_shield = cooltime_Shield;
 	*ct_return = cooltime_Return;
+}
+void CPlayer::PutDamage(INT damage)
+{
+	// 쉴드가 켜져있을 때 데미지가 1/2만 들어가게
+	if (onshield) damage /= 2;
 
+	if (mhp->SubHp(damage)) {
+		mdeath = TRUE;
+		Death();
+	}
 }
 INT CPlayer::GetObjRadius()
 {
@@ -297,6 +306,7 @@ BOOL CPlayer::Attack()
 void CPlayer::Draw(HDC hdc)
 {
 	if (mdeath) {
+		// 죽었을 때 이펙트 그리기
 		return;
 	}
 
@@ -382,7 +392,6 @@ void CPlayer::Draw(HDC hdc)
 
 		SelectObject(hdc, hOld);
 
-
 	}
 
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
@@ -453,6 +462,7 @@ void CPlayer::Update()
 			mhp->SetHp(PLAYER_MAXHP);
 			mdeath = FALSE;
 		}
+		return;	// 죽었으면 업데이트 멈추기
 	}
 
 

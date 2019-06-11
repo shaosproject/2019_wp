@@ -77,9 +77,9 @@ void CGameFramework::Draw(HDC hdc)
 		BitBlt(hdc, BUTTONPAUSE_RNG.left, BUTTONPAUSE_RNG.top, PAUSEBUTTONSIZE, PAUSEBUTTONSIZE,
 			memdc, 0, 0, SRCCOPY);
 
-		// 플레이어 정보에 관한 UI
-		INT p_hp, p_ctshoot, p_ctAoE, p_ctshield, p_ctreturn;
-		pworld->UI_GetPlayerInfo(&p_hp, &p_ctshoot, &p_ctAoE, &p_ctshield, &p_ctreturn);
+		// UI 정보 가져오기
+		INT p_hp, p_ctshoot, p_ctAoE, p_ctshield, p_ctreturn, t_hp;
+		pworld->GetUIInfo(&p_hp, &p_ctshoot, &p_ctAoE, &p_ctshield, &p_ctreturn, &t_hp);
 
 		RECT UI_Rect = { 20,20,80,680 };
 		FillRect(hdc, &UI_Rect , (HBRUSH)GetStockObject(WHITE_BRUSH));
@@ -91,6 +91,7 @@ void CGameFramework::Draw(HDC hdc)
 		Rectangle(hdc, 30, 580, 70, 620);
 		Rectangle(hdc, 30, 630, 70, 670);
 
+		// 광역기 쿨타임 가져오니까 화면 흔들림효과 넣을 수 있을 듯
 
 		if (pworld->IsEnding() != 0) {
 			// 여기다가 엔딩장면 그려라~~

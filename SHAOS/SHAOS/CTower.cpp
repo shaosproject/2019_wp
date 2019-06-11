@@ -94,3 +94,9 @@ void CTower::Death()
 		ideatheffecttime = TOWER_EFFECTTIME_DEATH;
 	}
 }
+
+INT CTower::GetTowerHp()
+{
+	return mhp->GetHp();
+}
+
