@@ -58,7 +58,7 @@ BOOL IsInRange(CGameObject* me, CGameObject* obj, INT range) {
 	float dy = me->GetPos().y - obj->GetPos().y;
 
 	float center_d = dx * dx + dy * dy;
-
-	if (center_d <= range * range) return TRUE;
+	float tmp = range * range;
+	if (center_d <= tmp) return TRUE;
 	else return FALSE;
 }

@@ -18,6 +18,8 @@ CTri::CTri(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 
 	halfedge = sqrt(3) * TRI_INNERCIRCLERADIUS;
 	iattakradius = TRI_INNERCIRCLERADIUS * 2;		//외심의 반지름
+
+	iattackcooltime = 0;
 }
 
 
@@ -43,9 +45,12 @@ void CTri::Draw(HDC hdc)
 		return;
 	}
 
-
-
 	Polygon(hdc, vertax, 3);
+
+	if (iattackcooltime >= FRAMETIME * 25) {
+		// 공격 이펙트 그리기
+		Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+	}
 }
 
 void CTri::SelectedDraw(HDC hdc, HBRUSH hbr)
@@ -77,9 +82,12 @@ void CTri::Move()
 		float nomalizedY = projY / distance;
 
 		movevector = { nomalizedX,nomalizedY };
+		attackOn = FALSE;
 	}
-	else movevector = { 0,0 };
-
+	else {
+		movevector = { 0,0 };
+		attackOn = TRUE;
+	}
 
 	mptpos.x += movevector.x;
 	mptpos.y += movevector.y;
@@ -100,11 +108,14 @@ void CTri::Move()
 
 void CTri::Attack()
 {
-
+	if (!attackOn) return;
+	pattacktarget->PutDamage(TRI_ATTACKDAMAGE);
+	iattackcooltime = FRAMETIME * 30;
 }
 
 void CTri::Update()
 {
+
 	if (ideatheffecttime) {
 		ideatheffecttime -= FRAMETIME;
 		return;
@@ -122,8 +133,9 @@ void CTri::Update()
 	if (iattackcooltime)
 		iattackcooltime -= FRAMETIME;
 	else {
+
 		Attack();
-		iattackcooltime = FRAMETIME * 50;
+
 	}
 
 }

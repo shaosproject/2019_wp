@@ -71,22 +71,39 @@ void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 
 void CWorld::Update()
 {
+
+	// 타워 죽음 이펙트가 끝났을 때
 	if (pUserTeam->gameover) {
 		if (gamestate == 0) 
-			sound->MyPlaySound(6, 4);// 사운드 넣기 
+			sound->MyPlaySound(5, 4);// 사운드 넣기 
 		gamestate = 2;
+		//iViewX = 600;
 		return;
 	}
-	if (pEnemyTeam->gameover)
+	else if (pEnemyTeam->gameover)
 	{
 		if (gamestate == 0)
-			sound->MyPlaySound(5, 4); // 사운드 넣기 
+			sound->MyPlaySound(6, 4); // 사운드 넣기 
 		gamestate = 1;
+		//iViewX == 3100;
 		return;
 	}
 
 	pUserTeam->Update();
 	pEnemyTeam->Update();
+
+	// 타워가 죽었을 때
+	if (pUserTeam->GetMyObjList()->IsDead()) {
+		// 타워 죽었을 때 효과음
+		iViewX = 600;
+		return;
+	}
+	else if (pEnemyTeam->GetMyObjList()->IsDead()) {
+		// 타워 죽었을 때 효과음
+		iViewX == 3100;
+		return;
+	}
+
 	iViewX = (INT)SET_VIEWX(pUserTeam->GetPlayerPos().x);	
 }
 
@@ -100,7 +117,10 @@ void CWorld::Draw(HDC clientDC)
 	pUserTeam->Draw(hUpdateDC);
 	pEnemyTeam->Draw(hUpdateDC);
 	//----
-
+	if(pUserTeam->GetMyObjList()->IsDead())
+		iViewX = 600;
+	if (pEnemyTeam->GetMyObjList()->IsDead())
+		iViewX == 3100;
 
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, iViewX - MIN_VIEWX, 0, SRCCOPY);
@@ -113,9 +133,9 @@ void CWorld::SetSound(CSound* asound)
 }
 
 void CWorld::GetUIInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
-	INT* ct_shield, INT* ct_return, INT* towerhp)
+	INT* ct_shield, INT* ct_return, INT* towerhp, INT* ct_death)
 {
-	pUserTeam->GetUIInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return, towerhp);
+	pUserTeam->GetUIInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return, towerhp, ct_death);
 }
 
 INT CWorld::IsEnding()

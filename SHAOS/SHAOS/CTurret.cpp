@@ -12,7 +12,7 @@ CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	mhp = new CHp(TOWER_MAXHP);
 	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 
-	iattackcooltime = FRAMETIME * 100;
+	iattackcooltime = 0;
 	ptarget = nullptr;
 	pbullet = nullptr;
 
@@ -31,6 +31,11 @@ void CTurret::Draw(HDC hdc)
 
 	if (ideatheffecttime) {
 		// 죽음 이펙트 그리기
+		// 타워의 색이 흰색으로 변하면서 
+		RoundRect(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom,
+			TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
+
+
 		INT tmp1 = ideatheffecttime / FRAMETIME;
 		INT tmp2 = TURRET_EFFECTTIME_DEATH / FRAMETIME;
 
@@ -46,6 +51,8 @@ void CTurret::Draw(HDC hdc)
 		if (tmp1 % 20 >= 16 && tmp1 % 20 <20 )
 		Ellipse(hdc, mptpos.x  - d, mptpos.y  - d,mptpos.x  + d, mptpos.y  + d);
 
+
+
 		return;
 	}
 
@@ -57,10 +64,11 @@ void CTurret::Draw(HDC hdc)
 		: hOldpen = (HPEN)SelectObject(hdc, (HPEN)GetStockObject(WHITE_PEN));
 
 	// 공격 범위 그리기...
-	Ellipse(hdc, mptpos.x - TOWER_ATTACK_RANGE, mptpos.y - TOWER_ATTACK_RANGE,
-		mptpos.x + TOWER_ATTACK_RANGE, mptpos.y + TOWER_ATTACK_RANGE);
+	Ellipse(hdc, mptpos.x - TURRET_ATTACK_RANGE, mptpos.y - TURRET_ATTACK_RANGE,
+		mptpos.x + TURRET_ATTACK_RANGE, mptpos.y + TURRET_ATTACK_RANGE);
 
 	SelectObject(hdc, hOldpen);
+
 	SelectObject(hdc, hTRBRUSH);
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
 		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
@@ -74,24 +82,33 @@ void CTurret::Draw(HDC hdc)
 
 void CTurret::Update()
 {
+	if (mdeath) {
+		if(ideatheffecttime > FRAMETIME) ideatheffecttime -= FRAMETIME;
+		return;
+	}
+
 	// hp바 업데이트
 	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TURRET_RADIUS * 2, TURRET_MAXHP);
-	
 
 
-	// 공격 -> 쿨타임 설정하는거 마음에 안 든다....
 	ptarget = FindTarget();
-	if (iattackcooltime) {
-		iattackcooltime -= FRAMETIME;
-		if (!iattackcooltime) {
-			if (ptarget && !pbullet) Attack();	// 총알 만들기
+	if (ptarget == nullptr) {
+		iattackcooltime = 0;
+	}
+
+	if (!iattackcooltime) {
+		if (ptarget && !pbullet) {
+			Attack();
 			iattackcooltime = FRAMETIME * 100;
 		}
 	}
+	else {
+		iattackcooltime -= FRAMETIME;
+	}
+
 	if (pbullet) pbullet = pbullet->Move();
 
 
-	if (ideatheffecttime) ideatheffecttime -= FRAMETIME;
 }
 
 CGameObject* CTurret::FindTarget()
@@ -104,14 +121,14 @@ CGameObject* CTurret::FindTarget()
 			continue;
 		}
 
-		INT range = TOWER_ATTACK_RANGE + tmp->GetObjRadius();
+		INT range = TURRET_ATTACK_RANGE + tmp->GetObjRadius();
 		if (IsInRange(this, tmp, range)) {
 			return tmp;					// 뭐가 됐든 타겟이 있으면 리턴
 		}
 		tmp = tmp->next;
 	}
 
-	INT range = TOWER_ATTACK_RANGE + PLAYER_RADIUS;
+	INT range = TURRET_ATTACK_RANGE + PLAYER_RADIUS;
 	if (IsInRange(this, menemylist->next, range)) {
 		return menemylist->next;
 	}

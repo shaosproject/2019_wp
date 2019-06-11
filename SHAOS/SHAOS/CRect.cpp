@@ -108,10 +108,7 @@ void CRect::Update()
 
 	if(iattackcooltime)
 		iattackcooltime -= FRAMETIME;
-	else {
-		Attack();
-		iattackcooltime = FRAMETIME * 50;
-	}
+	else Attack();
 
 
 
@@ -189,6 +186,8 @@ void CRect::Attack()
 
 		tmp = tmp->next;
 	}
+
+	iattackcooltime = FRAMETIME * 50;
 }
 
 void CRect::SetTarget()

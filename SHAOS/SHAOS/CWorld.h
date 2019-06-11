@@ -36,8 +36,9 @@ public:
 	void SetSound(CSound*);
 
 	void GetUIInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
-		INT* ct_shield, INT* ct_return, INT* towerhp);
+		INT* ct_shield, INT* ct_return, INT* towerhp, INT* ct_death);
 
 	INT IsEnding();
+
 };
 

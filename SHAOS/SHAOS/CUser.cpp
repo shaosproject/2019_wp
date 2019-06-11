@@ -39,6 +39,16 @@ void CUser::Update()
 {
 	if (gameover) return;
 
+	if (p_myobjlist->IsDead()) {
+
+		p_myobjlist->Update();
+
+		if (p_myobjlist->IsDelete())
+			gameover = TRUE;
+
+		return;
+	}
+
 	// À¯´Ö Á¨
 	if (iunitgentime) iunitgentime -= FRAMETIME;
 	else {
@@ -53,12 +63,9 @@ void CUser::Update()
 	for (int i = 0; i < imyobjnum; i++) {
 
 		tmp->Update();
+		if (p_myobjlist->IsDead()) return;
 
 		if (tmp->IsDelete()) {
-			if (tmp == p_myobjlist) {
-				gameover = TRUE;
-				continue;
-			}
 
 			CGameObject* delp = tmp;
 			tmp = tmp->next;
@@ -126,8 +133,8 @@ void CUser::SetSound(CSound* sound)
 }
 
 void CUser::GetUIInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
-	INT* ct_shield, INT* ct_return, INT* towerhp)
+	INT* ct_shield, INT* ct_return, INT* towerhp, INT* ct_death)
 {
-	mPlayer->UI_GetPlayerInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return);
+	mPlayer->UI_GetPlayerInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return, ct_death);
 	*towerhp = mTower->GetTowerHp();
 }

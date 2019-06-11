@@ -171,8 +171,3 @@ INT CDia::GetObjRadius()
 {
 	return DIA_SHORTRADIUS;
 }
-
-void CDia::Death()
-{
-	ideatheffecttime = FRAMETIME * 50;
-}

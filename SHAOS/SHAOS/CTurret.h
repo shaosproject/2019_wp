@@ -1,10 +1,6 @@
 #pragma once
 #include "CGameObject.h"
 
-#define TURRET_EFFECTTIME_DEATH FRAMETIME * 50
-#define TOWER_ATTACK_RANGE 300
-
-const HPEN hREDPEN = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
 
 
 class Bullet;

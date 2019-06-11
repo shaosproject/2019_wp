@@ -45,6 +45,17 @@ void CEnemy::SetInitObj()
 void CEnemy::Update()
 {
 	if (gameover) return;
+
+	if (p_myobjlist->IsDead()) {
+
+		p_myobjlist->Update();
+
+		if(p_myobjlist->IsDelete())
+			gameover = TRUE;
+
+		return;
+	}
+
 	// À¯´Ö Á¨
 	if (iunitgentime) iunitgentime -= FRAMETIME;
 	else {
@@ -61,10 +72,6 @@ void CEnemy::Update()
 		tmp->Update();
 
 		if (tmp->IsDelete()) {
-			if (tmp == p_myobjlist) {
-				gameover = TRUE;
-				continue;
-			}
 			CGameObject* delp = tmp;
 			tmp = tmp->next;
 			DeleteInList(delp);

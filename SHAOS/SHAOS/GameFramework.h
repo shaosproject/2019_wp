@@ -5,6 +5,7 @@
 void	CALLBACK	TimerProc(HWND, UINT, UINT, DWORD);
 BOOL	CALLBACK    DialogProc(HWND, UINT, WPARAM, LPARAM);
 
+
 class CGameFramework
 {
 	HINSTANCE		mhInst;
@@ -18,6 +19,13 @@ class CGameFramework
 
 	// 월드한테 좌표를 넘길 때 어디서 넘기지...
 	CWorld* pworld{ nullptr };
+
+	HBITMAP hskill_shoot;
+	HBITMAP hskill_aoe;
+	HBITMAP hskill_shield;
+	HBITMAP hskill_return;
+
+	INT p_hp, t_hp, p_ctshoot, p_ctAoE, p_ctshield, p_ctreturn, p_ctdeath;
 
 
 public:

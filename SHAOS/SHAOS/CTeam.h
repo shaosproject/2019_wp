@@ -31,5 +31,6 @@ public:
 	void AddMyObjList(CGameObject*);
 	void DeleteInList(CGameObject*);
 
+
 };
 

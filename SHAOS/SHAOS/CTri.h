@@ -1,9 +1,12 @@
 #pragma once
 #include "CUnit.h"
+
+
 class CTri : public CUnit
 {
 	INT iattakradius;
 	float halfedge;
+	BOOL attackOn;
 public:
 	CTri(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTri();

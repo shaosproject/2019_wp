@@ -329,13 +329,16 @@ void CPlayer::SetPos(POINT setpos)
 	mptpos.x = (INT)setpos.x;
 	mptpos.y = (INT)setpos.y;
 }
-void CPlayer::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE, INT* ct_shield, INT* ct_return)
+void CPlayer::UI_GetPlayerInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
+	INT* ct_shield, INT* ct_return, INT* ct_death)
 {
 	*ahp = mhp->GetHp();
 	*ct_shoot = cooltime_Shoot;
 	*ct_AoE = cooltime_AoE;
 	*ct_shield = cooltime_Shield;
 	*ct_return = cooltime_Return;
+	*ct_death = cooltime_Death;
+
 }
 void CPlayer::PutDamage(INT damage)
 {

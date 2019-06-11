@@ -1,9 +1,6 @@
 #pragma once
 #include "CUnit.h"
 #include "CTower.h"
-#define RECT_DAMAGE 10
-
-
 
 
 class CRect : public CUnit

@@ -1,9 +1,6 @@
 #pragma once
 #include "CGameObject.h"
 
-#define TOWER_EFFECTTIME_DEATH (FRAMETIME * 100)
-const HBRUSH hUSERTOWERCIRCLEBRUSH = CreateSolidBrush(RGB(0, 0, 92));
-const HBRUSH hENEMYTOWERCIRCLEBRUSH = CreateSolidBrush(RGB(92, 0, 0));
 
 class CTower : public CGameObject
 {
@@ -24,4 +21,5 @@ public:
 	virtual INT		GetObjRadius();
 	virtual void	Death();
 	INT				GetTowerHp();
+
 };

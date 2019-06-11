@@ -1,9 +1,6 @@
 #pragma once
 #include "CUnit.h"
 
-#define DIA_SPEED 2
-#define DIA_ATTACKDAMAGE 10
-const HBRUSH hDIAATTACKBRUSH = CreateSolidBrush(RGB(75, 255, 150));
 
 class CDia : public CUnit
 {
@@ -22,7 +19,6 @@ public:
 	void Attack();
 
 	virtual INT		GetObjRadius();
-	virtual void	Death();
 
 };
 
