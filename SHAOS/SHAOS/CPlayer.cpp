@@ -98,8 +98,7 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 		case 'Q':
 			if (!pressQ && !cooltime_Return) {
 				pressQ = TRUE;
-				ReturnHome();
-				msound->MyPlaySound(3, 3);
+				ReturnHome();				
 			}
 			break;
 		case 'V':
@@ -130,7 +129,6 @@ void CPlayer::MSG_Key(UINT message, WPARAM wParam)
 			if (pressQ) {
 				pressQ = FALSE;
 				castingtime_return = 0;
-				//msound->SoundStop(3);
 			}
 			break;
 		}
@@ -367,6 +365,7 @@ BOOL CPlayer::Attack()
 {
 	if (!ptarget) return FALSE;
 	pbullet = new Bullet(&mptpos, ptarget, PLAYER_BULLETDAMAGE);
+	msound->MyPlaySound(2, 3);
 	return TRUE;
 }
 
@@ -375,6 +374,7 @@ void CPlayer::Draw(HDC hdc)
 
 	if (mdeath) {
 		// 죽었을 때 이펙트 그리기
+
 		return;
 	}
 
@@ -403,10 +403,133 @@ void CPlayer::Draw(HDC hdc)
 	}
 
 	if (effecttime_Shoot) {
-		for (int i = 0; i < 7; i++) {
+		//for (int i = 0; i < 7; i++) {
 			// Shoot 이펙트 그리기
-			FillRect(hdc, &shootattackrange[i], (HBRUSH)GetStockObject(WHITE_BRUSH));
-		}
+			//float efs = effecttime_Shoot / FRAMETIME / 7;
+			//if (efs >= 7)
+			//{
+			//}
+			//else if (efs >= 6)
+			//{
+			//	FillRect(hdc, &shootattackrange[0], (HBRUSH)GetStockObject(DKGRAY_BRUSH));
+			//}
+			//else if(efs >=5)
+			//{
+			//	FillRect(hdc, &shootattackrange[1], (HBRUSH)GetStockObject(DKGRAY_BRUSH));
+			//}			
+			//else if (efs >= 4)
+			//{
+			//	FillRect(hdc, &shootattackrange[2], (HBRUSH)GetStockObject(GRAY_BRUSH));
+			//}			
+			//else if (efs >= 3)
+			//{
+			//	FillRect(hdc, &shootattackrange[3], (HBRUSH)GetStockObject(GRAY_BRUSH));
+			//}			
+			//else if (efs >= 2)
+			//{
+			//	FillRect(hdc, &shootattackrange[4], (HBRUSH)GetStockObject(LTGRAY_BRUSH));
+			//}			
+			//else if (efs >= 1)
+			//{
+			//	FillRect(hdc, &shootattackrange[5], (HBRUSH)GetStockObject(LTGRAY_BRUSH));
+			//}			
+			//else if (efs >= 0)
+			//{
+			//	FillRect(hdc, &shootattackrange[6], (HBRUSH)GetStockObject(WHITE_BRUSH));
+			//}
+
+		float tmp1 = effecttime_Shoot / FRAMETIME;
+	
+
+		    if (tmp1 > 48)
+			Ellipse(hdc, shootattackrange[0].left - 10, shootattackrange[0].bottom - 10,
+				shootattackrange[0].left + 10, shootattackrange[0].bottom + 10);
+			else if (tmp1>46)
+				Ellipse(hdc, shootattackrange[0].left - 10, shootattackrange[0].top - 10,
+					shootattackrange[0].left + 10, shootattackrange[0].top + 10);
+			else if (tmp1 > 44)
+				Ellipse(hdc, shootattackrange[0].right - 10, shootattackrange[0].top - 10,
+					shootattackrange[0].right + 10, shootattackrange[0].top + 10);
+			else if (tmp1 > 42)
+				Ellipse(hdc, shootattackrange[0].right - 10, shootattackrange[0].bottom - 10,
+					shootattackrange[0].right + 10, shootattackrange[0].bottom + 10);
+			else if (tmp1 > 40)
+				Ellipse(hdc, shootattackrange[1].left - 10, shootattackrange[1].bottom - 10,
+					shootattackrange[1].left + 10, shootattackrange[1].bottom + 10);
+			else if (tmp1 > 38)
+				Ellipse(hdc, shootattackrange[1].left - 10, shootattackrange[1].top - 10,
+					shootattackrange[1].left + 10, shootattackrange[1].top + 10);
+			else if (tmp1 > 36)
+				Ellipse(hdc, shootattackrange[1].right - 10, shootattackrange[1].top - 10,
+					shootattackrange[1].right + 10, shootattackrange[1].top + 10);
+			else if (tmp1 > 34)
+				Ellipse(hdc, shootattackrange[1].right - 10, shootattackrange[1].bottom - 10,
+					shootattackrange[1].right + 10, shootattackrange[1].bottom + 10);
+
+			else if (tmp1 > 32)
+				Ellipse(hdc, shootattackrange[2].left - 10, shootattackrange[2].bottom - 10,
+					shootattackrange[2].left + 10, shootattackrange[2].bottom + 10);
+			else if (tmp1 > 30)
+				Ellipse(hdc, shootattackrange[2].left - 10, shootattackrange[2].top - 10,
+					shootattackrange[2].left + 10, shootattackrange[2].top + 10);
+			else if (tmp1 > 28)
+				Ellipse(hdc, shootattackrange[2].right - 10, shootattackrange[2].top - 10,
+					shootattackrange[2].right + 10, shootattackrange[2].top + 10);
+			else if (tmp1 > 26)
+				Ellipse(hdc, shootattackrange[2].right - 10, shootattackrange[2].bottom - 10,
+					shootattackrange[2].right + 10, shootattackrange[2].bottom + 10);
+
+			else if (tmp1 > 24)
+				Ellipse(hdc, shootattackrange[3].left - 10, shootattackrange[3].bottom - 10,
+					shootattackrange[3].left + 10, shootattackrange[3].bottom + 10);
+			else if (tmp1 > 26)
+				Ellipse(hdc, shootattackrange[3].left - 10, shootattackrange[3].top - 10,
+					shootattackrange[3].left + 10, shootattackrange[3].top + 10);
+			else if (tmp1 > 24)
+				Ellipse(hdc, shootattackrange[3].right - 10, shootattackrange[3].top - 10,
+					shootattackrange[3].right + 10, shootattackrange[3].top + 10);
+			else if (tmp1 > 22)
+				Ellipse(hdc, shootattackrange[3].right - 10, shootattackrange[3].bottom - 10,
+					shootattackrange[3].right + 10, shootattackrange[3].bottom + 10);
+
+			else if (tmp1 > 20)
+				Ellipse(hdc, shootattackrange[4].left - 10, shootattackrange[4].bottom - 10,
+					shootattackrange[4].left + 10, shootattackrange[4].bottom + 10);
+			else if (tmp1 > 18)
+				Ellipse(hdc, shootattackrange[4].left - 10, shootattackrange[4].top - 10,
+					shootattackrange[4].left + 10, shootattackrange[4].top + 10);
+			else if (tmp1 > 16)
+				Ellipse(hdc, shootattackrange[4].right - 10, shootattackrange[4].top - 10,
+					shootattackrange[4].right + 10, shootattackrange[4].top + 10);
+			else if (tmp1 > 14)
+				Ellipse(hdc, shootattackrange[4].right - 10, shootattackrange[4].bottom - 10,
+					shootattackrange[4].right + 10, shootattackrange[4].bottom + 10);
+
+			else if (tmp1 > 12)
+				Ellipse(hdc, shootattackrange[5].left - 10, shootattackrange[5].bottom - 10,
+					shootattackrange[5].left + 10, shootattackrange[5].bottom + 10);
+			else if (tmp1 > 10)
+				Ellipse(hdc, shootattackrange[5].left - 10, shootattackrange[5].top - 10,
+					shootattackrange[5].left + 10, shootattackrange[5].top + 10);
+			else if (tmp1 > 8)
+				Ellipse(hdc, shootattackrange[5].right - 10, shootattackrange[5].top - 10,
+					shootattackrange[5].right + 10, shootattackrange[5].top + 10);
+			else if (tmp1 > 6)
+				Ellipse(hdc, shootattackrange[5].right - 10, shootattackrange[5].bottom - 10,
+					shootattackrange[5].right + 10, shootattackrange[5].bottom + 10);
+
+			else if (tmp1 > 4)
+				Ellipse(hdc, shootattackrange[6].left - 10, shootattackrange[6].bottom - 10,
+					shootattackrange[6].left + 10, shootattackrange[6].bottom + 10);
+			else if (tmp1 > 3)
+				Ellipse(hdc, shootattackrange[6].left - 10, shootattackrange[6].top - 10,
+					shootattackrange[6].left + 10, shootattackrange[6].top + 10);
+			else if (tmp1 > 2)
+				Ellipse(hdc, shootattackrange[6].right - 10, shootattackrange[6].top - 10,
+					shootattackrange[6].right + 10, shootattackrange[6].top + 10);
+			else if (tmp1 > 1)
+				Ellipse(hdc, shootattackrange[6].right - 10, shootattackrange[6].bottom - 10,
+					shootattackrange[6].right + 10, shootattackrange[6].bottom + 10);
 	}
 
 
@@ -448,6 +571,7 @@ void CPlayer::Draw(HDC hdc)
 
 	}
 
+
 	if (pressQ) {
 		// 파란색 바 그리기
 		RECT rcrtbarRng = { mrcRng.left - 10, mrcRng.bottom + 2,
@@ -471,7 +595,30 @@ void CPlayer::Draw(HDC hdc)
 
 	if (effecttime_Return) {
 		// 귀환 이펙트 그리기
-		Rectangle(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+		mrcRng = { (LONG)(mptpos.x - PLAYER_CENTER2VERTAX),
+		(LONG)(mptpos.y - PLAYER_CENTER2VERTAX),
+		(LONG)(mptpos.x + PLAYER_CENTER2VERTAX),
+		(LONG)(mptpos.y + PLAYER_CENTER2VERTAX)
+		};
+	// 먼저 그리는 삼각형
+		Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+
+		triangle1[0] = { (LONG)mptpos.x, (LONG)(mptpos.y + PLAYER_CENTER2VERTAX) };
+		triangle1[1] = { (LONG)(mptpos.x - PLAYER_HALFSIDE),(LONG)(mptpos.y - PLAYER_CENTER2SIDE) };
+		triangle1[2] = { (LONG)(mptpos.x + PLAYER_HALFSIDE),(LONG)(mptpos.y - PLAYER_CENTER2SIDE) };
+		// 나중에 그리는 삼각형
+		triangle2[0] = { (LONG)mptpos.x, (LONG)(mptpos.y - PLAYER_CENTER2VERTAX) };
+		triangle2[1] = { (LONG)(mptpos.x - PLAYER_HALFSIDE),(LONG)(mptpos.y + PLAYER_CENTER2SIDE) };
+		triangle2[2] = { (LONG)(mptpos.x + PLAYER_HALFSIDE),(LONG)(mptpos.y + PLAYER_CENTER2SIDE) };
+
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(NULL_BRUSH));
+
+		Polygon(hdc, triangle1, 3);
+		Polygon(hdc, triangle2, 3);
+
+		SelectObject(hdc, hOld);
+		
+		
 	}
 
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
@@ -520,6 +667,7 @@ void CPlayer::Draw(HDC hdc)
 
 	// 총알
 	if (pbullet) {
+		//msound->MyPlaySound(2, 3);
 		pbullet->Draw(hdc);
 	}
 	if (ptarget) {
@@ -560,8 +708,11 @@ void CPlayer::Update()
 
 	if (effecttime_Return) {
 		effecttime_Return -= FRAMETIME;
-		if(!effecttime_Return)
+		if (!effecttime_Return)
+		{
+			//msound->MyPlaySound(3, 3);
 			SetPos(PLAYER_DEFAULT_POSITION);
+		}
 	}
 
 	if (pressQ) {
@@ -571,8 +722,8 @@ void CPlayer::Update()
 		{
 			cooltime_Return = COOLTIME_RETURN;
 			effecttime_Return = FRAMETIME * 50;
+			msound->MyPlaySound(3, 3);
 			pressQ = FALSE;
-			//SetPos(PLAYER_DEFAULT_POSITION);
 		}
 		castingtime_return -= FRAMETIME;
 	}
@@ -586,11 +737,34 @@ void CPlayer::Update()
 
 
 	// 쿨타임이 0이 아닐 때 감소
-	if (cooltime_Shoot) cooltime_Shoot -= FRAMETIME;
-	if (cooltime_AoE) cooltime_AoE -= FRAMETIME;
-	if (cooltime_Shield) cooltime_Shield -= FRAMETIME;
-	if (cooltime_Return) cooltime_Return -= FRAMETIME;
-
+	if (cooltime_Shoot) {
+		cooltime_Shoot -= FRAMETIME;
+		if (!cooltime_Shoot) {
+			msound->MyPlaySound(4, 3);
+			// 쿨타임 끝~
+		}
+	}
+	if (cooltime_AoE) {
+		cooltime_AoE -= FRAMETIME;
+		if (!cooltime_AoE) {
+			msound->MyPlaySound(4, 3);
+		}
+	}
+	if (cooltime_Shield)
+	{
+		cooltime_Shield -= FRAMETIME;
+		if (!cooltime_Shield) {
+			msound->MyPlaySound(4, 3);
+		}
+	}
+	if (cooltime_Return)
+	{
+		cooltime_Return -= FRAMETIME;
+		if (!cooltime_Return) {
+			msound->MyPlaySound(4, 3);
+		}
+	}
+			
 
 	if (iattackcooltime)
 		iattackcooltime -= FRAMETIME;
