@@ -28,9 +28,6 @@ CTurret::~CTurret()
 
 void CTurret::Draw(HDC hdc)
 {
-	// 공격 범위 그리기...
-	//Ellipse(hdc, mptpos.x - TOWER_ATTACK_RANGE, mptpos.y - TOWER_ATTACK_RANGE,
-	//	mptpos.x + TOWER_ATTACK_RANGE, mptpos.y + TOWER_ATTACK_RANGE);
 
 	if (ideatheffecttime) {
 		// 죽음 이펙트 그리기
@@ -52,10 +49,22 @@ void CTurret::Draw(HDC hdc)
 		return;
 	}
 
-	HBRUSH hTROLDBRUSH = (HBRUSH)SelectObject(hdc, hTRBRUSH);
+	
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(NULL_BRUSH));
+	HPEN hOldpen;
+	(ptarget == menemylist->next) ? 
+		hOldpen = (HPEN)SelectObject(hdc, hREDPEN)
+		: hOldpen = (HPEN)SelectObject(hdc, (HPEN)GetStockObject(WHITE_PEN));
+
+	// 공격 범위 그리기...
+	Ellipse(hdc, mptpos.x - TOWER_ATTACK_RANGE, mptpos.y - TOWER_ATTACK_RANGE,
+		mptpos.x + TOWER_ATTACK_RANGE, mptpos.y + TOWER_ATTACK_RANGE);
+
+	SelectObject(hdc, hOldpen);
+	SelectObject(hdc, hTRBRUSH);
 	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
 		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
-	SelectObject(hdc, hTROLDBRUSH);
+	SelectObject(hdc, hOld);
 
 
 
@@ -88,7 +97,7 @@ void CTurret::Update()
 CGameObject* CTurret::FindTarget()
 {
 	// 먼저 생성된 유닛 먼저 공격하는 알고리즘
-	CGameObject* tmp = menemylist->next;	//유닛 먼저 검사
+	CGameObject* tmp = menemylist->next->next;	//유닛 먼저 검사
 	while (tmp != menemylist) {
 		if (tmp->IsDead()) {
 			tmp = tmp->next;

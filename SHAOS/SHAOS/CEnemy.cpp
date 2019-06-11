@@ -34,7 +34,7 @@ void CEnemy::SetInitObj()
 	mTurret4 = new CTurret(TURRET4_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret4);
 
-	CUnit* unit1 = new CDia(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+	CUnit* unit1 = new CTri(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(unit1);
 	
 	CUnit* unit2 = new CDia(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);

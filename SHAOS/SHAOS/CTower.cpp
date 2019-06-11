@@ -42,7 +42,10 @@ CTower::~CTower()
 
 void CTower::Draw(HDC hdc)
 {
-	HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(LTGRAY_BRUSH));
+	HBRUSH hOld;
+	(team == TEAM::USER) ?
+		hOld = (HBRUSH)SelectObject(hdc, hUSERTOWERCIRCLEBRUSH) :
+		hOld = (HBRUSH)SelectObject(hdc, hENEMYTOWERCIRCLEBRUSH);
 	Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
 	
 	SelectObject(hdc, (HBRUSH)GetStockObject(BLACK_BRUSH));

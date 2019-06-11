@@ -72,10 +72,12 @@ void CWorld::MSG_Key(UINT message, WPARAM wParam, LPARAM lParam)
 void CWorld::Update()
 {
 	if (pUserTeam->gameover) {
+		if (gamestate == 0); // 사운드 넣기 
 		gamestate = 2;
 		return;
 	}
 	if (pEnemyTeam->gameover) {
+		if (gamestate == 0); // 사운드 넣기 
 		gamestate = 1;
 		return;
 	}

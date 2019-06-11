@@ -10,7 +10,14 @@ CTri::CTri(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	
 	
 	mhp = new CHp(TRI_MAXHP);
-	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
+	mrchpbar = { mrcRng.right + 4, mrcRng.top - TRI_INNERCIRCLERADIUS,
+		mrcRng.right + 7, mrcRng.bottom + TRI_INNERCIRCLERADIUS };
+
+
+	pattacktarget = menemylist->next;
+
+	halfedge = sqrt(3) * TRI_INNERCIRCLERADIUS;
+	iattakradius = TRI_INNERCIRCLERADIUS * 2;		//외심의 반지름
 }
 
 
@@ -21,17 +28,104 @@ CTri::~CTri()
 
 void CTri::Draw(HDC hdc)
 {
-	float halfedge = sqrt(3) * TRI_INNERCIRCLERADIUS;
 	POINT vertax[3];
-	vertax[0] = { (LONG)mptpos.x, (LONG)mptpos.y - 2 * TRI_INNERCIRCLERADIUS };
-	vertax[1] = { (LONG)(mptpos.x + halfedge), mrcRng.bottom };
-	vertax[2] = { (LONG)(mptpos.x - halfedge), mrcRng.bottom };
+	vertax[0] = { (LONG)(mptpos.x - 2 * TRI_INNERCIRCLERADIUS) , (LONG)mptpos.y };
+	vertax[1] = { mrcRng.right, (LONG)(mptpos.y - halfedge) };
+	vertax[2] = { mrcRng.right, (LONG)(mptpos.y + halfedge) };
+
+
+	if (ideatheffecttime) {
+		// 죽었을 때 이펙트
+		INT tmp = ideatheffecttime / FRAMETIME;
+		if (tmp % 20 > 10) {
+			Polygon(hdc, vertax, 3);
+		}
+		return;
+	}
+
+
 
 	Polygon(hdc, vertax, 3);
 }
 
+void CTri::SelectedDraw(HDC hdc, HBRUSH hbr)
+{
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
+	POINT vertax[3];
+	vertax[0] = { (LONG)(mptpos.x - 2 * TRI_INNERCIRCLERADIUS) - 4 , (LONG)mptpos.y };
+	vertax[1] = { mrcRng.right + 2, (LONG)(mptpos.y - halfedge) - 3 };
+	vertax[2] = { mrcRng.right + 2, (LONG)(mptpos.y + halfedge) + 3 };
+
+	Polygon(hdc, vertax, 3);
+	SelectObject(hdc, hOld);
+}
+
+void CTri::Move()
+{
+	POINTFLOAT movevector;
+
+	// 타겟과 거리 구하기
+	float projX = pattacktarget->GetPos().x - mptpos.x;
+	float projY = pattacktarget->GetPos().y - mptpos.y;
+
+	float distance = sqrt(projX * projX + projY * projY);
+	INT stopdistance = pattacktarget->GetObjRadius() + iattakradius;
+
+	// movevector 구하는 곳
+	if (distance > stopdistance) {
+		float nomalizedX = projX / distance;
+		float nomalizedY = projY / distance;
+
+		movevector = { nomalizedX,nomalizedY };
+	}
+	else movevector = { 0,0 };
+
+
+	mptpos.x += movevector.x;
+	mptpos.y += movevector.y;
+
+	mrcRng = {
+		(LONG)mptpos.x - TRI_INNERCIRCLERADIUS, (LONG)mptpos.y - TRI_INNERCIRCLERADIUS,
+		(LONG)mptpos.x + TRI_INNERCIRCLERADIUS, (LONG)mptpos.y + TRI_INNERCIRCLERADIUS
+	};
+
+
+
+	mrchpbar = { mrcRng.right + 4,
+	mrcRng.bottom + TRI_INNERCIRCLERADIUS - (INT)GETHPBAR(mhp->GetHp(), TRI_INNERCIRCLERADIUS * 4, TRI_MAXHP),
+	mrcRng.right + 7,
+	mrcRng.bottom + TRI_INNERCIRCLERADIUS };
+
+}
+
+void CTri::Attack()
+{
+
+}
+
 void CTri::Update()
 {
+	if (ideatheffecttime) {
+		ideatheffecttime -= FRAMETIME;
+		return;
+	}
+
+	//타겟 설정
+	if (menemylist->next->IsDead()) {
+		pattacktarget = menemylist;
+	}
+	else pattacktarget = menemylist->next;
+
+	Move();
+
+	//공격
+	if (iattackcooltime)
+		iattackcooltime -= FRAMETIME;
+	else {
+		Attack();
+		iattackcooltime = FRAMETIME * 50;
+	}
+
 }
 
 INT CTri::GetObjRadius()
