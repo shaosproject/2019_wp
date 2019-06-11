@@ -4,17 +4,14 @@ CGameFramework::CGameFramework()
 {
 	msound = new CSound;
 	msound->SoundSystem();
-
 }
 CGameFramework::~CGameFramework()
 {
-	msound->SoundStop(2);
 }
 
 void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 {
-
-	msound->MyPlaySound(0, 1);//타이틀화면닫히고나서 부모창이 켜질때
+	msound->MyPlaySound(1, 2);//타이틀화면닫히고나서 부모창이 켜질때
 	mhInst = hInst;
 	mhWnd = hwnd;
 	mhhTitleWnd = htitlewnd;
@@ -34,7 +31,7 @@ void CGameFramework::Create(HWND hwnd, HWND htitlewnd, HINSTANCE hInst)
 
 void CGameFramework::Relese()
 {
-	msound->SoundStop(1); //부모창이 닫히고 타이틀창이 켜질때
+	msound->SoundStop(2); //부모창이 닫히고 타이틀창이 켜질때
 	DeleteObject(hpausebutton);
 	DeleteDC(memdc);
 	delete pworld;
@@ -83,18 +80,40 @@ void CGameFramework::Draw(HDC hdc)
 
 		RECT UI_Rect = { 20,20,80,680 };
 		FillRect(hdc, &UI_Rect , (HBRUSH)GetStockObject(WHITE_BRUSH));
+		
+		RECT hp_rect1 = { 30, 30, 70,220 };
+		RECT thp_rect1 = { 30, 255, 70, 445};
+		
+		RECT hp_rect2 = { 30, 220 - p_hp * 190/ PLAYER_MAXHP, 70, 220 };
+		RECT thp_rect2 = { 30, 445 - t_hp * 190 / TOWER_MAXHP, 70, 445  };
 
-		Rectangle(hdc, 30, 30, 70, 220);
-		Rectangle(hdc, 30, 255, 70, 445);
+
+
+		FillRect(hdc, &hp_rect2, (HBRUSH)GetStockObject(GRAY_BRUSH));
+		FillRect(hdc, &thp_rect2, (HBRUSH)GetStockObject(GRAY_BRUSH));
+
+		FrameRect(hdc, &hp_rect1, (HBRUSH)GetStockObject(BLACK_BRUSH));
+		FrameRect(hdc, &thp_rect1, (HBRUSH)GetStockObject(BLACK_BRUSH));
+
+
 		Rectangle(hdc, 30, 480, 70 ,520);
 		Rectangle(hdc, 30, 530, 70, 570);
 		Rectangle(hdc, 30, 580, 70, 620);
 		Rectangle(hdc, 30, 630, 70, 670);
 
+		TextOut(hdc, 40, 230, L"HP", strlen("HP"));
+		TextOut(hdc, 40, 455, L"HP", strlen("HP"));
+		RECT Text = {40,230,50,300 };
+		//DrawText(hdc,L"PLAYER", strlen("PLAYER"), &Text, DT_WORDBREAK | DT_VCENTER);
+		
+
 		// 광역기 쿨타임 가져오니까 화면 흔들림효과 넣을 수 있을 듯
 
 		if (pworld->IsEnding() != 0) {
 			// 여기다가 엔딩장면 그려라~~
+			//msound->SoundStop(1);
+			msound->SoundStop(2);
+
 
 			RECT endRect = {0,200,1200,500};
 			FillRect(hdc,&endRect, (HBRUSH)GetStockObject(WHITE_BRUSH));
@@ -105,9 +124,13 @@ void CGameFramework::Draw(HDC hdc)
 
 			switch (pworld->IsEnding()) {
 			case 1:
+				//msound->SoundStop(2);
+				msound->MyPlaySound(6, 4);
 				TextOut(hdc, 400, 300, L"VICTORY!", lstrlen(L"VICTORY!"));
 				break;
 			case 2:
+				//msound->SoundStop(2);
+				msound->MyPlaySound(5, 4);
 				TextOut(hdc, 400, 300, L"  LOSE!", lstrlen(L"  LOSE!"));
 				break;
 			}

@@ -16,10 +16,14 @@ void CSound::SoundSystem()
 
 	FMOD_System_Init(pSystem, 10, FMOD_INIT_NORMAL,nullptr);
 
-	FMOD_System_CreateSound(pSystem, "Game_BGM.wav", FMOD_LOOP_NORMAL, nullptr, &pSound[0]);
-	FMOD_System_CreateSound(pSystem, "Title_BGM.wav", FMOD_LOOP_NORMAL, nullptr, &pSound[1]);
-	FMOD_System_CreateSound(pSystem, "basic_Attack.wav", FMOD_LOOP_OFF, nullptr, &pSound[2]);
-	FMOD_System_CreateSound(pSystem, "return_Sound.wav", FMOD_LOOP_OFF, nullptr, &pSound[3]);
+	FMOD_System_CreateSound(pSystem, "Sound/Title_BGM.mp3", FMOD_LOOP_NORMAL, nullptr, &pSound[0]);//
+	FMOD_System_CreateSound(pSystem, "Sound/Game_BGM.wav", FMOD_LOOP_NORMAL, nullptr, &pSound[1]);//
+	FMOD_System_CreateSound(pSystem, "Sound/basic_Attack.wav", FMOD_LOOP_OFF, nullptr, &pSound[2]);
+	FMOD_System_CreateSound(pSystem, "Sound/return_Sound.wav", FMOD_LOOP_OFF, nullptr, &pSound[3]);
+	FMOD_System_CreateSound(pSystem, "Sound/cooltime_Zero.mp3", FMOD_LOOP_OFF, nullptr, &pSound[4]);
+	FMOD_System_CreateSound(pSystem, "Sound/Lose_BGM.mp3", FMOD_LOOP_OFF, nullptr, &pSound[5]);//
+	FMOD_System_CreateSound(pSystem, "Sound/Win_BGM.mp3", FMOD_LOOP_OFF, nullptr, &pSound[6]);//
+	//FMOD_System_CreateSound(pSystem, "Sound\°­°ø°Ý.wav", FMOD_LOOP_NORMAL, nullptr, &pSound[7]);
 }
 
 void CSound::MyPlaySound(int nsound, int nchannel)

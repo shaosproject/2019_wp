@@ -234,9 +234,9 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
 	switch (message) {
 	case WM_CREATE:
-	{
+	{	
 
-		g_GameFrameWork.msound->MyPlaySound(1, 2);//창이켜질때
+		g_GameFrameWork.msound->MyPlaySound(0, 1);//창이켜질때
 
 		HWND hStart = CreateWindow(
 			L"button",
@@ -279,7 +279,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		UINT ctrlID = LOWORD(wParam);
 		switch (ctrlID) {
 		case IDC_BUTTON_START:
-			g_GameFrameWork.msound->SoundStop(2); //타이틀화면이 닫힐때
+			g_GameFrameWork.msound->SoundStop(1); //타이틀화면이 닫힐때
 			g_GameFrameWork.Create(GetParent(hWnd), hWnd, hInst);
 			SetTimer(GetParent(hWnd), 0, FRAMETIME, (TIMERPROC)TimerProc);
 			DestroyWindow(hWnd);
@@ -337,8 +337,9 @@ BOOL CALLBACK DialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 			EndDialog(hDlg, 0);
 			break;
 		case ID_BACKTITLE:
-
 			g_GameFrameWork.Relese();	// 게임 종료
+
+			g_GameFrameWork.msound->SoundStop(4);
 
 			//  타이틀 윈도우 살리기
 			RECT rcClient;
