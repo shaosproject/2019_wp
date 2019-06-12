@@ -1,10 +1,16 @@
 #pragma once
 #include "CGameObject.h"
 
+#define TURRET2_ATTAKRANGE 50
+
 class CTurret2 : public CGameObject
 {
 
 	CGameObject* ptarget;
+	BOOL attackOn;
+	INT attackdamage;
+	POINTFLOAT attakpoint;
+
 public:
 	CTurret2(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTurret2();
@@ -13,7 +19,8 @@ public:
 	virtual void Update();
 
 	CGameObject* FindTarget();
-	void Attack();
+	void AttackStart();
+	void AttackEnd();
 
 	virtual void SelectedDraw(HDC, HBRUSH);
 

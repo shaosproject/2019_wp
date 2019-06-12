@@ -172,6 +172,11 @@ void CRect::Attack()
 	while (tmp != menemylist) {
 		if (!tmp) tmp = menemylist;
 
+		if (tmp->IsDead()) {
+			tmp = tmp->next;
+			continue;
+		}
+
 		float dx = mptpos.x - tmp->GetPos().x;
 		float dy = mptpos.y - tmp->GetPos().y;
 

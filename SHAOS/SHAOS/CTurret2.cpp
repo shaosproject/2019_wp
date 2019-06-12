@@ -15,6 +15,11 @@ CTurret2::CTurret2(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 
 	iattackcooltime = 0;
 	ideatheffecttime = 0;
+
+	attackOn = FALSE;
+	ptarget = nullptr;
+	attakpoint = { 0,0 };
+
 }
 
 
@@ -53,7 +58,6 @@ void CTurret2::Draw(HDC hdc)
 	}
 
 
-
 	HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(NULL_BRUSH));
 	HPEN hOldpen;
 	(ptarget == menemylist->next) ?
@@ -70,6 +74,14 @@ void CTurret2::Draw(HDC hdc)
 		TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
 	SelectObject(hdc, hOld);
 
+	if (attackOn) {
+
+		// 공격 이펙트 그리기
+		Ellipse(hdc, mptpos.x - 10, mptpos.y - 10,
+			mptpos.x + 10, mptpos.y + 10);
+
+
+	}
 }
 
 void CTurret2::Update()
@@ -82,21 +94,16 @@ void CTurret2::Update()
 
 	// 타겟 찾기
 	ptarget = FindTarget();
-	if (ptarget == nullptr) {
-		iattackcooltime = 0;
-	}
 
-	// 공격 알고리
-	if (!iattackcooltime) {
-		if (ptarget) {
-			Attack();
-			iattackcooltime = FRAMETIME * 100;
+	if (ptarget && !attackOn) {
+		AttackStart();
+	}
+	if (iattackcooltime) {
+		iattackcooltime -= FRAMETIME;
+		if (!iattackcooltime) {
+			AttackEnd();
 		}
 	}
-	else {
-		iattackcooltime -= FRAMETIME;
-	}
-
 
 }
 
@@ -125,16 +132,47 @@ CGameObject* CTurret2::FindTarget()
 	return nullptr;
 }
 
-void CTurret2::Attack()
+void CTurret2::AttackStart()
 {
-	if (ptarget == menemylist->next) // 플레이어이면
-	{
-		//TURRET_BULLETDAMAGE * 5 ->데미지
+	attackOn = TRUE;
+	iattackcooltime = FRAMETIME * 100;
+	if (ptarget == menemylist->next) {
+		attackdamage = 50;
+	}
+	else attackdamage = 20;
 
+	attakpoint = ptarget->GetPos();
+}
+
+void CTurret2::AttackEnd()
+{
+	attackOn = FALSE;
+
+	// 데미지 주기
+	CGameObject* tmp = menemylist->next;
+	while (tmp != menemylist) {
+
+		if (tmp->IsDead()) {
+			tmp = tmp->next;
+			continue;
+		}
+
+		float dx = attakpoint.x - tmp->GetPos().x;
+		float dy = attakpoint.y - tmp->GetPos().y;
+
+		float center_d = dx * dx + dy * dy;
+		float range = TURRET2_ATTAKRANGE + tmp->GetObjRadius();
+
+		if (center_d <= range * range) {
+			tmp->PutDamage(attackdamage);
+		}
+
+		tmp = tmp->next;
 	}
 
-
 }
+
+
 
 void CTurret2::SelectedDraw(HDC hdc, HBRUSH hbr)
 {

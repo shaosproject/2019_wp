@@ -31,6 +31,8 @@ CTri::~CTri()
 void CTri::Draw(HDC hdc)
 {
 	POINT vertax[3];
+
+
 	vertax[0] = { (LONG)(mptpos.x - 2 * TRI_INNERCIRCLERADIUS) , (LONG)mptpos.y };
 	vertax[1] = { mrcRng.right, (LONG)(mptpos.y - halfedge) };
 	vertax[2] = { mrcRng.right, (LONG)(mptpos.y + halfedge) };
@@ -48,9 +50,19 @@ void CTri::Draw(HDC hdc)
 	Polygon(hdc, vertax, 3);
 
 	if (iattackcooltime >= FRAMETIME * 25) {
-		// 공격 이펙트 그리기
-		Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+		// tri 공격 이펙트
+
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hTIRATTACBRUSH);
+
+		vertax[0] = { (LONG)(mptpos.x - 2 * TRI_INNERCIRCLERADIUS) - 10 , (LONG)mptpos.y };
+		vertax[1] = { mrcRng.right + 5, (LONG)(mptpos.y - halfedge) - 5 };
+		vertax[2] = { mrcRng.right + 5, (LONG)(mptpos.y + halfedge) + 5 };
+		Polygon(hdc, vertax, 3);
+
+		SelectObject(hdc, hOld);
 	}
+
+
 }
 
 void CTri::SelectedDraw(HDC hdc, HBRUSH hbr)

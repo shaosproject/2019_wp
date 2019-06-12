@@ -195,7 +195,7 @@ const HPEN hREDPEN = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
 
 
 const HBRUSH hDIAATTACKBRUSH = CreateSolidBrush(RGB(75, 255, 150));
-
+const HBRUSH hTIRATTACBRUSH = CreateSolidBrush(RGB(100, 100, 230));
 #pragma endregion
 
 #pragma region ABOUT_HP
@@ -206,7 +206,7 @@ const HBRUSH hHPBRUSH = CreateSolidBrush(RGB(60, 255, 30));
 #define RECOVERAMOUNT 1
 
 #define TOWER_MAXHP 100
-#define PLAYER_MAXHP 100
+#define PLAYER_MAXHP 500
 #define TURRET_MAXHP 100
 #define RECT_MAXHP 100
 #define ELLIP_MAXHP 100
