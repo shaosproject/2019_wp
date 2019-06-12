@@ -99,7 +99,7 @@ void CGameFramework::Draw(HDC hdc)
 			memdc, 0, 0, SRCCOPY);
 
 		RECT UI_Rect = { 20,20,80,680 };
-		FillRect(hdc, &UI_Rect , (HBRUSH)GetStockObject(WHITE_BRUSH));
+		FillRect(hdc, &UI_Rect , hUIBARBRUSH);
 
 		// hp바 그리기
 		RECT hp_rect1 = { 50, 30, 70,220 };
@@ -107,7 +107,6 @@ void CGameFramework::Draw(HDC hdc)
 		
 		RECT hp_rect2 = { 50, 220 - p_hp * 190/ PLAYER_MAXHP, 70, 220 };
 		RECT thp_rect2 = { 50, 445 - t_hp * 190 / TOWER_MAXHP, 70, 445  };
-
 
 
 		FillRect(hdc, &hp_rect2, hHPBRUSH);
@@ -138,22 +137,26 @@ void CGameFramework::Draw(HDC hdc)
 		//Rectangle(hdc, 30, 580, 70, 620);
 		//Rectangle(hdc, 30, 630, 70, 670);
 
+
+		SetBkMode(hdc, TRANSPARENT);
 		TextOut(hdc, 40, 230, L"HP", strlen("HP"));
 		TextOut(hdc, 40, 455, L"HP", strlen("HP"));
 		RECT Text = { 30,30,45,400 };
 		DrawText(hdc, L"P L A Y E R    H P", lstrlen(L"P L A Y E R    H P"), &Text, DT_WORDBREAK);
 		
 
-		// 광역기 쿨타임 가져오니까 화면 흔들림효과 넣을 수 있을 듯
 
 		if (pworld->IsEnding() != 0) {
 			// 여기다가 엔딩장면 그려라~~
 			//msound->SoundStop(1);
 			msound->SoundStop(2);
 
+			HBRUSH hOldbr = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(DKGRAY_BRUSH));
+			HPEN hOldpn = (HPEN)SelectObject(hdc, hENDINGWHITEPEN);
+			Rectangle(hdc, 0, 300, 1200, 400);
+			SelectObject(hdc, hOldbr);
+			SelectObject(hdc, hOldpn);
 
-			RECT endRect = {0,200,1200,500};
-			FillRect(hdc,&endRect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 			HFONT myFont = CreateFont(100, 0, 0, 0, 10, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, L"궁서체");
 			HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
 			SetTextColor(hdc, RGB(255, 255, 0));
