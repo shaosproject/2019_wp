@@ -18,6 +18,7 @@ INT CHp::GetHp() const
 
 void CHp::SetHp(INT sethp)
 {
+	IsZero = FALSE;
 	ihp = sethp;
 }
 

@@ -70,6 +70,6 @@ public:
 										INT* ct_AoE, INT* ct_shield, INT* ct_return, INT* ct_death);
 	void				PutDamage(INT damage);
 	INT					GetEffectTimeAoE();
-	void OffPlayerMove();
+	void				 OffPlayerMove();
 	
 };

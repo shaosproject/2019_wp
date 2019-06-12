@@ -36,8 +36,8 @@ void CGameObject::PutDamage(INT damage)
 {
 	// mhp가 0이면 true리턴
 	if (mhp->SubHp(damage)) {
+		if(!mdeath) Death();
 		mdeath = TRUE;
-		Death();
 	}
 }
 

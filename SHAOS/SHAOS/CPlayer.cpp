@@ -4,7 +4,7 @@
 #include "Bullet.h"
 #include "Sound.h"
 CPlayer::CPlayer(POINTFLOAT ainitPos, TEAM team, CGameObject* enemylist)
-	: CGameObject(ainitPos, team, enemylist), iAoERadius(PLAYER_RADIUS * 5)
+	: CGameObject(ainitPos, team, enemylist), iAoERadius(PLAYER_RADIUS * 7)
 {
 	// 충돌체크용 플레이어 영역 설정해주기
 	mrcRng = { (LONG)mptpos.x - PLAYER_RADIUS,(LONG)mptpos.y - PLAYER_RADIUS,
@@ -208,6 +208,19 @@ void CPlayer::Move() {
 	if (utd <= TOWER_CENTER2VERTAX + PLAYER_RADIUS)
 		return;
 
+	RECT tmp;
+	RECT nextrc = { (LONG)nextpos.x - PLAYER_RADIUS,(LONG)nextpos.y - PLAYER_RADIUS,
+		(LONG)nextpos.x + PLAYER_RADIUS, (LONG)nextpos.y + PLAYER_RADIUS };
+
+
+	if (IntersectRect(&tmp, &nextrc, &rcTURRET1) ||
+		IntersectRect(&tmp, &nextrc, &rcTURRET2) ||
+		IntersectRect(&tmp, &nextrc, &rcTURRET3) ||
+		IntersectRect(&tmp, &nextrc, &rcTURRET4)
+		) {
+		return;
+	}
+
 	mptpos.x = PLAY_CLIENTX(mptpos.x + dirvector.x);
 	mptpos.y = PLAY_CLIENTY(mptpos.y + dirvector.y);
 
@@ -356,8 +369,8 @@ void CPlayer::PutDamage(INT damage)
 	if (onshield) damage /= 2;
 
 	if (mhp->SubHp(damage)) {
+		if (!mdeath) Death();
 		mdeath = TRUE;
-		Death();
 	}
 }
 INT CPlayer::GetEffectTimeAoE()
@@ -417,9 +430,11 @@ void CPlayer::Draw(HDC hdc)
 	}
 
 	if (effecttime_Shoot) {
-
-		for (int i = 0; i < 7; i++) {
-			FillRect(hdc, &shootattackrange[i], (HBRUSH)GetStockObject(DKGRAY_BRUSH));
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hPLAYERSHOOTBRUSH);
+		int mult = 7;
+		for (int i = 1; i <= 7; i++) {
+			Ellipse(hdc, shootattackpt[i - 1].x - (i * mult), shootattackpt[i - 1].y - (i * mult),
+				shootattackpt[i - 1].x + (i * mult), shootattackpt[i - 1].y + (i * mult));
 		}
 		//for (int i = 0; i < 7; i++) {
 			// Shoot 이펙트 그리기
@@ -456,98 +471,105 @@ void CPlayer::Draw(HDC hdc)
 			//	FillRect(hdc, &shootattackrange[6], (HBRUSH)GetStockObject(WHITE_BRUSH));
 			//}
 
-		float tmp1 = effecttime_Shoot / FRAMETIME;
-	
 
-		    if (tmp1 > 48)
+		
+
+		// 이펙트타임 25
+		float tmp1 = effecttime_Shoot / FRAMETIME;
+
+
+		if (tmp1 > 48)
 			Ellipse(hdc, shootattackrange[0].left - 10, shootattackrange[0].bottom - 10,
 				shootattackrange[0].left + 10, shootattackrange[0].bottom + 10);
-			else if (tmp1>46)
-				Ellipse(hdc, shootattackrange[0].left - 10, shootattackrange[0].top - 10,
-					shootattackrange[0].left + 10, shootattackrange[0].top + 10);
-			else if (tmp1 > 44)
-				Ellipse(hdc, shootattackrange[0].right - 10, shootattackrange[0].top - 10,
-					shootattackrange[0].right + 10, shootattackrange[0].top + 10);
-			else if (tmp1 > 42)
-				Ellipse(hdc, shootattackrange[0].right - 10, shootattackrange[0].bottom - 10,
-					shootattackrange[0].right + 10, shootattackrange[0].bottom + 10);
-			else if (tmp1 > 40)
-				Ellipse(hdc, shootattackrange[1].left - 10, shootattackrange[1].bottom - 10,
-					shootattackrange[1].left + 10, shootattackrange[1].bottom + 10);
-			else if (tmp1 > 38)
-				Ellipse(hdc, shootattackrange[1].left - 10, shootattackrange[1].top - 10,
-					shootattackrange[1].left + 10, shootattackrange[1].top + 10);
-			else if (tmp1 > 36)
-				Ellipse(hdc, shootattackrange[1].right - 10, shootattackrange[1].top - 10,
-					shootattackrange[1].right + 10, shootattackrange[1].top + 10);
-			else if (tmp1 > 34)
-				Ellipse(hdc, shootattackrange[1].right - 10, shootattackrange[1].bottom - 10,
-					shootattackrange[1].right + 10, shootattackrange[1].bottom + 10);
+		else if (tmp1 > 46)
+			Ellipse(hdc, shootattackrange[0].left - 10, shootattackrange[0].top - 10,
+				shootattackrange[0].left + 10, shootattackrange[0].top + 10);
+		else if (tmp1 > 44)
+			Ellipse(hdc, shootattackrange[0].right - 10, shootattackrange[0].top - 10,
+				shootattackrange[0].right + 10, shootattackrange[0].top + 10);
+		else if (tmp1 > 42)
+			Ellipse(hdc, shootattackrange[0].right - 10, shootattackrange[0].bottom - 10,
+				shootattackrange[0].right + 10, shootattackrange[0].bottom + 10);
+		else if (tmp1 > 40)
+			Ellipse(hdc, shootattackrange[1].left - 10, shootattackrange[1].bottom - 10,
+				shootattackrange[1].left + 10, shootattackrange[1].bottom + 10);
+		else if (tmp1 > 38)
+			Ellipse(hdc, shootattackrange[1].left - 10, shootattackrange[1].top - 10,
+				shootattackrange[1].left + 10, shootattackrange[1].top + 10);
+		else if (tmp1 > 36)
+			Ellipse(hdc, shootattackrange[1].right - 10, shootattackrange[1].top - 10,
+				shootattackrange[1].right + 10, shootattackrange[1].top + 10);
+		else if (tmp1 > 34)
+			Ellipse(hdc, shootattackrange[1].right - 10, shootattackrange[1].bottom - 10,
+				shootattackrange[1].right + 10, shootattackrange[1].bottom + 10);
 
-			else if (tmp1 > 32)
-				Ellipse(hdc, shootattackrange[2].left - 10, shootattackrange[2].bottom - 10,
-					shootattackrange[2].left + 10, shootattackrange[2].bottom + 10);
-			else if (tmp1 > 30)
-				Ellipse(hdc, shootattackrange[2].left - 10, shootattackrange[2].top - 10,
-					shootattackrange[2].left + 10, shootattackrange[2].top + 10);
-			else if (tmp1 > 28)
-				Ellipse(hdc, shootattackrange[2].right - 10, shootattackrange[2].top - 10,
-					shootattackrange[2].right + 10, shootattackrange[2].top + 10);
-			else if (tmp1 > 26)
-				Ellipse(hdc, shootattackrange[2].right - 10, shootattackrange[2].bottom - 10,
-					shootattackrange[2].right + 10, shootattackrange[2].bottom + 10);
+		else if (tmp1 > 32)
+			Ellipse(hdc, shootattackrange[2].left - 10, shootattackrange[2].bottom - 10,
+				shootattackrange[2].left + 10, shootattackrange[2].bottom + 10);
+		else if (tmp1 > 30)
+			Ellipse(hdc, shootattackrange[2].left - 10, shootattackrange[2].top - 10,
+				shootattackrange[2].left + 10, shootattackrange[2].top + 10);
+		else if (tmp1 > 28)
+			Ellipse(hdc, shootattackrange[2].right - 10, shootattackrange[2].top - 10,
+				shootattackrange[2].right + 10, shootattackrange[2].top + 10);
+		else if (tmp1 > 26)
+			Ellipse(hdc, shootattackrange[2].right - 10, shootattackrange[2].bottom - 10,
+				shootattackrange[2].right + 10, shootattackrange[2].bottom + 10);
 
-			else if (tmp1 > 24)
-				Ellipse(hdc, shootattackrange[3].left - 10, shootattackrange[3].bottom - 10,
-					shootattackrange[3].left + 10, shootattackrange[3].bottom + 10);
-			else if (tmp1 > 26)
-				Ellipse(hdc, shootattackrange[3].left - 10, shootattackrange[3].top - 10,
-					shootattackrange[3].left + 10, shootattackrange[3].top + 10);
-			else if (tmp1 > 24)
-				Ellipse(hdc, shootattackrange[3].right - 10, shootattackrange[3].top - 10,
-					shootattackrange[3].right + 10, shootattackrange[3].top + 10);
-			else if (tmp1 > 22)
-				Ellipse(hdc, shootattackrange[3].right - 10, shootattackrange[3].bottom - 10,
-					shootattackrange[3].right + 10, shootattackrange[3].bottom + 10);
+		else if (tmp1 > 24)
+			Ellipse(hdc, shootattackrange[3].left - 10, shootattackrange[3].bottom - 10,
+				shootattackrange[3].left + 10, shootattackrange[3].bottom + 10);
+		else if (tmp1 > 26)
+			Ellipse(hdc, shootattackrange[3].left - 10, shootattackrange[3].top - 10,
+				shootattackrange[3].left + 10, shootattackrange[3].top + 10);
+		else if (tmp1 > 24)
+			Ellipse(hdc, shootattackrange[3].right - 10, shootattackrange[3].top - 10,
+				shootattackrange[3].right + 10, shootattackrange[3].top + 10);
+		else if (tmp1 > 22)
+			Ellipse(hdc, shootattackrange[3].right - 10, shootattackrange[3].bottom - 10,
+				shootattackrange[3].right + 10, shootattackrange[3].bottom + 10);
 
-			else if (tmp1 > 20)
-				Ellipse(hdc, shootattackrange[4].left - 10, shootattackrange[4].bottom - 10,
-					shootattackrange[4].left + 10, shootattackrange[4].bottom + 10);
-			else if (tmp1 > 18)
-				Ellipse(hdc, shootattackrange[4].left - 10, shootattackrange[4].top - 10,
-					shootattackrange[4].left + 10, shootattackrange[4].top + 10);
-			else if (tmp1 > 16)
-				Ellipse(hdc, shootattackrange[4].right - 10, shootattackrange[4].top - 10,
-					shootattackrange[4].right + 10, shootattackrange[4].top + 10);
-			else if (tmp1 > 14)
-				Ellipse(hdc, shootattackrange[4].right - 10, shootattackrange[4].bottom - 10,
-					shootattackrange[4].right + 10, shootattackrange[4].bottom + 10);
+		else if (tmp1 > 20)
+			Ellipse(hdc, shootattackrange[4].left - 10, shootattackrange[4].bottom - 10,
+				shootattackrange[4].left + 10, shootattackrange[4].bottom + 10);
+		else if (tmp1 > 18)
+			Ellipse(hdc, shootattackrange[4].left - 10, shootattackrange[4].top - 10,
+				shootattackrange[4].left + 10, shootattackrange[4].top + 10);
+		else if (tmp1 > 16)
+			Ellipse(hdc, shootattackrange[4].right - 10, shootattackrange[4].top - 10,
+				shootattackrange[4].right + 10, shootattackrange[4].top + 10);
+		else if (tmp1 > 14)
+			Ellipse(hdc, shootattackrange[4].right - 10, shootattackrange[4].bottom - 10,
+				shootattackrange[4].right + 10, shootattackrange[4].bottom + 10);
 
-			else if (tmp1 > 12)
-				Ellipse(hdc, shootattackrange[5].left - 10, shootattackrange[5].bottom - 10,
-					shootattackrange[5].left + 10, shootattackrange[5].bottom + 10);
-			else if (tmp1 > 10)
-				Ellipse(hdc, shootattackrange[5].left - 10, shootattackrange[5].top - 10,
-					shootattackrange[5].left + 10, shootattackrange[5].top + 10);
-			else if (tmp1 > 8)
-				Ellipse(hdc, shootattackrange[5].right - 10, shootattackrange[5].top - 10,
-					shootattackrange[5].right + 10, shootattackrange[5].top + 10);
-			else if (tmp1 > 6)
-				Ellipse(hdc, shootattackrange[5].right - 10, shootattackrange[5].bottom - 10,
-					shootattackrange[5].right + 10, shootattackrange[5].bottom + 10);
+		else if (tmp1 > 12)
+			Ellipse(hdc, shootattackrange[5].left - 10, shootattackrange[5].bottom - 10,
+				shootattackrange[5].left + 10, shootattackrange[5].bottom + 10);
+		else if (tmp1 > 10)
+			Ellipse(hdc, shootattackrange[5].left - 10, shootattackrange[5].top - 10,
+				shootattackrange[5].left + 10, shootattackrange[5].top + 10);
+		else if (tmp1 > 8)
+			Ellipse(hdc, shootattackrange[5].right - 10, shootattackrange[5].top - 10,
+				shootattackrange[5].right + 10, shootattackrange[5].top + 10);
+		else if (tmp1 > 6)
+			Ellipse(hdc, shootattackrange[5].right - 10, shootattackrange[5].bottom - 10,
+				shootattackrange[5].right + 10, shootattackrange[5].bottom + 10);
 
-			else if (tmp1 > 4)
-				Ellipse(hdc, shootattackrange[6].left - 10, shootattackrange[6].bottom - 10,
-					shootattackrange[6].left + 10, shootattackrange[6].bottom + 10);
-			else if (tmp1 > 3)
-				Ellipse(hdc, shootattackrange[6].left - 10, shootattackrange[6].top - 10,
-					shootattackrange[6].left + 10, shootattackrange[6].top + 10);
-			else if (tmp1 > 2)
-				Ellipse(hdc, shootattackrange[6].right - 10, shootattackrange[6].top - 10,
-					shootattackrange[6].right + 10, shootattackrange[6].top + 10);
-			else if (tmp1 > 1)
-				Ellipse(hdc, shootattackrange[6].right - 10, shootattackrange[6].bottom - 10,
-					shootattackrange[6].right + 10, shootattackrange[6].bottom + 10);
+		else if (tmp1 > 4)
+			Ellipse(hdc, shootattackrange[6].left - 10, shootattackrange[6].bottom - 10,
+				shootattackrange[6].left + 10, shootattackrange[6].bottom + 10);
+		else if (tmp1 > 3)
+			Ellipse(hdc, shootattackrange[6].left - 10, shootattackrange[6].top - 10,
+				shootattackrange[6].left + 10, shootattackrange[6].top + 10);
+		else if (tmp1 > 2)
+			Ellipse(hdc, shootattackrange[6].right - 10, shootattackrange[6].top - 10,
+				shootattackrange[6].right + 10, shootattackrange[6].top + 10);
+		else if (tmp1 > 1)
+			Ellipse(hdc, shootattackrange[6].right - 10, shootattackrange[6].bottom - 10,
+				shootattackrange[6].right + 10, shootattackrange[6].bottom + 10);
+
+		//SelectObject(hdc, hOldpen);
+		SelectObject(hdc, hOld);
 	}
 
 
@@ -567,13 +589,47 @@ void CPlayer::Draw(HDC hdc)
 		//
 		//SelectObject(hdc, hOld);
 
-		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hIAOEBRUSH);
-		POINT iAoe[8] = { {mrcRng.left, mrcRng.top},{mptpos.x,mptpos.y - iAoERadius},{mrcRng.right, mrcRng.top}
-			,{mptpos.x + iAoERadius,mptpos.y},{mrcRng.right, mrcRng.bottom}
-			,{mptpos.x , mptpos.y+ iAoERadius},{mrcRng.left, mrcRng.bottom}
-			,{mptpos.x- iAoERadius,mptpos.y} };
-		//Ellipse(hdc, mptpos.x - iAoERadius, mptpos.y - iAoERadius, mptpos.x + iAoERadius, mptpos.y + iAoERadius);
-		Polygon(hdc,iAoe, 8);
+		//POINT iAoe[8] = { 
+		//	{mrcRng.left, mrcRng.top},{mptpos.x,mptpos.y - iAoERadius},{mrcRng.right, mrcRng.top}
+		//	,{mptpos.x + iAoERadius,mptpos.y},{mrcRng.right, mrcRng.bottom}
+		//	,{mptpos.x , mptpos.y+ iAoERadius},{mrcRng.left, mrcRng.bottom}
+		//	,{mptpos.x- iAoERadius,mptpos.y}
+		//};
+		POINT iAoe1[8] = {
+		{mrcRng.left, mrcRng.top},
+		{mptpos.x,mptpos.y - iAoERadius},
+		{mrcRng.right, mrcRng.top},
+		{mptpos.x + iAoERadius,mptpos.y},
+		{mrcRng.right, mrcRng.bottom},
+		{mptpos.x , mptpos.y + iAoERadius},
+		{mrcRng.left, mrcRng.bottom},
+		{mptpos.x - iAoERadius,mptpos.y}
+		};
+
+		float prdcos45 = PLAYER_RADIUS * 1.4;
+		float circos45 = iAoERadius * 1.4;
+
+		POINT iAoe2[8] = {
+			{(LONG)(mptpos.x),				(LONG)(mptpos.y - prdcos45)		},
+			{(LONG)(mptpos.x + circos45),	(LONG)(mptpos.y - circos45)		},
+			{(LONG)(mptpos.x + prdcos45),	(LONG)(mptpos.y)				},
+			{(LONG)(mptpos.x + circos45),	(LONG)(mptpos.y + circos45)		},
+			{(LONG)(mptpos.x),				(LONG)(mptpos.y + prdcos45)		},
+			{(LONG)(mptpos.x - circos45),	(LONG)(mptpos.y + circos45)		},
+			{(LONG)(mptpos.x - prdcos45),	(LONG)(mptpos.y)				},
+			{(LONG)(mptpos.x - circos45),	(LONG)(mptpos.y - circos45)		}
+		};
+
+			
+
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc, hIAOEBRUSH2);
+		Ellipse(hdc, mptpos.x - iAoERadius, mptpos.y - iAoERadius, 
+			mptpos.x + iAoERadius, mptpos.y + iAoERadius);
+
+		SelectObject(hdc, hIAOEBRUSH);
+		//Polygon(hdc, iAoe, 8);
+		Polygon(hdc, iAoe1, 8);
+		Polygon(hdc, iAoe2, 8);
 		SelectObject(hdc, hOld);
 	}
 
