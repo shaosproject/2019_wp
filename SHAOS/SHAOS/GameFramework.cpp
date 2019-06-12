@@ -150,7 +150,7 @@ void CGameFramework::Draw(HDC hdc)
 			// 여기다가 엔딩장면 그려라~~
 			//msound->SoundStop(1);
 			msound->SoundStop(2);
-
+			msound->MyPlaySound(7, 3);
 			HBRUSH hOldbr = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(DKGRAY_BRUSH));
 			HPEN hOldpn = (HPEN)SelectObject(hdc, hENDINGWHITEPEN);
 			Rectangle(hdc, 0, 300, 1200, 400);

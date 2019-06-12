@@ -8,7 +8,7 @@ class CTurret : public CGameObject
 {
 	CGameObject* ptarget;
 	Bullet* pbullet;
-
+	CSound* msound;
 public:
 	CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTurret();
@@ -22,5 +22,9 @@ public:
 
 	virtual INT		GetObjRadius();
 	virtual void	Death();
+
+	void GetSound(CSound* sound) {
+		msound = sound;
+	}
 };
 
