@@ -130,6 +130,31 @@ void CGameFramework::Draw(HDC hdc)
 		BitBlt(hdc, 30, 630, SKILLICONSIZE, SKILLICONSIZE,
 			memdc, 0, 0, SRCCOPY);
 
+		RECT sk_rect1,sk_rect2,sk_rect3,sk_rect4;
+		sk_rect1 = { 30,480,70,520 };
+		sk_rect2 = { 30,530,70,570 };
+		sk_rect3 = { 30,580,70,620 };
+		sk_rect4 = { 30,630,70,670 };
+
+		RECT msk_rect1, msk_rect2, msk_rect3, msk_rect4;
+		msk_rect1 = { 30,520 - p_ctshoot * SKILLICONSIZE / (FRAMETIME * 100) ,70,520 };
+		msk_rect2 = { 30,570 - p_ctAoE * SKILLICONSIZE / PLAYER_EFFECTTIME_AOE,70,570 };
+		msk_rect3 = { 30,580 - p_ctshield * SKILLICONSIZE / (FRAMETIME * 100),70,620 };
+		msk_rect4 = { 30,630,70,670 - p_ctreturn * SKILLICONSIZE / PLAYER_MAXHP };
+
+		FillRect(hdc, &msk_rect1, hHPBRUSH);
+		FillRect(hdc, &msk_rect2, hHPBRUSH);
+		FillRect(hdc, &msk_rect3, hHPBRUSH);
+		FillRect(hdc, &msk_rect4, hHPBRUSH);
+
+		//if()
+
+		FrameRect(hdc, &sk_rect1, (HBRUSH)GetStockObject(WHITE_BRUSH));
+		FrameRect(hdc, &sk_rect2, (HBRUSH)GetStockObject(WHITE_BRUSH));
+		FrameRect(hdc, &sk_rect3, (HBRUSH)GetStockObject(WHITE_BRUSH));
+		FrameRect(hdc, &sk_rect4, (HBRUSH)GetStockObject(WHITE_BRUSH));
+
+
 
 		// 스킬 아이콘 위치
 		//Rectangle(hdc, 30, 480, 70 ,520);
