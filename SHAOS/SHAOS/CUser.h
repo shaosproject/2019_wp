@@ -32,5 +32,6 @@ public:
 
 	INT GeteffecttimeAoE();
 	void OffPlayerMove();
+
 };
 

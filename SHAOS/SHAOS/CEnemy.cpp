@@ -13,6 +13,7 @@ CEnemy::CEnemy()
 	p_myobjlist = mTower;
 	p_myobjlist->next = p_myobjlist->prev = p_myobjlist;
 
+	iunitgentime = 0;
 }
 
 
@@ -34,12 +35,6 @@ void CEnemy::SetInitObj()
 	mTurret4 = new CTurret2(TURRET4_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret4);
 
-	CUnit* unit1 = new CTri(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
-	this->AddMyObjList(unit1);
-	
-	CUnit* unit2 = new CDia(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
-	this->AddMyObjList(unit2);
-
 }
 
 void CEnemy::Update()
@@ -58,12 +53,9 @@ void CEnemy::Update()
 
 	// À¯´Ö Á¨
 	if (iunitgentime) iunitgentime -= FRAMETIME;
-	else {
-		if (this->imyobjnum < 10) {
-			UnitGen();
-			iunitgentime = FRAMETIME * 300;
-		}
-	}
+
+	UnitGen();
+	
 
 
 	CGameObject* tmp = p_myobjlist;
@@ -95,10 +87,313 @@ void CEnemy::Draw(HDC hdc)
 
 void CEnemy::UnitGen()
 {
-	CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
-	this->AddMyObjList(unit1);
+	int deadtowercount = 0;
 
-	CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
-	this->AddMyObjList(unit2);
+	if (mTurret1->IsDead()) deadtowercount++;
+	if (mTurret2->IsDead()) deadtowercount++;
+	if (mTurret3->IsDead()) deadtowercount++;
+	if (mTurret4->IsDead()) deadtowercount++;
+
+	if (!iunitgentime) {
+		switch (deadtowercount) {
+		case 0:
+		{
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+			iunitgentime = FRAMETIME * 2000;
+			break;
+		}
+		case 1:
+		{
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+			iunitgentime = FRAMETIME * 1750;
+			break;
+		}
+
+		case 2:
+		{
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+			iunitgentime = FRAMETIME * 1500;
+			break;
+		}
+		case 3:
+		{
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+			iunitgentime = FRAMETIME * 1250;
+			break;
+		}
+		case 4:
+		{
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+			iunitgentime = FRAMETIME * 1000;
+			break;
+		}
+
+		}
+	}
+	switch (deadtowercount) {
+	case 0:
+	{
+		if (iunitgentime == FRAMETIME * 1800) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1700) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1600) {
+			CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1500) {
+			CUnit* unit1 = new CDia(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CTri(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+
+		break;
+	}
+	case 1:
+	{
+		if (iunitgentime == FRAMETIME * 1600) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1500) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1400) {
+			CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1300) {
+			CUnit* unit1 = new CDia(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CTri(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+
+
+
+		break;
+	}
+	case 2:
+	{
+		if (iunitgentime == FRAMETIME * 1400) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1300) {
+			CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1200) {
+			CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1100) {
+			CUnit* unit1 = new CDia(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CDia(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1000) {
+			CUnit* unit1 = new CTri(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CTri(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+
+
+		break;
+	}
+	case 3:
+	{
+		if (iunitgentime == FRAMETIME * 1100) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 1000) {
+			CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 900) {
+			CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 800) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 700) {
+			CUnit* unit1 = new CTri(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CTri(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 600) {
+			CUnit* unit1 = new CDia(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CDia(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+
+		break;
+	}
+	case 4:
+	{
+		if (iunitgentime == FRAMETIME * 900) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 800) {
+			CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CRect(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 700) {
+			CUnit* unit1 = new CEllip(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 600) {
+			CUnit* unit1 = new CDia(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CDia(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 500) {
+			CUnit* unit1 = new CDia(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CDia(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 400) {
+			CUnit* unit1 = new CTri(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CTri(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+		if (iunitgentime == FRAMETIME * 300) {
+			CUnit* unit1 = new CRect(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit1);
+
+			CUnit* unit2 = new CEllip(ptUnitSponPos2, TEAM::ENEMY, p_opponentobjlist);
+			this->AddMyObjList(unit2);
+
+		}
+
+
+		break;
+	}
+	}
+
 
 }
