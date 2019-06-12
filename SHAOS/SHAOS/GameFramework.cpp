@@ -137,15 +137,15 @@ void CGameFramework::Draw(HDC hdc)
 		sk_rect4 = { 30,630,70,670 };
 
 		RECT msk_rect1, msk_rect2, msk_rect3, msk_rect4;
-		msk_rect1 = { 30,520 - p_ctshoot * SKILLICONSIZE / (FRAMETIME * 100) ,70,520 };
-		msk_rect2 = { 30,570 - p_ctAoE * SKILLICONSIZE / PLAYER_EFFECTTIME_AOE,70,570 };
-		msk_rect3 = { 30,580 - p_ctshield * SKILLICONSIZE / (FRAMETIME * 100),70,620 };
-		msk_rect4 = { 30,630,70,670 - p_ctreturn * SKILLICONSIZE / PLAYER_MAXHP };
+		msk_rect1 = { 30,520 - p_ctshoot * SKILLICONSIZE / COOLTIME_SHOOT ,70,520 };
+		msk_rect2 = { 30,570 - p_ctAoE * SKILLICONSIZE / COOLTIME_AOE,70,570 };
+		msk_rect3 = { 30,620 - p_ctshield * SKILLICONSIZE / COOLTIME_SHIELD,70,620 };
+		msk_rect4 = { 30,670 - p_ctreturn * SKILLICONSIZE / COOLTIME_RETURN,70,670 };
 
-		FillRect(hdc, &msk_rect1, hHPBRUSH);
-		FillRect(hdc, &msk_rect2, hHPBRUSH);
-		FillRect(hdc, &msk_rect3, hHPBRUSH);
-		FillRect(hdc, &msk_rect4, hHPBRUSH);
+		FillRect(hdc, &msk_rect1, (HBRUSH)GetStockObject(BLACK_BRUSH));
+		FillRect(hdc, &msk_rect2, (HBRUSH)GetStockObject(BLACK_BRUSH));
+		FillRect(hdc, &msk_rect3, (HBRUSH)GetStockObject(BLACK_BRUSH));
+		FillRect(hdc, &msk_rect4, (HBRUSH)GetStockObject(BLACK_BRUSH));
 
 		//if()
 
@@ -156,24 +156,21 @@ void CGameFramework::Draw(HDC hdc)
 
 
 
-		// 스킬 아이콘 위치
-		//Rectangle(hdc, 30, 480, 70 ,520);
-		//Rectangle(hdc, 30, 530, 70, 570);
-		//Rectangle(hdc, 30, 580, 70, 620);
-		//Rectangle(hdc, 30, 630, 70, 670);
-
-
 		SetBkMode(hdc, TRANSPARENT);
-		TextOut(hdc, 40, 230, L"HP", strlen("HP"));
-		TextOut(hdc, 40, 455, L"HP", strlen("HP"));
-		RECT Text = { 30,30,45,400 };
-		DrawText(hdc, L"P L A Y E R    H P", lstrlen(L"P L A Y E R    H P"), &Text, DT_WORDBREAK);
-		
 
+
+		RECT Text = { 30,55,45,200 };
+		DrawText(hdc, L"P L A Y E R    H P", lstrlen(L"P L A Y E R    H P"), &Text, DT_WORDBREAK| DT_CENTER);
+
+		Text = { 30,280,45,500 };
+		DrawText(hdc, L"T O W E R    H P", lstrlen(L"T O W E R    H P"), &Text, DT_WORDBREAK| DT_CENTER);
+
+		//if (p_ctdeath) {
+		//	RECT rcback = {500,300,700,400};
+		//	FillRect(hdc, &rcback, (HBRUSH)GetStockObject(WHITE_BRUSH));
+		//}
 
 		if (pworld->IsEnding() != 0) {
-			// 여기다가 엔딩장면 그려라~~
-			//msound->SoundStop(1);
 			msound->SoundStop(2);
 			msound->MyPlaySound(7, 3);
 			HBRUSH hOldbr = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(DKGRAY_BRUSH));
@@ -186,13 +183,14 @@ void CGameFramework::Draw(HDC hdc)
 			HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
 			SetTextColor(hdc, RGB(255, 255, 0));
 			SetBkMode(hdc, TRANSPARENT);
+			
 
 			switch (pworld->IsEnding()) {
 			case 1:
 				TextOut(hdc, 400, 300, L"VICTORY!", lstrlen(L"VICTORY!"));
 				break;
 			case 2:
-				TextOut(hdc, 400, 300, L"  LOSE!", lstrlen(L"  LOSE!"));
+				TextOut(hdc, 400, 300, L"  LOSE", lstrlen(L"  LOSE"));
 				break;
 			}
 

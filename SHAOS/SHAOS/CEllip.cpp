@@ -121,14 +121,14 @@ void CEllip::Move()
 	if (team == TEAM::USER) {
 		mrchpbar = {
 			mrcRng.left - 7,
-			mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), RECT_RADIUS * 2, RECT_MAXHP),
+			mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), ELLIP_RADIUS * 2, ELLIP_MAXHP),
 			mrcRng.left - 4,
 			mrcRng.bottom
 		};
 	}
 	else {
 		mrchpbar = { mrcRng.right + 4,
-			mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), RECT_RADIUS * 2, RECT_MAXHP),
+			mrcRng.bottom - (INT)GETHPBAR(mhp->GetHp(), ELLIP_RADIUS * 2, ELLIP_MAXHP),
 			mrcRng.right + 7,
 			mrcRng.bottom };
 	}

@@ -129,9 +129,6 @@
     <ClInclude Include="CEllip.h">
       <Filter>GameObj\Unit\Ellip</Filter>
     </ClInclude>
-    <ClInclude Include="CTurret2.h">
-      <Filter>GameObj\Turret</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -190,9 +187,6 @@
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="CTurret2.cpp">
-      <Filter>GameObj\Turret</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

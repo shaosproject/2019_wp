@@ -32,7 +32,7 @@ void CEnemy::SetInitObj()
 	mTurret3 = new CTurret(TURRET3_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret3);
 
-	mTurret4 = new CTurret2(TURRET4_POS, TEAM::ENEMY, p_opponentobjlist);
+	mTurret4 = new CTurret(TURRET4_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret4);
 
 }
