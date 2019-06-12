@@ -72,8 +72,10 @@ void CGameFramework::MSG_Mouse(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	POINT mousepos = { LOWORD(lParam),HIWORD(lParam) };
 	if (PtInRect(&BUTTONPAUSE_RNG, mousepos)) {
-		if(message == WM_LBUTTONUP)
+		if (message == WM_LBUTTONUP) {
+			pworld->OffPlayerMove();
 			DialogBox(mhInst, MAKEINTRESOURCE(IDD_DIALOGPAUSE), mhWnd, (DLGPROC)DialogProc);
+		}
 		return;
 	}
 	else {
@@ -138,8 +140,8 @@ void CGameFramework::Draw(HDC hdc)
 
 		TextOut(hdc, 40, 230, L"HP", strlen("HP"));
 		TextOut(hdc, 40, 455, L"HP", strlen("HP"));
-		RECT Text = {40,230,50,300 };
-		//DrawText(hdc,L"PLAYER", strlen("PLAYER"), &Text, DT_WORDBREAK | DT_VCENTER);
+		RECT Text = { 30,30,45,400 };
+		DrawText(hdc, L"P L A Y E R    H P", lstrlen(L"P L A Y E R    H P"), &Text, DT_WORDBREAK);
 		
 
 		// 광역기 쿨타임 가져오니까 화면 흔들림효과 넣을 수 있을 듯

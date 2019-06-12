@@ -1,34 +1,30 @@
 #include "pch.h"
-#include "CTurret.h"
-#include "Bullet.h"
+#include "CTurret2.h"
 
-CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
+
+CTurret2::CTurret2(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	: CGameObject(initPos, team, enemylist)
 {
 	mrcRng = { (LONG)initPos.x - TURRET_RADIUS ,(LONG)initPos.y - TURRET_RADIUS,
-		(LONG)initPos.x + TURRET_RADIUS, (LONG)initPos.y + TURRET_RADIUS };
+	(LONG)initPos.x + TURRET_RADIUS, (LONG)initPos.y + TURRET_RADIUS };
 
 
 	mhp = new CHp(TOWER_MAXHP);
 	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 
-	iattackcooltime = 0;
-	ptarget = nullptr;
-	pbullet = nullptr;
 
+	iattackcooltime = 0;
 	ideatheffecttime = 0;
 }
 
 
-CTurret::~CTurret()
+CTurret2::~CTurret2()
 {
 	delete mhp;
-	if (pbullet) delete pbullet;
 }
 
-void CTurret::Draw(HDC hdc)
+void CTurret2::Draw(HDC hdc)
 {
-
 	if (ideatheffecttime) {
 		// 죽음 이펙트 그리기
 		// 타워의 색이 흰색으로 변하면서 
@@ -39,63 +35,60 @@ void CTurret::Draw(HDC hdc)
 		INT tmp1 = ideatheffecttime / FRAMETIME;
 		INT tmp2 = TURRET_EFFECTTIME_DEATH / FRAMETIME;
 
-		INT d = (INT)(TURRET_RADIUS/2 * tmp1 / tmp2);
-		if (tmp1 % 20>=0&&tmp1%20<4)
-			Ellipse(hdc, (mptpos.x-35)-d, (mptpos.y - 35)-d, (mptpos.x - 35)+d, (mptpos.y - 35)+d);
-		if (tmp1 % 20 >=4&&tmp1 % 20 < 8)
-		Ellipse(hdc, (mptpos.x + 35) - d, (mptpos.y - 35) - d, (mptpos.x + 35) + d, (mptpos.y - 35) + d);
+		INT d = (INT)(TURRET_RADIUS / 2 * tmp1 / tmp2);
+		if (tmp1 % 20 >= 0 && tmp1 % 20 < 4)
+			Ellipse(hdc, (mptpos.x - 35) - d, (mptpos.y - 35) - d, (mptpos.x - 35) + d, (mptpos.y - 35) + d);
+		if (tmp1 % 20 >= 4 && tmp1 % 20 < 8)
+			Ellipse(hdc, (mptpos.x + 35) - d, (mptpos.y - 35) - d, (mptpos.x + 35) + d, (mptpos.y - 35) + d);
 		if (tmp1 % 20 >= 8 && tmp1 % 20 < 12)
-		Ellipse(hdc, (mptpos.x + 35) - d, (mptpos.y +35) - d, (mptpos.x + 35) + d, (mptpos.y + 35) + d);
+			Ellipse(hdc, (mptpos.x + 35) - d, (mptpos.y + 35) - d, (mptpos.x + 35) + d, (mptpos.y + 35) + d);
 		if (tmp1 % 20 >= 12 && tmp1 % 20 < 16)
-		Ellipse(hdc, (mptpos.x - 35) - d, (mptpos.y + 35) - d, (mptpos.x - 35) + d, (mptpos.y + 35) + d);		
-		if (tmp1 % 20 >= 16 && tmp1 % 20 <20 )
-		Ellipse(hdc, mptpos.x  - d, mptpos.y  - d,mptpos.x  + d, mptpos.y  + d);
+			Ellipse(hdc, (mptpos.x - 35) - d, (mptpos.y + 35) - d, (mptpos.x - 35) + d, (mptpos.y + 35) + d);
+		if (tmp1 % 20 >= 16 && tmp1 % 20 < 20)
+			Ellipse(hdc, mptpos.x - d, mptpos.y - d, mptpos.x + d, mptpos.y + d);
 
 
 
 		return;
 	}
 
-	
+
+
 	HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(NULL_BRUSH));
 	HPEN hOldpen;
-	(ptarget == menemylist->next) ? 
+	(ptarget == menemylist->next) ?
 		hOldpen = (HPEN)SelectObject(hdc, hREDPEN)
 		: hOldpen = (HPEN)SelectObject(hdc, (HPEN)GetStockObject(WHITE_PEN));
 
-	// 공격 범위 그리기...
 	Ellipse(hdc, mptpos.x - TURRET_ATTACK_RANGE, mptpos.y - TURRET_ATTACK_RANGE,
 		mptpos.x + TURRET_ATTACK_RANGE, mptpos.y + TURRET_ATTACK_RANGE);
 
 	SelectObject(hdc, hOldpen);
 
 	SelectObject(hdc, hTRBRUSH);
-	RoundRect(hdc, mrcRng.left,mrcRng.top, mrcRng.right,mrcRng.bottom,
-		TURRET_RADIUS/5*4, TURRET_RADIUS/5*4);
+	RoundRect(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom,
+		TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
 	SelectObject(hdc, hOld);
 
-
-	if (pbullet) pbullet->Draw(hdc);
 }
 
-void CTurret::Update()
+void CTurret2::Update()
 {
 	if (mdeath) {
-		if(ideatheffecttime > FRAMETIME) ideatheffecttime -= FRAMETIME;
+		if (ideatheffecttime > FRAMETIME) ideatheffecttime -= FRAMETIME;
 		return;
 	}
-
-	// hp바 업데이트
 	mrchpbar.top = mrcRng.bottom - GETHPBAR(mhp->GetHp(), TURRET_RADIUS * 2, TURRET_MAXHP);
 
-
+	// 타겟 찾기
 	ptarget = FindTarget();
 	if (ptarget == nullptr) {
 		iattackcooltime = 0;
 	}
 
+	// 공격 알고리
 	if (!iattackcooltime) {
-		if (ptarget && !pbullet) {
+		if (ptarget) {
 			Attack();
 			iattackcooltime = FRAMETIME * 100;
 		}
@@ -104,12 +97,10 @@ void CTurret::Update()
 		iattackcooltime -= FRAMETIME;
 	}
 
-	if (pbullet) pbullet = pbullet->Move();
-
 
 }
 
-CGameObject* CTurret::FindTarget()
+CGameObject* CTurret2::FindTarget()
 {
 	// 먼저 생성된 유닛 먼저 공격하는 알고리즘
 	CGameObject* tmp = menemylist->next->next;	//유닛 먼저 검사
@@ -134,19 +125,18 @@ CGameObject* CTurret::FindTarget()
 	return nullptr;
 }
 
-
-
-
-void CTurret::Attack()
+void CTurret2::Attack()
 {
 	if (ptarget == menemylist->next) // 플레이어이면
 	{
-		pbullet = new Bullet(&mptpos, ptarget, TURRET_BULLETDAMAGE*5);
+		//TURRET_BULLETDAMAGE * 5 ->데미지
+
 	}
-	else pbullet = new Bullet(&mptpos, ptarget, TURRET_BULLETDAMAGE);
+
+
 }
 
-void CTurret::SelectedDraw(HDC hdc, HBRUSH hbr)
+void CTurret2::SelectedDraw(HDC hdc, HBRUSH hbr)
 {
 	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
 
@@ -155,15 +145,16 @@ void CTurret::SelectedDraw(HDC hdc, HBRUSH hbr)
 		TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
 
 	SelectObject(hdc, hOld);
+
 }
 
-INT CTurret::GetObjRadius()
+INT CTurret2::GetObjRadius()
 {
 	return TURRET_RADIUS;
 }
 
-void CTurret::Death()
+void CTurret2::Death()
 {
 	ideatheffecttime = TURRET_EFFECTTIME_DEATH;
-}
 
+}

@@ -33,7 +33,9 @@ class CPlayer : public CGameObject
 
 	POINT worldmousepos;
 
+	POINT shootattackpt[7];
 	RECT shootattackrange[7];
+
 	BOOL immotal;
 public:
 	CSound* msound{ nullptr };
@@ -65,6 +67,9 @@ public:
 	POINTFLOAT			Player_Vector();
 	void				SetPos(POINT setpos);
 	void				UI_GetPlayerInfo(INT* ahp, INT* ct_shoot,
-		INT* ct_AoE, INT* ct_shield, INT* ct_return, INT* ct_death);
+										INT* ct_AoE, INT* ct_shield, INT* ct_return, INT* ct_death);
 	void				PutDamage(INT damage);
+	INT					GetEffectTimeAoE();
+	void OffPlayerMove();
+	
 };

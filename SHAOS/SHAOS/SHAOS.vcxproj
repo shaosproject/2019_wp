@@ -165,6 +165,7 @@
     <ClInclude Include="CTower.h" />
     <ClInclude Include="CTri.h" />
     <ClInclude Include="CTurret.h" />
+    <ClInclude Include="CTurret2.h" />
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="CUser.h" />
     <ClInclude Include="CWorld.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="CTower.cpp" />
     <ClCompile Include="CTri.cpp" />
     <ClCompile Include="CTurret.cpp" />
+    <ClCompile Include="CTurret2.cpp" />
     <ClCompile Include="CUnit.cpp" />
     <ClCompile Include="CUser.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -213,6 +215,9 @@
     <Image Include="Resource\map.bmp" />
     <Image Include="SHAOS.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor1.cur" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

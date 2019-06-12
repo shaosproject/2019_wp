@@ -246,7 +246,7 @@ void CPlayer::Skill_AreaOfEffect()
 void CPlayer::Skill_Shoot()
 {
 	cooltime_Shoot = COOLTIME_SHOOT;
-	effecttime_Shoot = FRAMETIME * 50;
+	effecttime_Shoot = FRAMETIME * 25;
 
 	float dx = worldmousepos.x - mptpos.x;
 	float dy = worldmousepos.y - mptpos.y;
@@ -259,12 +259,12 @@ void CPlayer::Skill_Shoot()
 
 
 	for (int i = 0; i < 7; i++) {
-		POINT centerpos = { (INT)(mptpos.x + standardx * (i + 1)),
+		shootattackpt[i] = { (INT)(mptpos.x + standardx * (i + 1)),
 			(INT)(mptpos.y + standardy * (i + 1)) };
 
 		shootattackrange[i] = {
-			centerpos.x - 25, centerpos.y - 25,
-			centerpos.x + 25, centerpos.y + 25
+			shootattackpt[i].x - 25, shootattackpt[i].y - 25,
+			shootattackpt[i].x + 25, shootattackpt[i].y + 25
 		};
 
 	}
@@ -360,6 +360,17 @@ void CPlayer::PutDamage(INT damage)
 		Death();
 	}
 }
+INT CPlayer::GetEffectTimeAoE()
+{
+	return effecttime_AoE;
+}
+void CPlayer::OffPlayerMove()
+{
+	R_On = FALSE;
+	L_On = FALSE;
+	U_On = FALSE;
+	D_On = FALSE;
+}
 INT CPlayer::GetObjRadius()
 {
 	return PLAYER_RADIUS;
@@ -406,6 +417,10 @@ void CPlayer::Draw(HDC hdc)
 	}
 
 	if (effecttime_Shoot) {
+
+		for (int i = 0; i < 7; i++) {
+			FillRect(hdc, &shootattackrange[i], (HBRUSH)GetStockObject(DKGRAY_BRUSH));
+		}
 		//for (int i = 0; i < 7; i++) {
 			// Shoot 이펙트 그리기
 			//float efs = effecttime_Shoot / FRAMETIME / 7;

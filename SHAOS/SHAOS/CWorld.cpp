@@ -100,7 +100,37 @@ void CWorld::Update()
 	}
 	else if (pEnemyTeam->GetMyObjList()->IsDead()) {
 		// 타워 죽었을 때 효과음
-		iViewX == 3100;
+		iViewX = 3100;
+		return;
+	}
+
+	if (pUserTeam->GeteffecttimeAoE()) {
+		// 15프레임
+		iViewX = (INT)SET_VIEWX(pUserTeam->GetPlayerPos().x);
+
+		switch (pUserTeam->GeteffecttimeAoE()) {
+		case FRAMETIME * 15:
+		case FRAMETIME * 14:
+		case FRAMETIME * 13:
+		case FRAMETIME * 9:
+		case FRAMETIME * 8:
+		case FRAMETIME * 7:
+		case FRAMETIME * 3:
+		case FRAMETIME * 2:
+		case FRAMETIME * 1:
+			iViewX += 3;
+			break;
+		case FRAMETIME * 12:
+		case FRAMETIME * 11:
+		case FRAMETIME * 10:
+		case FRAMETIME * 6:
+		case FRAMETIME * 5:
+		case FRAMETIME * 4:
+			iViewX -= 3;
+			break;
+		default:
+			break;
+		}
 		return;
 	}
 
@@ -120,7 +150,7 @@ void CWorld::Draw(HDC clientDC)
 	if(pUserTeam->GetMyObjList()->IsDead())
 		iViewX = 600;
 	if (pEnemyTeam->GetMyObjList()->IsDead())
-		iViewX == 3100;
+		iViewX = 3100;
 
 	BitBlt(clientDC, 0, 0, rcClient.right, rcClient.bottom,
 		hUpdateDC, iViewX - MIN_VIEWX, 0, SRCCOPY);
@@ -141,4 +171,9 @@ void CWorld::GetUIInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
 INT CWorld::IsEnding()
 {
 	return gamestate;
+}
+
+void CWorld::OffPlayerMove()
+{
+	pUserTeam->OffPlayerMove();
 }

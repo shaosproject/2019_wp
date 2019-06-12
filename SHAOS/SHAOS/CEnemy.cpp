@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CEnemy.h"
 #include "CTurret.h"
-
+#include "CTurret2.h"
 #include "CRect.h"
 #include "CEllip.h"
 #include "CDia.h"
@@ -31,7 +31,7 @@ void CEnemy::SetInitObj()
 	mTurret3 = new CTurret(TURRET3_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret3);
 
-	mTurret4 = new CTurret(TURRET4_POS, TEAM::ENEMY, p_opponentobjlist);
+	mTurret4 = new CTurret2(TURRET4_POS, TEAM::ENEMY, p_opponentobjlist);
 	this->AddMyObjList(mTurret4);
 
 	CUnit* unit1 = new CTri(ptUnitSponPos1, TEAM::ENEMY, p_opponentobjlist);

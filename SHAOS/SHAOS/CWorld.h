@@ -19,6 +19,7 @@ class CWorld
 
 	INT iViewX;
 	
+
 	INT gamestate;	//0:진행 1:유저 승 2: 유저 패
 	CSound* sound{ nullptr };
 public:
@@ -40,5 +41,6 @@ public:
 
 	INT IsEnding();
 
+	void OffPlayerMove();
 };
 

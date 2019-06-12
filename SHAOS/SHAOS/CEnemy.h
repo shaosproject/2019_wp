@@ -2,12 +2,14 @@
 #include "CTeam.h"
 
 class CTurret;
+class CTurret2;
 
 class CEnemy : public CTeam
 {
 	// gameobjlist에 타워, 포탑, 유닛 순으로 연결
 	CTower* mTower;
-	CTurret* mTurret1, * mTurret2,* mTurret3,* mTurret4;
+	CTurret* mTurret1, * mTurret2, * mTurret3;
+	CTurret2* mTurret4;
 
 	const POINTFLOAT ptUnitSponPos1 = { 3200, 200 };
 	const POINTFLOAT ptUnitSponPos2 = { 3200, 500 };

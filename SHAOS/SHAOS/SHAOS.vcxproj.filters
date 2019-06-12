@@ -129,6 +129,9 @@
     <ClInclude Include="CEllip.h">
       <Filter>GameObj\Unit\Ellip</Filter>
     </ClInclude>
+    <ClInclude Include="CTurret2.h">
+      <Filter>GameObj\Turret</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -188,6 +191,9 @@
     <ClCompile Include="Sound.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
+    <ClCompile Include="CTurret2.cpp">
+      <Filter>GameObj\Turret</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SHAOS.rc">
@@ -204,5 +210,10 @@
     <Image Include="Resource\map.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor1.cur">
+      <Filter>리소스 파일</Filter>
+    </None>
   </ItemGroup>
 </Project>

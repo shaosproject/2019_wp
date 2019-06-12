@@ -138,3 +138,13 @@ void CUser::GetUIInfo(INT* ahp, INT* ct_shoot, INT* ct_AoE,
 	mPlayer->UI_GetPlayerInfo(ahp, ct_shoot, ct_AoE, ct_shield, ct_return, ct_death);
 	*towerhp = mTower->GetTowerHp();
 }
+
+INT CUser::GeteffecttimeAoE()
+{
+	return mPlayer->GetEffectTimeAoE();
+}
+
+void CUser::OffPlayerMove()
+{
+	mPlayer->OffPlayerMove();
+}

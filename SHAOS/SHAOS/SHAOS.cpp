@@ -78,7 +78,7 @@ void MyRegisterClass(HINSTANCE hInstance)
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(NULL, IDI_APPLICATION);
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hCursor        = LoadCursor(NULL, IDC_ARROW); //LoadCursor(hInstance, (LPCWSTR)IDC_CURSOR1);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
 	wcex.lpszMenuName	= NULL;
     wcex.lpszClassName  = szWindowClass;
@@ -91,6 +91,7 @@ void MyRegisterClass(HINSTANCE hInstance)
 	wcex.lpszClassName = L"TitleWndClass";
 
 	RegisterClassEx(&wcex);
+
 }
 
 //
@@ -231,7 +232,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
 	static HBITMAP hTitleBit;
-
 	switch (message) {
 	case WM_CREATE:
 	{	
@@ -326,8 +326,12 @@ BOOL CALLBACK DialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 
 	//bool값 등 활성화된 상태가 있으면 복귀했을 때 문제다
 
+
+
 	switch (message) {
 	case WM_INITDIALOG:
+
+
 		KillTimer(GetParent(hDlg), 0);
 		break;
 	case WM_COMMAND:
