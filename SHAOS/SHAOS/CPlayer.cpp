@@ -232,6 +232,7 @@ void CPlayer::Move() {
 
 void CPlayer::Skill_AreaOfEffect()
 {
+	msound->MyPlaySound(8, 3);
 	cooltime_AoE = COOLTIME_AOE;
 
 	// ÀÌÆåÆ® ½ÅÈ£ ÁÖ±â
@@ -258,6 +259,9 @@ void CPlayer::Skill_AreaOfEffect()
 
 void CPlayer::Skill_Shoot()
 {
+
+	msound->MyPlaySound(7, 5);
+	//msound->SetVolum(5, 1);
 	cooltime_Shoot = COOLTIME_SHOOT;
 	effecttime_Shoot = FRAMETIME * 25;
 
@@ -312,6 +316,7 @@ void CPlayer::ActiveShield()
 	onshield = TRUE;
 	activetime_shield = ACTIVETIME_SHIELD;
 	cooltime_Shield = COOLTIME_SHIELD;
+	msound->MyPlaySound(9, 3);
 }
 
 
@@ -741,7 +746,6 @@ void CPlayer::Draw(HDC hdc)
 
 	// ÃÑ¾Ë
 	if (pbullet) {
-		//msound->MyPlaySound(2, 3);
 		pbullet->Draw(hdc);
 	}
 	if (ptarget) {
@@ -758,6 +762,9 @@ void CPlayer::Update()
 
 	// Á×À½
 	if (ideatheffecttime) {
+		if (ideatheffecttime == PLAYER_EFFECTTIME_DEATH) {
+		}
+
 		ideatheffecttime -= FRAMETIME;
 		if (!ideatheffecttime) {
 			SetPos(PLAYER_DEFAULT_POSITION);
@@ -784,14 +791,11 @@ void CPlayer::Update()
 		effecttime_Return -= FRAMETIME;
 		if (!effecttime_Return)
 		{
-			//msound->MyPlaySound(3, 3);
 			SetPos(PLAYER_DEFAULT_POSITION);
 		}
 	}
 
 	if (pressQ) {
-		//if(returntime==FRAMETIME*20)
-		//	msound->MyPlaySound(3, 4);
 		if (castingtime_return == 0)
 		{
 			cooltime_Return = COOLTIME_RETURN;
@@ -804,6 +808,7 @@ void CPlayer::Update()
 
 	if (onshield) {
 		if (activetime_shield == 0) {
+			//msound->MyPlaySound(9, 3);
 			onshield = FALSE;
 		}
 		activetime_shield -= FRAMETIME;
@@ -873,4 +878,5 @@ void CPlayer::Update()
 void CPlayer::Death()
 {
 	ideatheffecttime = PLAYER_EFFECTTIME_DEATH;
+	msound->MyPlaySound(12, 3);
 }

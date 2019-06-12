@@ -164,6 +164,7 @@ INT CTurret::GetObjRadius()
 
 void CTurret::Death()
 {
+	
 	ideatheffecttime = TURRET_EFFECTTIME_DEATH;
 }
 

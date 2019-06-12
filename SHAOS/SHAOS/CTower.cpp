@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CTower.h"
-
+#include "Sound.h"
 
 CTower::CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	: CGameObject(initPos, team, enemylist)
@@ -29,7 +29,7 @@ CTower::CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 		mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 		hTriBrush = CreateSolidBrush(RGB(200, 0, 0));
 	}
-
+	msound = new CSound;
 }
 
 
@@ -81,6 +81,10 @@ void CTower::Update()
 	
 	
 	if (ideatheffecttime) {
+		if (ideatheffecttime == TOWER_EFFECTTIME_DEATH) {
+			msound->MyPlaySound(10, 3);
+
+		}
 		ideatheffecttime -= FRAMETIME;
 	}
 }
@@ -94,6 +98,7 @@ void CTower::Death()
 {
 	if (!ideatheffecttime) {
 		ideatheffecttime = TOWER_EFFECTTIME_DEATH;
+		//msound->MyPlaySound(10, 3);
 	}
 }
 

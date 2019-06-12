@@ -8,7 +8,7 @@ class CTower : public CGameObject
 	POINT triangle2[3];
 
 	HBRUSH hTriBrush;
-
+	CSound* msound;
 public:
 	CTower(POINTFLOAT initPos, TEAM team, CGameObject* enemylist);
 	~CTower();
