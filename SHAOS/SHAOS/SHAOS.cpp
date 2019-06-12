@@ -78,7 +78,7 @@ void MyRegisterClass(HINSTANCE hInstance)
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(NULL, IDI_APPLICATION);
-    wcex.hCursor        = LoadCursor(NULL, IDC_ARROW); //LoadCursor(hInstance, (LPCWSTR)IDC_CURSOR1);
+    wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
 	wcex.lpszMenuName	= NULL;
     wcex.lpszClassName  = szWindowClass;
@@ -242,20 +242,9 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 			L"button",
 			L"START",
 			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			850, 280, 200, 30,
-			hWnd,
-			(HMENU)IDC_BUTTON_START,
-			hInst,
-			nullptr
-		);
-
-		HWND hHelp = CreateWindow(
-			L"button",
-			L"HELP",
-			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
 			850, 340, 200, 30,
 			hWnd,
-			(HMENU)IDC_BUTTON_HELP,
+			(HMENU)IDC_BUTTON_START,
 			hInst,
 			nullptr
 		);
@@ -284,8 +273,7 @@ LRESULT CALLBACK TitleProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 			SetTimer(GetParent(hWnd), 0, FRAMETIME, (TIMERPROC)TimerProc);
 			DestroyWindow(hWnd);
 			break;
-		case IDC_BUTTON_HELP:
-			break;
+
 		case IDC_BUTTON_EXIT:
 			DestroyWindow(GetParent(hWnd));
 			break;

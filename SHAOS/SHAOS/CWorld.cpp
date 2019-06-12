@@ -142,10 +142,14 @@ void CWorld::Draw(HDC clientDC)
 	BitBlt(hUpdateDC, 0, 0, MAPSIZE_WIDTH, MAPSIZE_HEIGHT,
 		hBackgroundDC, 0, 0, SRCCOPY);
 
-
+	HBRUSH hOld = (HBRUSH)SelectObject(hUpdateDC, hUSERUNITBRUSH);
 	// °´Ã¼ ±×¸®±â
 	pUserTeam->Draw(hUpdateDC);
+	SelectObject(hUpdateDC, hENEMYUNITBRUSH);
 	pEnemyTeam->Draw(hUpdateDC);
+	SelectObject(hUpdateDC, hOld);
+
+
 	//----
 	if(pUserTeam->GetMyObjList()->IsDead())
 		iViewX = 600;

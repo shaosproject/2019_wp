@@ -9,7 +9,7 @@ CTurret2::CTurret2(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 	(LONG)initPos.x + TURRET_RADIUS, (LONG)initPos.y + TURRET_RADIUS };
 
 
-	mhp = new CHp(TOWER_MAXHP);
+	mhp = new CHp(TURRET_MAXHP);
 	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 
 
@@ -137,9 +137,9 @@ void CTurret2::AttackStart()
 	attackOn = TRUE;
 	iattackcooltime = FRAMETIME * 100;
 	if (ptarget == menemylist->next) {
-		attackdamage = 50;
+		attackdamage = 80;
 	}
-	else attackdamage = 20;
+	else attackdamage = 40;
 
 	attakpoint = ptarget->GetPos();
 }
@@ -178,9 +178,9 @@ void CTurret2::SelectedDraw(HDC hdc, HBRUSH hbr)
 {
 	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
 
-	RoundRect(hdc, mrcRng.left - 4, mrcRng.top - 4,
+	RoundRect(hdc, mrcRng.left - 3, mrcRng.top - 3,
 		mrcRng.right + 4, mrcRng.bottom + 4,
-		TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
+		TURRET_RADIUS / 5 * 3, TURRET_RADIUS / 5 * 3);
 
 	SelectObject(hdc, hOld);
 

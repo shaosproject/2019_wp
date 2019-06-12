@@ -85,8 +85,8 @@ const POINTFLOAT DIRVECTOR_STOP = { 0,0 };
 
 const HBRUSH hRTBRUSH = CreateSolidBrush(RGB(60, 100, 250));
 const HBRUSH hIAOEBRUSH= CreateSolidBrush(RGB(255, 69, 0));
-const HBRUSH hIAOEBRUSH2 = CreateSolidBrush(RGB(255, 215, 0));
-const HBRUSH hSDBRUSH = CreateSolidBrush(RGB(0, 0, 238));
+const HBRUSH hIAOEBRUSH2 = CreateSolidBrush(RGB(255, 0, 0));
+const HBRUSH hSDBRUSH = CreateSolidBrush(RGB(0, 200, 200));
 
 #define COOLTIME_SHOOT		(FRAMETIME * 300)
 #define COOLTIME_AOE		(FRAMETIME * 500)
@@ -108,8 +108,10 @@ const HBRUSH hINRANGEBRUSH = CreateSolidBrush(RGB(0, 255, 0));
 #define PLAYER_SHOOT_LENGTH 200
 #define PLAYER_SHOOTDAMAGE 70
 
-const HPEN hPLAYERSHOOTPEN = CreatePen(PS_SOLID, 50, RGB(0, 200, 200));
-const HBRUSH hPLAYERSHOOTBRUSH = CreateSolidBrush(RGB(0, 0, 0));
+const HPEN hPLAYERSHOOTPEN = CreatePen(PS_SOLID, 50, RGB(255, 255, 51));
+const HBRUSH hPLAYERSHOOTCIRBRUSH = CreateSolidBrush(RGB(255, 255, 51));
+const HBRUSH hPLAYERSHOOTRECTBRUSH = CreateSolidBrush(RGB(255, 204, 0));
+
 #pragma endregion
 
 
@@ -178,6 +180,9 @@ const HPEN hREDPEN = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
 
 
 #pragma region ABOUT_UNIT
+const HBRUSH hUSERUNITBRUSH = CreateSolidBrush(RGB(153, 217, 231));
+const HBRUSH hENEMYUNITBRUSH = CreateSolidBrush(RGB(255, 174, 201));
+
 #define UNIT_RECOGRNGRADIUS 300
 #define UNIT_EFFECTTIME_DEATH (FRAMETIME*50)
 

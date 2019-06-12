@@ -9,7 +9,7 @@ CTurret::CTurret(POINTFLOAT initPos, TEAM team, CGameObject* enemylist)
 		(LONG)initPos.x + TURRET_RADIUS, (LONG)initPos.y + TURRET_RADIUS };
 
 
-	mhp = new CHp(TOWER_MAXHP);
+	mhp = new CHp(TURRET_MAXHP);
 	mrchpbar = { mrcRng.right + 4, mrcRng.top, mrcRng.right + 7, mrcRng.bottom };
 
 	iattackcooltime = 0;
@@ -141,7 +141,7 @@ void CTurret::Attack()
 {
 	if (ptarget == menemylist->next) // 플레이어이면
 	{
-		pbullet = new Bullet(&mptpos, ptarget, TURRET_BULLETDAMAGE*5);
+		pbullet = new Bullet(&mptpos, ptarget, TURRET_BULLETDAMAGE*4);
 	}
 	else pbullet = new Bullet(&mptpos, ptarget, TURRET_BULLETDAMAGE);
 }
@@ -150,9 +150,9 @@ void CTurret::SelectedDraw(HDC hdc, HBRUSH hbr)
 {
 	HBRUSH hOld = (HBRUSH)SelectObject(hdc, hbr);
 
-	RoundRect(hdc, mrcRng.left - 4, mrcRng.top - 4,
+	RoundRect(hdc, mrcRng.left - 3, mrcRng.top - 3,
 		mrcRng.right + 4, mrcRng.bottom + 4,
-		TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
+		TURRET_RADIUS / 5 * 3, TURRET_RADIUS / 5 * 3);
 
 	SelectObject(hdc, hOld);
 }
