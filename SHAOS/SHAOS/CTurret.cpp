@@ -32,8 +32,8 @@ void CTurret::Draw(HDC hdc)
 	if (ideatheffecttime) {
 		// 죽음 이펙트 그리기
 		// 타워의 색이 흰색으로 변하면서 
-		RoundRect(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom,
-			TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
+		//RoundRect(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom,
+		//	TURRET_RADIUS / 5 * 4, TURRET_RADIUS / 5 * 4);
 
 
 		INT tmp1 = ideatheffecttime / FRAMETIME;

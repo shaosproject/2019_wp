@@ -208,18 +208,18 @@ void CPlayer::Move() {
 	if (utd <= TOWER_CENTER2VERTAX + PLAYER_RADIUS)
 		return;
 
-	RECT tmp;
-	RECT nextrc = { (LONG)nextpos.x - PLAYER_RADIUS,(LONG)nextpos.y - PLAYER_RADIUS,
-		(LONG)nextpos.x + PLAYER_RADIUS, (LONG)nextpos.y + PLAYER_RADIUS };
-
-
-	if (IntersectRect(&tmp, &nextrc, &rcTURRET1) ||
-		IntersectRect(&tmp, &nextrc, &rcTURRET2) ||
-		IntersectRect(&tmp, &nextrc, &rcTURRET3) ||
-		IntersectRect(&tmp, &nextrc, &rcTURRET4)
-		) {
-		return;
-	}
+	//RECT tmp;
+	//RECT nextrc = { (LONG)nextpos.x - PLAYER_RADIUS,(LONG)nextpos.y - PLAYER_RADIUS,
+	//	(LONG)nextpos.x + PLAYER_RADIUS, (LONG)nextpos.y + PLAYER_RADIUS };
+	//
+	//
+	//if (IntersectRect(&tmp, &nextrc, &rcTURRET1) ||
+	//	IntersectRect(&tmp, &nextrc, &rcTURRET2) ||
+	//	IntersectRect(&tmp, &nextrc, &rcTURRET3) ||
+	//	IntersectRect(&tmp, &nextrc, &rcTURRET4)
+	//	) {
+	//	return;
+	//}
 
 	mptpos.x = PLAY_CLIENTX(mptpos.x + dirvector.x);
 	mptpos.y = PLAY_CLIENTY(mptpos.y + dirvector.y);
