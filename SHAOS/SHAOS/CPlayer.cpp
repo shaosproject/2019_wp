@@ -608,7 +608,11 @@ void CPlayer::Draw(HDC hdc)
 		(LONG)(mptpos.y + PLAYER_CENTER2VERTAX)
 		};
 	// 먼저 그리는 삼각형
+		
+		HBRUSH hOld = (HBRUSH)SelectObject(hdc,rtHbrush);
 		Ellipse(hdc, mrcRng.left, mrcRng.top, mrcRng.right, mrcRng.bottom);
+		SelectObject(hdc,hOld);
+
 
 		triangle1[0] = { (LONG)mptpos.x, (LONG)(mptpos.y + PLAYER_CENTER2VERTAX) };
 		triangle1[1] = { (LONG)(mptpos.x - PLAYER_HALFSIDE),(LONG)(mptpos.y - PLAYER_CENTER2SIDE) };
@@ -618,7 +622,7 @@ void CPlayer::Draw(HDC hdc)
 		triangle2[1] = { (LONG)(mptpos.x - PLAYER_HALFSIDE),(LONG)(mptpos.y + PLAYER_CENTER2SIDE) };
 		triangle2[2] = { (LONG)(mptpos.x + PLAYER_HALFSIDE),(LONG)(mptpos.y + PLAYER_CENTER2SIDE) };
 
-		HBRUSH hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(NULL_BRUSH));
+		hOld = (HBRUSH)SelectObject(hdc, (HBRUSH)GetStockObject(NULL_BRUSH));
 
 		Polygon(hdc, triangle1, 3);
 		Polygon(hdc, triangle2, 3);
@@ -627,7 +631,7 @@ void CPlayer::Draw(HDC hdc)
 		
 		
 	}
-
+	HBRUSH hOld = (HBRUSH)SelectObject(hdc, GetStockObject(WHITE_BRUSH));
 	FLOAT TriHeight = PLAYER_RADIUS / 2 * sqrt(3);
 	POINT pt[6];
 	pt[0] = { (LONG)mptpos.x - PLAYER_RADIUS, (LONG)mptpos.y };
@@ -637,10 +641,13 @@ void CPlayer::Draw(HDC hdc)
 	pt[4] = { (LONG)mptpos.x + (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
 	pt[5] = { (LONG)mptpos.x - (PLAYER_RADIUS / 2), (LONG)(mptpos.y + TriHeight) };
 
+
 	Polygon(hdc, pt, 6);
+	SelectObject(hdc, GetStockObject(BLACK_BRUSH));
+
 	Ellipse(hdc, mptpos.x - PLAY_ELLIPSE_RAD, mptpos.y - PLAY_ELLIPSE_RAD,
 		mptpos.x + PLAY_ELLIPSE_RAD, mptpos.y + PLAY_ELLIPSE_RAD);
-
+	SelectObject(hdc, hOld);
 
 	// hpbar 
 	mrchpbar.left = mrcRng.left - 7;

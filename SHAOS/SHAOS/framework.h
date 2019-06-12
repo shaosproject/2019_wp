@@ -12,7 +12,7 @@
 #include <cmath>
 
 #include <mmsystem.h>
-#pragma comment(lib, "winmm.lib")
+//#pragma comment(lib, "winmm.lib")
 
 #define CLIENT_WIDTH 1200
 #define CLIENT_HEIGHT 700
@@ -88,6 +88,8 @@ const HBRUSH hIAOEBRUSH= CreateSolidBrush(RGB(255, 69, 0));
 const HBRUSH hIAOEBRUSH2 = CreateSolidBrush(RGB(255, 0, 0));
 const HBRUSH hSDBRUSH = CreateSolidBrush(RGB(0, 200, 200));
 
+const HBRUSH rtHbrush = CreateSolidBrush(RGB(148, 0, 212));
+
 #define COOLTIME_SHOOT		(FRAMETIME * 300)
 #define COOLTIME_AOE		(FRAMETIME * 500)
 #define COOLTIME_SHIELD		(FRAMETIME * 200)
@@ -100,8 +102,8 @@ const HBRUSH hSDBRUSH = CreateSolidBrush(RGB(0, 200, 200));
 #define PLAYER_ATTACK_RANGE 200
 #define SHIELD_RAD 20
 
-const HBRUSH hSELECTEDBRUSH = CreateSolidBrush(RGB(255, 0, 0));
-const HBRUSH hINRANGEBRUSH = CreateSolidBrush(RGB(0, 255, 0));
+const HBRUSH hSELECTEDBRUSH = CreateSolidBrush(RGB(51, 102, 255));
+const HBRUSH hINRANGEBRUSH = CreateSolidBrush(RGB(102, 255, 255));
 
 #define PLAYER_EFFECTTIME_AOE (FRAMETIME * 15)
 #define PLAYER_EFFECTTIME_DEATH (FRAMETIME* 500)
@@ -199,7 +201,7 @@ const HBRUSH hENEMYUNITBRUSH = CreateSolidBrush(RGB(255, 174, 201));
 #define DIA_SPEED 2
 
 
-const HBRUSH hDIAATTACKBRUSH = CreateSolidBrush(RGB(75, 255, 150));
+const HBRUSH hDIAATTACKBRUSH = CreateSolidBrush(RGB(0, 255, 255));
 const HBRUSH hTIRATTACBRUSH = CreateSolidBrush(RGB(100, 100, 230));
 #pragma endregion
 
